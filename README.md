@@ -1,9 +1,9 @@
-== DO NOT USE IN PRODUCTION ==
+<h2><strong>DO NOT USE IN PRODUCTION </strong></h2>
 
-THIS PLUGIN IS STILL ON DEVELOPMENT MODE USE SUBWAY (VERSION 1) INSTEAD
+<em>THIS PLUGIN IS STILL ON DEVELOPMENT MODE USE SUBWAY (VERSION 1) INSTEAD</em>
 
 
-==SUBWAY==
+<h3><strong>SUBWAY</strong></h3>
 
 Subway is a plugin for WordPress that allows you hide the content of your website to non-logged in visitors and only displays them to logged in users. 
 
@@ -13,13 +13,13 @@ It validates the users’ credentials and displays a set of configurable message
 
 The plugin has settings inside the Administration Panel (‘Settings’ > ‘Reading’) that allows you to configure where you want the user to be taken after he/she has successfully logged in, this can be a page, a custom URL, or just the default behavior.
 
-==Caveats==
+<h3><strong>Caveats</strong></h3>
 
 Subway is only built for WordPress website owners to redirect non-logged in users to a custom login form. This plugin is not a replacement for Membership websites where a complex set of configurations are allowed. There are no payments model, subscriptions, and role types.
 
 Subway is good for Private Intranet Websites where membership is required.
 
-==Installation==
+<h3><strong>Installation</strong></h3>
 
 <strong>Manual:</strong>
 
