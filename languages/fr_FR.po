@@ -1,0 +1,143 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Subway 1.0\n"
+"POT-Creation-Date: 2016-10-20 12:46+0200\n"
+"PO-Revision-Date: 2016-10-20 16:53+0200\n"
+"Language-Team: Dunhakdis Software Creatives <dsc.official.mail@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-KeywordsList: __;_e;esc_html__\n"
+"Last-Translator: \n"
+"Language: fr\n"
+"X-Poedit-SearchPath-0: functions.php\n"
+"X-Poedit-SearchPath-1: login-form.php\n"
+"X-Poedit-SearchPath-2: private.php\n"
+"X-Poedit-SearchPath-3: subway.php\n"
+"X-Poedit-SearchPath-4: update-check.php\n"
+
+#: login-form.php:25
+msgid "Username"
+msgstr "Nom d’utilisateur"
+
+#: login-form.php:26
+msgid "Password"
+msgstr "Mot de passe"
+
+#: login-form.php:27
+msgid "Remember Me"
+msgstr "Se souvenir de moi"
+
+#: login-form.php:28
+msgid "Log In"
+msgstr "Connexion"
+
+#: login-form.php:50
+msgid ""
+"Error: There was an error trying to sign-in to your account. Make sure your "
+"credentials are correct"
+msgstr ""
+"Erreur: Il y eue une erreur lors de la tentative de connexion à votre "
+"compte. Veuillez vérifier vos données de connexion."
+
+#: login-form.php:53
+msgid "Required: Username and Password cannot not be empty."
+msgstr ""
+
+#: login-form.php:56
+msgid "Required: Username cannot not be empty."
+msgstr ""
+
+#: login-form.php:59
+msgid "Required: Password cannot not be empty."
+msgstr ""
+
+#: login-form.php:62
+msgid "Facebook email is invalid or is not verified."
+msgstr ""
+
+#: login-form.php:65
+msgid "Facebook Application Error. Misconfig or App is rejected."
+msgstr ""
+
+#: login-form.php:68
+msgid "Unable to fetch your Facebook profile."
+msgstr ""
+
+#: login-form.php:71
+msgid "Username or e-mail already exists"
+msgstr ""
+
+#: login-form.php:74
+msgid "Google Plus Authentication Error. Invalid Client ID or Secret."
+msgstr ""
+
+#: login-form.php:90
+msgid "Error: Invalid username and password combination."
+msgstr "Erreur: Nom d’utilisateur et/ou mot de passe incorrect."
+
+#: login-form.php:97
+msgid "Oops! Looks like you need to login in order to view the page."
+msgstr "Vous devez vous identifier avant de pouvoir afficher cette page."
+
+#: login-form.php:105
+msgid "Account Sign-in"
+msgstr "Connexion"
+
+#: login-form.php:152
+msgid "Forgot Password"
+msgstr "J’ai oublié mon mot de passe"
+
+#: private.php:132
+msgid "Pages Visibility Settings"
+msgstr ""
+
+#: private.php:140
+msgid "Display the following pages and posts in public"
+msgstr ""
+
+#: private.php:149
+msgid "Make my Intranet public"
+msgstr ""
+
+#: private.php:158
+msgid "Login Page"
+msgstr ""
+
+#: private.php:191
+msgid ""
+"Enter the IDs of posts and/or pages that you wanted to show in public. You "
+"need to separate it by \",\"(comma), <br>for example: 143,123,213. "
+"Alternatively, you can enable public viewing of all of your pages and posts "
+"by checking <br>the option below."
+msgstr ""
+
+#: private.php:204
+msgid ""
+"Pages like user profile, members, and groups are still only available to the "
+"rightful owner of the profile"
+msgstr ""
+
+#: private.php:241
+msgid "Select Page"
+msgstr ""
+
+#: private.php:244
+msgid ""
+"Select a page to use as a login page for your website. <strong style=\"color:"
+"red;\">You need to add \"[subway_login]\" shortcode in the selected page<br> "
+"to show the login form</strong>."
+msgstr ""
+
+#: update-check.php:442
+msgid ""
+"The plugin has been updated, but could not be reactivated. Please reactivate "
+"it manually."
+msgstr ""
+
+#: update-check.php:443
+msgid "Plugin reactivated successfully."
+msgstr ""
