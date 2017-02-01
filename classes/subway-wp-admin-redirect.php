@@ -4,7 +4,7 @@ namespace Subway;
 final class Admin_Redirect {
 
 	public static function index() {
-		
+
 		// Only run this function when on wp-login.php.
 		if ( ! in_array( $GLOBALS['pagenow'], array( 'wp-login.php' ), true ) ) {
 			return;
@@ -71,7 +71,7 @@ final class Admin_Redirect {
 				return;
 			}
 
-			// Check if there is an action present. 
+			// Check if there is an action present.
 			// The action might represent user trying to log out.
 			if ( isset( $_GET['action'] ) ) {
 
@@ -131,5 +131,104 @@ final class Admin_Redirect {
 
 		return;
 	}
+
+	public static function authentication_fail() {
+
+		// Pull the sign-in page url.
+		$sign_in_page = wp_login_url();
+
+		$custom_sign_in_page_url = Options::get_redirect_page_url();
+
+		if ( ! empty( $custom_sign_in_page_url ) ) {
+
+			$sign_in_page = $custom_sign_in_page_url;
+
+		}
+
+		// Check that were not on the default login page.
+		if ( ! empty( $sign_in_page ) && ! strstr( $sign_in_page,'wp-login' ) && ! strstr( $sign_in_page,'wp-admin' ) && null !== $user ) {
+
+			// make sure we don't already have a failed login attempt.
+			if ( ! strstr( $sign_in_page, '?login=failed' ) ) {
+
+				// Redirect to the login page and append a querystring of login failed.
+				$permalink = add_query_arg( array(
+					'login' => 'failed',
+					'type' => 'default',
+				), $custom_sign_in_page_url );
+
+				wp_safe_redirect( esc_url_raw( $permalink ) );
+
+				die();
+
+			} else {
+
+				wp_safe_redirect( $sign_in_page );
+
+				die();
+			}
+
+			return;
+		}
+
+		return;
+	}
+
+	public static function authentication_200( $redirect_to, $request, $user ) {
+
+		$subway_redirect_type = get_option( 'subway_redirect_type' );
+
+		// Redirect the user to default behaviour if there are no redirect type option saved.
+		if ( empty( $subway_redirect_type ) ) {
+
+			return $redirect_to;
+
+		}
+
+		if ( 'default' === $subway_redirect_type ) {
+			return $redirect_to;
+		}
+
+		if ( 'page' === $subway_redirect_type ) {
+
+			// Get the page url of the selected page if the admin selected 'Custom Page' in the redirect type settings.
+			$selected_redirect_page = intval( get_option( 'subway_redirect_page_id' ) );
+
+			// Redirect to default WordPress behaviour if the user did not select page.
+			if ( empty( $selected_redirect_page ) ) {
+
+				return $redirect_to;
+			}
+
+			// Otherwise, get the permalink of the saved page and let the user go into that page.
+			return get_permalink( $selected_redirect_page );
+
+		} elseif ( 'custom_url' === $subway_redirect_type ) {
+
+			// Get the custom url saved in the redirect type settings.
+			$entered_custom_url = get_option( 'subway_redirect_custom_url' );
+
+			// Redirect to default WordPress behaviour if the user did enter a custom url.
+			if ( empty( $entered_custom_url ) ) {
+
+				return $redirect_to;
+
+			}
+
+			// Otherwise, get the custom url saved and let the user go into that page.
+			$current_user = wp_get_current_user();
+
+			$entered_custom_url = str_replace( '%user_id%', $user->ID, $entered_custom_url );
+
+			$entered_custom_url = str_replace( '%user_name%', $user->user_login, $entered_custom_url );
+
+			return $entered_custom_url;
+
+		}
+
+		// Otherwise, quit and redirect the user back to default WordPress behaviour.
+		return $redirect_to;
+	}
+	
 }
 
