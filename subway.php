@@ -26,6 +26,9 @@ define( 'SUBWAY_VERSION', '2.0' );
 // Define Subway Directory Path.
 define( 'SUBWAY_DIR_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 
+// Include Subway i18n.
+require_once SUBWAY_DIR_PATH . 'i18.php';
+
 // Include Subway Settings Class.
 require_once SUBWAY_DIR_PATH . 'admin-settings.php';
 
