@@ -26,15 +26,29 @@ define( 'SUBWAY_VERSION', '2.0' );
 // Define Subway Directory Path.
 define( 'SUBWAY_DIR_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 
-// Include our plugin login forms and shortcodes.
+// Include Subway Settings Class.
+require_once SUBWAY_DIR_PATH . 'admin-settings.php';
+
+// Include Subway Options Getter Class.
+require_once SUBWAY_DIR_PATH . 'classes/subway-options.php';
+
+// Include Page Redirect Class.
+require_once SUBWAY_DIR_PATH . 'classes/subway-page-redirect.php';
+
+// Include Admin Redirect Class.
 require_once SUBWAY_DIR_PATH . 'classes/subway-wp-admin-redirect.php';
 
+// Include Subway Shortcodes.
+require_once SUBWAY_DIR_PATH . 'shortcodes/subway-shortcodes.php';
+
 // Redirect (302) all front-end request to the login page.
-// add_action( 'wp', 'subway_redirect_to_login' );
+add_action( 'wp', array( 'Subway\Page_Redirect', 'index') );
+
 // Redirect the user when he/she visit wp-admin or wp-login.php.
-add_action( 'init', array( 'Subway_Admin_Redirect', 'index' ) );
+add_action( 'init', array( 'Subway\Admin_Redirect', 'index' ) );
 
 // Redirect (302) invalid login request to the login page.
 // add_action( 'wp_login_failed', 'subway_redirect_login_handle_failure' );
 // Redirect the user after successful logged in.
 // add_filter( 'login_redirect', 'subway_redirect_user_after_logged_in', 10, 3 );
+

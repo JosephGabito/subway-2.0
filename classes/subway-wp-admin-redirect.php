@@ -1,5 +1,7 @@
 <?php
-final class Subway_Admin_Redirect {
+namespace Subway;
+
+final class Admin_Redirect {
 
 	public static function index() {
 		
@@ -8,12 +10,6 @@ final class Subway_Admin_Redirect {
 			return;
 		}
 
-		// Bypass login if specified.
-		$no_redirect = filter_input( INPUT_GET, 'no_redirect', FILTER_VALIDATE_BOOLEAN );
-
-		// Bypass wp-login.php?action=*.
-		$has_action = filter_input( INPUT_GET, 'action', FILTER_SANITIZE_STRING );
-
 		// Has any errors?
 		$has_error = filter_input( INPUT_GET, 'error', FILTER_SANITIZE_STRING );
 
@@ -21,7 +17,7 @@ final class Subway_Admin_Redirect {
 		$has_type = filter_input( INPUT_GET, 'type', FILTER_SANITIZE_STRING );
 
 		// Set the default to our login page.
-		$redirect_page = subway_get_redirect_page_url();
+		$redirect_page = Options::get_redirect_page_url();
 
 		if ( $has_error && $has_type ) {
 
@@ -30,51 +26,53 @@ final class Subway_Admin_Redirect {
 				'type' => $has_type,
 			), $redirect_page );
 
-				wp_safe_redirect( esc_url_raw( $redirect_to ) );
+			wp_safe_redirect( esc_url_raw( $redirect_to ) );
 
-				die();
+			die();
+
 		}
 
 		// Bypass wp-login.php?action=* link.
-		if ( $has_action ) {
+		if ( filter_input( INPUT_GET, 'action', FILTER_SANITIZE_STRING ) ) {
 			return;
 		}
 
-		if ( $no_redirect ) {
+		// Bypass no redirect action
+		if ( filter_input( INPUT_GET, 'no_redirect', FILTER_VALIDATE_BOOLEAN ) ) {
 			return;
 		}
 
-		// Check if buddypress activate page.
+		// Do not redirect if BuddyPress activation page.
 		if ( function_exists( 'bp_is_activation_page' ) ) {
 			if ( bp_is_activation_page() ) {
 				return;
 			}
 		}
 
-		// Check if buddypress registration page.
+		// Do not redirect if BuddyPress registration page.
 		if ( function_exists( 'bp_is_register_page' ) ) {
 			if ( bp_is_register_page() ) {
 				return;
 			}
 		}
 
-		// Store for checking if this page equals wp-login.php.
+		// Holds the curret URI string for checking.
 		$curr_paged = basename( $_SERVER['REQUEST_URI'] );
 
 		if ( empty( $redirect_page ) ) {
-
 			return;
-
 		}
 
-		// Ff user visits wp-admin or wp-login.php, redirect them.
+		// If user visits wp-admin or wp-login.php, redirect them.
 		if ( strstr( $curr_paged, 'wp-login.php' ) ) {
 
+			// Do not redirect interim login.
 			if ( isset( $_GET['interim-login'] ) ) {
 				return;
 			}
 
-			// Check if there is an action present action might represent user trying to log out.
+			// Check if there is an action present. 
+			// The action might represent user trying to log out.
 			if ( isset( $_GET['action'] ) ) {
 
 				$action = $_GET['action'];
@@ -101,6 +99,7 @@ final class Subway_Admin_Redirect {
 					), $redirect_page );
 
 					wp_safe_redirect( esc_url_raw( $redirect_to ) );
+
 				} elseif ( empty( $_POST['log'] ) && ! empty( $_POST['pwd'] ) && ! empty( $_POST['redirect_to'] ) ) {
 					// Username empty.
 					$redirect_to = add_query_arg( array(
