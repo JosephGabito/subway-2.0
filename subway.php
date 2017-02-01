@@ -48,7 +48,8 @@ add_action( 'wp', array( 'Subway\Page_Redirect', 'index') );
 add_action( 'init', array( 'Subway\Admin_Redirect', 'index' ) );
 
 // Redirect (302) invalid login request to the login page.
-// add_action( 'wp_login_failed', 'subway_redirect_login_handle_failure' );
-// Redirect the user after successful logged in.
-// add_filter( 'login_redirect', 'subway_redirect_user_after_logged_in', 10, 3 );
+add_action( 'wp_login_failed', array('Subway\Admin_Redirect', 'authentication_fail') );
+
+// Redirect the user after successful logged in; Priority = 10; Accepted Params Number = 3'
+add_filter( 'login_redirect', array('Subway\Admin_Redirect', 'authentication_200'), 10, 3 );
 
