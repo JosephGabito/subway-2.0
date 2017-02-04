@@ -5,6 +5,8 @@
 
 <h3><strong>SUBWAY</strong></h3>
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/e85826fc-c1cb-47f1-9448-2a04b7b00eb1/big.png)](https://insight.sensiolabs.com/projects/e85826fc-c1cb-47f1-9448-2a04b7b00eb1)
+
 Subway is a plugin for WordPress that allows you hide the content of your website to non-logged in visitors and only displays them to logged in users. 
 
 This plugin redirects the users to the provided login page with a login form that allows them to type their username/email and password combination. 

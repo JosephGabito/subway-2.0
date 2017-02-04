@@ -20,6 +20,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
+if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
+	add_action( 'admin_notices', 'subway_admin_notice' );
+	function subway_admin_notice() { ?>
+		<div class="notice notice-error is-dismissible">
+	        <p><strong><?php _e( 'Notice: Subway uses PHP Class Namespaces which is only available in servers with PHP 5.3.0 version and above. Update your server\'s PHP version. You can deactivate Subway in the meantime.', 'subway' ); ?></strong></p>
+	    </div>
+	<?php } 
+	return;
+}
 // Define Subway Plugin Version.
 define( 'SUBWAY_VERSION', '2.0' );
 
