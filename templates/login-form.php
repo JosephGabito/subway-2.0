@@ -70,14 +70,14 @@ if ( isset( $_GET['login'] ) ) {
 
 		} else {
 
-			$error_login_message = '<div id="message" class="error">'.__( 'Error: Invalid username and password combination.', 'subway' ).'</div>';
+			$error_login_message = '<div id="message" class="error">'. esc_html__ ( 'Error: Invalid username and password combination.', 'subway' ).'</div>';
 
 		}
 	}
 }
 
 if ( isset( $_GET['_redirected'] ) ) {
-	$error_login_message = '<div id="message" class="success">' .__( 'Oops! Looks like you need to login in order to view the page.', 'subway' ) . '</div>';
+	$error_login_message = '<div id="message" class="success">' . esc_html__( 'We are glad to have you back. Please use the login form below to access the page.', 'subway' ) . '</div>';
 }
 
 ?>
