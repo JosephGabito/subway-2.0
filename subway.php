@@ -35,6 +35,8 @@ define( 'SUBWAY_VERSION', '2.0' );
 // Define Subway Directory Path.
 define( 'SUBWAY_DIR_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 
+define( 'SUBWAY_DIR_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+
 // Include Subway i18n.
 require_once SUBWAY_DIR_PATH . 'i18.php';
 
@@ -50,6 +52,9 @@ require_once SUBWAY_DIR_PATH . 'classes/subway-page-redirect.php';
 // Include Admin Redirect Class.
 require_once SUBWAY_DIR_PATH . 'classes/subway-wp-admin-redirect.php';
 
+// Include our scripts class.
+require_once SUBWAY_DIR_PATH . 'classes/subway-enqueue.php';
+
 // Include Subway Shortcodes.
 require_once SUBWAY_DIR_PATH . 'shortcodes/subway-shortcodes.php';
 
@@ -60,8 +65,10 @@ add_action( 'wp', array( 'Subway\Page_Redirect', 'index') );
 add_action( 'init', array( 'Subway\Admin_Redirect', 'index' ) );
 
 // Redirect (302) invalid login request to the login page.
-add_action( 'wp_login_failed', array('Subway\Admin_Redirect', 'authentication_fail') );
+add_action( 'wp_ajax_nopriv_subway_logging_in', array('Subway\Admin_Redirect', 'handle_authentication') );
 
 // Redirect the user after successful logged in; Priority = 10; Accepted Params Number = 3'
 add_filter( 'login_redirect', array('Subway\Admin_Redirect', 'authentication_200'), 10, 3 );
 
+// Load our JS and CSS files.
+add_action( 'wp_enqueue_scripts', array('Subway\Enqueue', 'register_js') );

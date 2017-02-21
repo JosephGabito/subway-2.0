@@ -1,5 +1,4 @@
 <?php
-
 $args = array(
 	'echo'           => true,
 	'form_id'        => 'loginform',
@@ -106,32 +105,3 @@ if ( isset( $_GET['_redirected'] ) ) {
 		</p>
 	</div>
 <?php } ?>
-<script>
-jQuery(document).ready(function($){
-
-	"use strict";
-
-	$(window).load( function(){
-
-		var $input = $('.subway-login-form__form p > input');
-
-		if ( $input.val().length >= 1 ) {
-			$input.prev('label').addClass('inactive');
-		}
-
-	});
-
-	$('.subway-login-form__form p > input').focusin( function(){
-
-		$(this).prev('label').addClass('inactive');
-
-	}).focusout(function(){
-
-		if ( $(this).val().length < 1 ) {
-
-			$(this).prev('label').removeClass('inactive');
-			
-		}
-	});
-});
-</script>
