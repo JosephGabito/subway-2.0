@@ -34,6 +34,8 @@ function subway_register_settings() {
 
 	// Register our settings section.
 	add_settings_section( 'subway-page-visibility-section', __( 'Pages Visibility', 'subway' ), 'subway_section_cb', 'subway-settings-section' );
+
+    // Register Redirect Options pages.
 	add_settings_section( 'subway-redirect-section', __( 'Redirect Options', 'subway' ), 'subway_redirect_cb', 'subway-settings-section' );
 
 	// Register the fields.
@@ -84,7 +86,10 @@ function subway_register_settings() {
     	require_once trailingslashit( SUBWAY_DIR_PATH ) . 'settings-fields/field-' . sanitize_title( str_replace('_','-', $field['callback']) ) . '.php';
     }
 
+    // Register Redirect Page ID Settings.
 	register_setting( 'subway-settings-group', 'subway_redirect_page_id' );
+
+    // Register Redirect Custom URL Settings.
 	register_setting( 'subway-settings-group', 'subway_redirect_custom_url' );
 
     return;
@@ -98,8 +103,8 @@ function subway_redirect_cb() {
 	return;
 }
 
-function subway_options_page() {
-    ?>
+function subway_options_page() {  ?>
+
     <div class="wrap">
         <h2>
         	<?php esc_html_e('Subway Settings', 'subway'); ?>
@@ -110,5 +115,6 @@ function subway_options_page() {
             <?php submit_button(); ?>
         </form>
     </div>
+    
     <?php
 }
