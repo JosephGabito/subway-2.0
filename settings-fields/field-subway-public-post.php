@@ -1,4 +1,19 @@
 <?php
+/**
+ * This file is part of the Subway WordPress Plugin Package.
+ *
+ * (c) Joseph Gabito <joseph@useissuestabinstead.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @package Subway
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
+}
+
 function subway_public_post() {
 
 	echo '<textarea id="subway_public_post" name="subway_public_post" rows="5" cols="95">' . esc_attr( trim( get_option( 'subway_public_post' ) ) ) . '</textarea>';
