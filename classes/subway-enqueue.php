@@ -25,7 +25,7 @@ final class Enqueue {
 
    		wp_localize_script( 'subway-script', 'subway_config', array( 
    				'ajax_url' => admin_url( 'admin-ajax.php' ),
-   				'login_http_error' => __( 'An error occured while transmitting the data. Refresh the page and try again', 'subway' )
+   				'login_http_error' => esc_html_e( 'An error occured while transmitting the data. Refresh the page and try again', 'subway' )
    			)
    		);
 
