@@ -1,4 +1,19 @@
 <?php
+/**
+ * This file is part of the Subway WordPress Plugin Package.
+ *
+ * (c) Joseph Gabito <joseph@useissuestabinstead.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @package Subway
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
+}
+
 function subway_lock_wp_admin() { ?>
 
 	<label for="subway_redirect_wp_admin">
