@@ -85,7 +85,7 @@ final class Shortcodes {
 
     	} else {
 
-	    	echo sprintf( __( 'Subway Error: Unable to find template file in: %1s', 'subway' ), $template );
+	    	echo sprintf( esc_html_e( 'Subway Error: Unable to find template file in: %1s', 'subway' ), $template );
 
 	    }
 
@@ -93,17 +93,21 @@ final class Shortcodes {
 	}
 
 	public function login_form_action( $__content ) {
+
 		ob_start();
+		
 		do_action( 'login_form' );
+		
 		return $__content . ob_get_clean();
+
 	}
 
 	public function __action_lost_password_link( $__content ) {
 		
 		return $__content . $this->get_template_file( $params = array(),  $file = 'login-form-lost-password.php',  $content = null );
+
 	}
 
 }
 
 $subway_shortcode = Shortcodes::instance();
-?>

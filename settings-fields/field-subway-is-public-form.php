@@ -26,4 +26,3 @@ function subway_is_public_form() {
 
 	return;
 }
-?>
