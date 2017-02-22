@@ -20,7 +20,6 @@ $error_login_message = '';
 
 $message_types = array();
 
-// add_filter('login_form_middle', 'subway_integrate_login_form_filter');
 if ( isset( $_GET['login'] ) ) {
 
 	if ( 'failed' === $_GET['login'] ) {
