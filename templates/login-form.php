@@ -91,7 +91,7 @@ if ( isset( $_GET['login'] ) ) {
 }
 
 if ( isset( $_GET['_redirected'] ) ) {
-	$error_login_message = '<div id="message" class="success">' . esc_html__( 'We are glad to have you back. Please use the login form below to access the page.', 'subway' ) . '</div>';
+	$error_login_message = '<div id="message" class="success">' . esc_html__( 'Members only page. Please use the login form below to access the page.', 'subway' ) . '</div>';
 }
 
 ?>
@@ -100,7 +100,7 @@ if ( isset( $_GET['_redirected'] ) ) {
 		<div class="subway-login-form-form">
 			<div class="subway-login-form__actions">
 				<h3>
-					<?php _e( 'Account Sign-in', 'subway' ); ?>
+					<?php esc_html_e( 'Account Sign-in', 'subway' ); ?>
 				</h3>
 				<?php do_action( 'gears_login_form' ); ?>
 			</div>
