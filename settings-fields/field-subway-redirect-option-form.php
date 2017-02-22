@@ -1,5 +1,20 @@
 <?php
 /**
+ * This file is part of the Subway WordPress Plugin Package.
+ *
+ * (c) Joseph Gabito <joseph@useissuestabinstead.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @package Subway
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
+}
+
+/**
  * Callback function for 'subway_redirect_option' setting.
  *
  * @return void
