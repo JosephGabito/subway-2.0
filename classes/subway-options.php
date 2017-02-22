@@ -57,6 +57,3 @@ final class Options {
 		
 	}
 }
-
-
-?>
