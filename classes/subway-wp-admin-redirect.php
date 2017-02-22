@@ -5,8 +5,14 @@ final class Admin_Redirect {
 
 	public static function index() {
 
+		$is_redirect_admin = get_option( 'subway_redirect_wp_admin' );
+
 		// Only run this function when on wp-login.php.
 		if ( ! in_array( $GLOBALS['pagenow'], array( 'wp-login.php' ), true ) ) {
+			return;
+		}
+
+		if ( ! $is_redirect_admin ) {
 			return;
 		}
 
@@ -143,7 +149,7 @@ final class Admin_Redirect {
 	}
 
 	public static function handle_authentication() {
-		sleep(1);
+
 		// Set the header type to json.
 		header('Content-Type: application/json');
 
@@ -178,6 +184,10 @@ final class Admin_Redirect {
 			}
 
 		}
+
+		$subway_redirect_url = Admin_Redirect::authentication_200( $redirect_to ='', $request = '', $user =1 );
+		
+		$response['redirect_url'] = apply_filters('subway_login_redirect', $subway_redirect_url );
 
 		echo json_encode( $response );
 
