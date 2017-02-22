@@ -9,12 +9,11 @@
  *
  * @package Subway
  */
+namespace Subway;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
-
-namespace Subway;
 
 final class Options {
 
