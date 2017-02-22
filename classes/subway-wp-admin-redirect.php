@@ -10,11 +10,11 @@
  * @package Subway
  */
 
+namespace Subway;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
-
-namespace Subway;
 
 final class Admin_Redirect {
 
