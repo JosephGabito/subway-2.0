@@ -32,4 +32,3 @@ function subway_localize_plugin() {
 
 	return;
 }
-
