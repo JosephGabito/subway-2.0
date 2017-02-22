@@ -1,5 +1,19 @@
 <?php
+/**
+ * This file is part of the Subway WordPress Plugin Package.
+ *
+ * (c) Joseph Gabito <joseph@useissuestabinstead.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @package Subway
+ */
 namespace Subway;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
+}
 
 final class Shortcodes {
 
@@ -30,7 +44,9 @@ final class Shortcodes {
 
 		add_shortcode( 'subway_login', array( $this, 'wp_login' ) );
 
-		add_action( 'login_form_middle', array( $this, '__action_lost_password_link' ) );
+		add_action( 'login_form_middle', array( $this, 'login_form_action' ), 10, 2 );
+
+		add_action( 'login_form_middle', array( $this, '__action_lost_password_link' ), 10, 2 );
 
 		return null;
 
@@ -76,11 +92,15 @@ final class Shortcodes {
 	    return ob_get_clean();
 	}
 
-	public function __action_lost_password_link( $content ) {
+	public function login_form_action( $__content ) {
+		ob_start();
+		do_action( 'login_form' );
+		return $__content . ob_get_clean();
+	}
+
+	public function __action_lost_password_link( $__content ) {
 		
-		return $this->get_template_file( $params = array(), 
-				$file = 'login-form-lost-password.php', 
-				$content = null );
+		return $__content . $this->get_template_file( $params = array(),  $file = 'login-form-lost-password.php',  $content = null );
 	}
 
 }

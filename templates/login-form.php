@@ -1,4 +1,18 @@
 <?php
+/**
+ * This file is part of the Subway WordPress Plugin Package.
+ *
+ * (c) Joseph Gabito <joseph@useissuestabinstead.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @package Subway
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
+}
 
 $args = array(
 	'echo'           => true,
@@ -21,7 +35,6 @@ $error_login_message = '';
 
 $message_types = array();
 
-// add_filter('login_form_middle', 'subway_integrate_login_form_filter');
 if ( isset( $_GET['login'] ) ) {
 
 	if ( 'failed' === $_GET['login'] ) {
@@ -71,14 +84,14 @@ if ( isset( $_GET['login'] ) ) {
 
 		} else {
 
-			$error_login_message = '<div id="message" class="error">'.__( 'Error: Invalid username and password combination.', 'subway' ).'</div>';
+			$error_login_message = '<div id="message" class="error">'. esc_html__ ( 'Error: Invalid username and password combination.', 'subway' ).'</div>';
 
 		}
 	}
 }
 
 if ( isset( $_GET['_redirected'] ) ) {
-	$error_login_message = '<div id="message" class="success">' .__( 'Oops! Looks like you need to login in order to view the page.', 'subway' ) . '</div>';
+	$error_login_message = '<div id="message" class="success">' . esc_html__( 'We are glad to have you back. Please use the login form below to access the page.', 'subway' ) . '</div>';
 }
 
 ?>
@@ -106,32 +119,3 @@ if ( isset( $_GET['_redirected'] ) ) {
 		</p>
 	</div>
 <?php } ?>
-<script>
-jQuery(document).ready(function($){
-
-	"use strict";
-
-	$(window).load( function(){
-
-		var $input = $('.subway-login-form__form p > input');
-
-		if ( $input.val().length >= 1 ) {
-			$input.prev('label').addClass('inactive');
-		}
-
-	});
-
-	$('.subway-login-form__form p > input').focusin( function(){
-
-		$(this).prev('label').addClass('inactive');
-
-	}).focusout(function(){
-
-		if ( $(this).val().length < 1 ) {
-
-			$(this).prev('label').removeClass('inactive');
-			
-		}
-	});
-});
-</script>

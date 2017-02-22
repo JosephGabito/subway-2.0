@@ -1,12 +1,33 @@
 <?php
+/**
+ * This file is part of the Subway WordPress Plugin Package.
+ *
+ * (c) Joseph Gabito <joseph@useissuestabinstead.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @package Subway
+ */
+
 namespace Subway;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
+}
 
 final class Admin_Redirect {
 
 	public static function index() {
 
+		$is_redirect_admin = get_option( 'subway_redirect_wp_admin' );
+
 		// Only run this function when on wp-login.php.
 		if ( ! in_array( $GLOBALS['pagenow'], array( 'wp-login.php' ), true ) ) {
+			return;
+		}
+
+		if ( ! $is_redirect_admin ) {
 			return;
 		}
 
@@ -28,7 +49,7 @@ final class Admin_Redirect {
 
 			wp_safe_redirect( esc_url_raw( $redirect_to ) );
 
-			die();
+			exit;
 
 		}
 
@@ -56,7 +77,7 @@ final class Admin_Redirect {
 			}
 		}
 
-		// Holds the curret URI string for checking.
+		// Holds the current URI string for checking.
 		$curr_paged = basename( $_SERVER['REQUEST_URI'] );
 
 		if ( empty( $redirect_page ) ) {
@@ -86,19 +107,24 @@ final class Admin_Redirect {
 
 			// Only redirect if there are no incoming post data.
 			if ( empty( $_POST ) ) {
+
 				wp_safe_redirect( $redirect_page );
+
+				exit;
 			}
 
 			// Redirect to error page if user left username and password blank.
 			if ( ! empty( $_POST ) ) {
 
 				if ( empty( $_POST['log'] ) && empty( $_POST['pwd'] ) ) {
+
 					$redirect_to = add_query_arg( array(
 						'login' => 'failed',
 						'type' => '__blank',
 					), $redirect_page );
 
 					wp_safe_redirect( esc_url_raw( $redirect_to ) );
+
 
 				} elseif ( empty( $_POST['log'] ) && ! empty( $_POST['pwd'] ) && ! empty( $_POST['redirect_to'] ) ) {
 					// Username empty.
@@ -108,6 +134,8 @@ final class Admin_Redirect {
 					), $redirect_page );
 
 					wp_safe_redirect( esc_url_raw( $redirect_to ) );
+
+
 				} elseif ( ! empty( $_POST['log'] ) && empty( $_POST['pwd'] ) && ! empty( $_POST['redirect_to'] ) ) {
 					// Password empty.
 					$redirect_to = add_query_arg( array(
@@ -116,6 +144,8 @@ final class Admin_Redirect {
 					), $redirect_page );
 
 					wp_safe_redirect( esc_url_raw( $redirect_to ) );
+
+
 				} else {
 
 					// Generic.
@@ -125,6 +155,7 @@ final class Admin_Redirect {
 					), $redirect_page );
 
 					wp_safe_redirect( esc_url_raw( $redirect_to ) );
+
 				}
 			}
 		}
@@ -132,46 +163,51 @@ final class Admin_Redirect {
 		return;
 	}
 
-	public static function authentication_fail() {
+	public static function handle_authentication() {
 
-		// Pull the sign-in page url.
-		$sign_in_page = wp_login_url();
+		// Set the header type to json.
+		header('Content-Type: application/json');
 
-		$custom_sign_in_page_url = Options::get_redirect_page_url();
+		$log = filter_input( INPUT_POST, 'log', FILTER_SANITIZE_STRING );
 
-		if ( ! empty( $custom_sign_in_page_url ) ) {
+		$pwd = filter_input( INPUT_POST, 'pwd', FILTER_SANITIZE_STRING );
 
-			$sign_in_page = $custom_sign_in_page_url;
+		if ( empty( $log ) && empty( $pwd ) ) {
 
-		}
+			$response['type'] = 'error';
 
-		// Check that were not on the default login page.
-		if ( ! empty( $sign_in_page ) && ! strstr( $sign_in_page,'wp-login' ) && ! strstr( $sign_in_page,'wp-admin' ) && null !== $user ) {
+			$response['message'] = esc_html__('Username and Password cannot be empty.', 'subway');;
 
-			// make sure we don't already have a failed login attempt.
-			if ( ! strstr( $sign_in_page, '?login=failed' ) ) {
+		} else {
 
-				// Redirect to the login page and append a querystring of login failed.
-				$permalink = add_query_arg( array(
-					'login' => 'failed',
-					'type' => 'default',
-				), $custom_sign_in_page_url );
+			$is_signin = wp_signon();
 
-				wp_safe_redirect( esc_url_raw( $permalink ) );
+			$response = array();
 
-				die();
+			if ( is_wp_error( $is_signin ) ) {
+
+				$response['type'] = 'error';
+
+				$response['message'] = $is_signin->get_error_message();
 
 			} else {
 
-				wp_safe_redirect( $sign_in_page );
+				$response['type'] = 'success';
 
-				die();
+				$response['message'] = esc_html__('You have successfully logged-in. Redirecting you in few seconds...');
+
 			}
 
-			return;
 		}
 
-		return;
+		$subway_redirect_url = Admin_Redirect::authentication_200( $redirect_to ='', $request = '', $user =1 );
+		
+		$response['redirect_url'] = apply_filters('subway_login_redirect', $subway_redirect_url );
+
+		echo json_encode( $response );
+
+		wp_die();
+
 	}
 
 	public static function authentication_200( $redirect_to, $request, $user ) {
@@ -218,10 +254,13 @@ final class Admin_Redirect {
 			// Otherwise, get the custom url saved and let the user go into that page.
 			$current_user = wp_get_current_user();
 
-			$entered_custom_url = str_replace( '%user_id%', $user->ID, $entered_custom_url );
+			if ( ! empty ( $user->ID ) ) {
+				$entered_custom_url = str_replace( '%user_id%', $user->ID, $entered_custom_url );
+			}
 
-			$entered_custom_url = str_replace( '%user_name%', $user->user_login, $entered_custom_url );
-
+			if ( ! empty ( $user->user_login ) ) {
+				$entered_custom_url = str_replace( '%user_name%', $user->user_login, $entered_custom_url );
+			}
 			return $entered_custom_url;
 
 		}
