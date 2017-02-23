@@ -93,20 +93,20 @@ require_once SUBWAY_DIR_PATH . 'classes/subway-enqueue.php';
 require_once SUBWAY_DIR_PATH . 'shortcodes/subway-shortcodes.php';
 
 // Redirect (302) all front-end request to the login page.
-add_action( 'wp', array( 'Subway\Page_Redirect', 'index' ) );
+add_action( 'wp', array( 'Subway\PageRedirect', 'index' ) );
 
 // Redirect (302) invalid login request to the login page.
-add_action( 'wp_ajax_nopriv_subway_logging_in', array( 'Subway\Auth_Redirect', 'handle_authentication' ) );
+add_action( 'wp_ajax_nopriv_subway_logging_in', array( 'Subway\AuthRedirect', 'handleAuthentication' ) );
 
 // Load our JS and CSS files.
-add_action( 'wp_enqueue_scripts', array( 'Subway\Enqueue', 'register_js' ) );
+add_action( 'wp_enqueue_scripts', array( 'Subway\Enqueue', 'registerJs' ) );
 
 // Change the default login url to our sign-in page.
-add_filter( 'login_url', array( 'Subway\Auth_Redirect', 'login_url' ), 10, 3 );
+add_filter( 'login_url', array( 'Subway\AuthRedirect', 'loginUrl' ), 10, 3 );
 
 // Redirect the user after successful logged in to the right page.
 // Does not trigger when using ajax form. Only on default wp-login.php and wp_login_form().
-add_filter( 'login_redirect', array( 'Subway\Auth_Redirect', 'get_login_redirect_url' ), 10, 3 );
+add_filter( 'login_redirect', array( 'Subway\AuthRedirect', 'getLoginRedirectUrl' ), 10, 3 );
 
 // Change the default logout url to our sign-in page.
-add_action( 'wp_logout', array( 'Subway\Auth_Redirect', 'logout_url' ), 10, 3 );
+add_action( 'wp_logout', array( 'Subway\AuthRedirect', 'logoutUrl' ), 10, 3 );
