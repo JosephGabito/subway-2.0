@@ -70,6 +70,9 @@ require_once SUBWAY_DIR_PATH . 'i18.php';
 // Include Subway Settings Class.
 require_once SUBWAY_DIR_PATH . 'admin-settings.php';
 
+// Include Subway Helpers.
+require_once SUBWAY_DIR_PATH . 'classes/subway-helpers.php';
+
 // Include Subway Options Getter Class.
 require_once SUBWAY_DIR_PATH . 'classes/subway-options.php';
 

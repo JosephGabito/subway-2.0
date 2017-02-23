@@ -10,6 +10,8 @@
  * @package Subway
  */
 
+namespace Subway;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
@@ -17,18 +19,34 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin i18n.
  */
-add_action( 'plugins_loaded', 'subway_localize_plugin' );
+final class i18 {
 
-/**
- * Subway l8n callback.
- *
- * @return void
- */
-function subway_localize_plugin() {
+	/**
+	 * Class Constructor.
+	 *
+	 * @return  void
+	 */
+	public function __construct() {
 
-	$rel_path = SUBWAY_DIR_PATH . 'languages';
+		add_action( 'plugins_loaded', array( $this, 'subway_localize_plugin' ) );
 
-	load_plugin_textdomain( 'subway', false, $rel_path );
+		return;
+	}
 
-	return;
+	/**
+	 * Subway l8n callback.
+	 *
+	 * @return void
+	 */
+	function subway_localize_plugin() {
+
+		$rel_path = SUBWAY_DIR_PATH . 'languages';
+
+		load_plugin_textdomain( 'subway', false, $rel_path );
+
+		return;
+	}
+
 }
+
+$subwayi18 = new i18();
