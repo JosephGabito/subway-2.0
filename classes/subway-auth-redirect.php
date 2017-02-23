@@ -173,9 +173,7 @@ final class Auth_Redirect {
 
 		wp_safe_redirect( esc_url( $subway_login_page . '?loggedout=true' ) );
 
-		exit;
-
-		return;
+		Helpers::close();
 
 	}
 

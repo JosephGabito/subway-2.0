@@ -103,8 +103,7 @@ final class Page_Redirect {
 						)
 					);
 
-					die();
-
+					Helpers::close();
 				}
 			}
 		}
