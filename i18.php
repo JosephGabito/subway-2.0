@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin i18n.
  */
-final class i18 {
+final class I18 {
 
 	/**
 	 * Class Constructor.
@@ -28,7 +28,7 @@ final class i18 {
 	 */
 	public function __construct() {
 
-		add_action( 'plugins_loaded', array( $this, 'subway_localize_plugin' ) );
+		add_action( 'plugins_loaded', array( $this, 'subwayLocalizePlugin' ) );
 
 		return;
 	}
@@ -38,7 +38,7 @@ final class i18 {
 	 *
 	 * @return void
 	 */
-	function subway_localize_plugin() {
+	public function subwayLocalizePlugin() {
 
 		$rel_path = SUBWAY_DIR_PATH . 'languages';
 
@@ -49,4 +49,4 @@ final class i18 {
 
 }
 
-$subwayi18 = new i18();
+$subwayi18 = new I18();

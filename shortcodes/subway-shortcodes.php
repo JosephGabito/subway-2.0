@@ -25,7 +25,7 @@ final class Shortcodes {
 
 	}
 
-	static function instance() {
+	public static function instance() {
 		
 		static $instance = null;
 
@@ -40,7 +40,7 @@ final class Shortcodes {
 	}
 
 
-	function register() {
+	public function register() {
 
 		add_shortcode( 'subway_login', array( $this, 'wp_login' ) );
 
@@ -52,7 +52,7 @@ final class Shortcodes {
 
 	}
 
-	function wp_login() {
+	public function wp_login() {
 		
 		$atts = array();
 
