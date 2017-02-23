@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_action( 'plugins_loaded', 'subway_localize_plugin' );
 
 /**
- * Subway l10n callback.
+ * Subway l8n callback.
  *
  * @return void
  */
