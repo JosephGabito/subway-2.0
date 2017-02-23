@@ -1,4 +1,5 @@
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/e85826fc-c1cb-47f1-9448-2a04b7b00eb1/big.png)](https://insight.sensiolabs.com/projects/e85826fc-c1cb-47f1-9448-2a04b7b00eb1)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/e85826fc-c1cb-47f1-9448-2a04b7b00eb1/big.png?x_cache=false)](https://insight.sensiolabs.com/projects/e85826fc-c1cb-47f1-9448-2a04b7b00eb1)
+
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/codehaiku/subway-2.0/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/codehaiku/subway-2.0/?branch=master)[![Build Status](https://scrutinizer-ci.com/g/codehaiku/subway-2.0/badges/build.png?b=master)](https://scrutinizer-ci.com/g/codehaiku/subway-2.0/build-status/master)
 <h3><strong>SUBWAY</strong></h3>
 
