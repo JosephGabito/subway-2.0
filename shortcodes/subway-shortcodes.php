@@ -56,7 +56,7 @@ final class Shortcodes {
 		
 		$atts = array();
 
-		echo $this->get_template_file( $atts, $file = 'login-form.php', $content = null );
+		echo $this->get_template_file( $atts, 'login-form.php', null );
 
 		return;
 	}
@@ -104,7 +104,7 @@ final class Shortcodes {
 
 	public function __action_lost_password_link( $__content ) {
 		
-		return $__content . $this->get_template_file( $params = array(),  $file = 'login-form-lost-password.php',  $content = null );
+		return $__content . $this->get_template_file( array(), 'login-form-lost-password.php', null );
 
 	}
 
