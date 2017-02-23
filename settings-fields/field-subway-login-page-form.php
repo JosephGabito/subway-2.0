@@ -51,7 +51,7 @@ function subway_login_page_form() {
 		)
 	);
 
-	echo '<p class="description">' . sprintf( esc_html__( 'Select a login page and save the changes to make your site private. Leave blank to make your site public. %1$s.', 'subway' ), '<span style="font-weight: bold; color: #ad4a4a;">' . esc_html__( 'You need to add "[subway_login]" shortcode in the selected page to show the login form (this is done automatically)', 'subway' ) ) . '</span></p>';
+	echo '<p class="description">' . sprintf( esc_html__( 'Select a login page and save the changes to make your site private. Leave blank to make your site public. %1$s.', 'subway' ), '<span style="font-weight: bold; color: #e53935;">' . esc_html__( 'You need to add "[subway_login]" shortcode in the selected page to show the login form (this will be done automatically after saving)', 'subway' ) ) . '</span></p>';
 
 	return;
 }
