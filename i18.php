@@ -6,47 +6,64 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @package Subway
+ * 
+ * PHP Version 5.4
+ * 
+ * @category Subway\i18
+ * @package  Subway
+ * @author   Joseph G. <emailnotdisplayed@domain.tld>
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @version  GIT:github.com/codehaiku/subway
+ * @link     github.com/codehaiku/subway The Plugin Repository
  */
 
 namespace Subway;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	return;
+if (! defined('ABSPATH') ) {
+    return;
 }
 
 /**
- * Plugin i18n.
+ * Register Plugin i18 (internationalization)
+ *
+ * @category Subway\i18
+ * @package  Subway
+ * @author   Joseph G. <emailnotdisplayed@domain.tld>
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     github.com/codehaiku/subway The Plugin Repository
+ * @since    1.0  
  */
-final class i18 {
+final class I18
+{
 
-	/**
-	 * Class Constructor.
-	 *
-	 * @return  void
-	 */
-	public function __construct() {
+    /**
+     * Class Constructor.
+     *
+     * @return void
+     */
+    public function __construct() 
+    {
 
-		add_action( 'plugins_loaded', array( $this, 'subway_localize_plugin' ) );
+        add_action('plugins_loaded', array( $this, 'subwayLocalizePlugin' ));
 
-		return;
-	}
+        return;
+    }
 
-	/**
-	 * Subway l8n callback.
-	 *
-	 * @return void
-	 */
-	function subway_localize_plugin() {
+    /**
+     * Subway l8n callback.
+     *
+     * @return void
+     */
+    public function subwayLocalizePlugin() 
+    {
 
-		$rel_path = SUBWAY_DIR_PATH . 'languages';
+        $rel_path = SUBWAY_DIR_PATH . 'languages';
 
-		load_plugin_textdomain( 'subway', false, $rel_path );
+        load_plugin_textdomain('subway', false, $rel_path);
 
-		return;
-	}
+        return;
+    }
 
 }
 
-$subwayi18 = new i18();
+$subwayi18 = new I18();

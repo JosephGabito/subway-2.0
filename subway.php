@@ -12,8 +12,12 @@
  *
  * PHP version 5.4+
  *
- * @since     1.0
- * @package subway
+ * @category Subway\Bootstrap
+ * @package  Subway
+ * @author   Joseph G. <emailnotdisplayed@domain.tld>
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @version  GIT:github.com/codehaiku/subway
+ * @link     github.com/codehaiku/subway The Plugin Repository
  */
 
 /**

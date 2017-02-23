@@ -6,107 +6,184 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @package Subway
+ * 
+ * PHP Version 5.4
+ * 
+ * @category Subway\Shortcodes
+ * @package  Subway\Shortcodes
+ * @author   Joseph G. <emailnotdisplayed@domain.tld>
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @version  GIT:github.com/codehaiku/subway
+ * @link     github.com/codehaiku/subway The Plugin Repository
  */
+
 namespace Subway;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	return;
+if (! defined('ABSPATH') ) {
+    return;
 }
 
-final class Shortcodes {
+/**
+ * Registers Plugin Shortcodes
+ *
+ * @category Subway\Shortcodes
+ * @package  Subway
+ * @author   Joseph G. <emailnotdisplayed@domain.tld>
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     github.com/codehaiku/subway The Plugin Repository
+ * @since    1.0  
+ */
+final class Shortcodes
+{
 
-	private function __construct() {
-		
-		add_action( 'init', array( $this, 'register') );
-		
-		return $this;
+    /**
+     * Class Constructor.
+     *
+     * @return void
+     */
+    private function __construct() 
+    {
+        
+        add_action('init', array( $this, 'register'));
+        
+        return $this;
 
-	}
+    }
 
-	static function instance() {
-		
-		static $instance = null;
+    /**
+     * Instantiate our class.
+     * 
+     * @return mixed The instance of this class.
+     */
+    public static function instance() 
+    {
+        
+        static $instance = null;
 
-		if ( null === $instance ) {
+        if (null === $instance ) {
 
-			$instance = new Shortcodes();
+            $instance = new Shortcodes();
 
-		}
+        }
 
-		return $instance;
+        return $instance;
 
-	}
+    }
 
+    /**
+     * Instantiate our class.
+     * 
+     * @return void
+     */
+    public function register() 
+    {
 
-	function register() {
+        add_shortcode('subway_login', array( $this, 'loginForm' ));
 
-		add_shortcode( 'subway_login', array( $this, 'wp_login' ) );
+        add_action('login_form_middle', array( $this, 'loginFormAction' ), 10, 2);
 
-		add_action( 'login_form_middle', array( $this, 'login_form_action' ), 10, 2 );
+        add_action('login_form_middle', array( $this, 'lostPasswordLink' ), 10, 2);
 
-		add_action( 'login_form_middle', array( $this, '__action_lost_password_link' ), 10, 2 );
+        return;
 
-		return null;
+    }
 
-	}
+    /**
+     * Displays the login form
+     * 
+     * @return void
+     */
+    public function loginForm() 
+    {
+        
+        $atts = array();
 
-	function wp_login() {
-		
-		$atts = array();
+        echo $this->renderTemplate($atts, 'login-form.php');
 
-		echo $this->get_template_file( $atts, 'login-form.php', null );
+        return;
+    }
 
-		return;
-	}
+    /**
+     * Include the specific plugin file if there is no template file.
+     * 
+     * @param mixed  $atts The shortcode attribute.
+     * @param string $file The shortcode template file.
+     * 
+     * @return string The html template content.
+     */
+    protected function renderTemplate( $atts, $file = '' ) 
+    {
 
-	protected function get_template_file( $atts, $file = '', $content = null ) {
+        ob_start();
 
-		ob_start();
+        if (empty($file) ) {
+            
+            return;
 
-		if ( empty( $file ) ) {
-			
-			return;
+        }
 
-		}
+        $template = SUBWAY_DIR_PATH . 'templates/'.$file;
 
-		$template = SUBWAY_DIR_PATH . 'templates/'.$file;
+        if (file_exists($template) ) {
 
-		if ( file_exists( $template ) ) {
+            $theme_template = locate_template(array('gears/shortcodes/'.$file ));
 
-			if ( $theme_template = locate_template( array('gears/shortcodes/'.$file ) ) ) {
+            if ($theme_template) {
 
-	        	$template = $theme_template;
+                   $template = $theme_template;
 
-	    	}
+            }
 
-	    	include $template;
+            include $template;
 
-    	} else {
+        } else {
 
-	    	echo sprintf( esc_html_e( 'Subway Error: Unable to find template file in: %1s', 'subway' ), $template );
+            echo sprintf(
+                esc_html_e(
+                    'Subway Error: Unable to find template file in: %1s', 'subway'
+                ), 
+                $template
+            );
 
-	    }
+        }
 
-	    return ob_get_clean();
-	}
+        return ob_get_clean();
+    }
 
-	public function login_form_action( $__content ) {
+    /**
+     * The action for our login form.
+     * 
+     * @param string $__content The current filtered contents.
+     * 
+     * @return string            The content of our login form action.
+     */
+    public function loginFormAction( $__content ) 
+    {
 
-		ob_start();
-		
-		do_action( 'login_form' );
-		
-		return $__content . ob_get_clean();
+        ob_start();
+        
+        do_action('login_form');
+        
+        return $__content . ob_get_clean();
 
-	}
+    }
 
-	public function __action_lost_password_link( $__content ) {
-		
-		return $__content . $this->get_template_file( array(), 'login-form-lost-password.php', null );
+     /**
+     * The action for our 'lost password' link.
+     * 
+     * @param string $content The current filtered contents.
+     * 
+     * @return string          The content of our lost password link.
+     */
+    public function lostPasswordLink( $content ) 
+    {
+        
+        return $content . $this->renderTemplate(
+            array(), 
+            'login-form-lost-password.php'
+        );
 
-	}
+    }
 
 }
 
