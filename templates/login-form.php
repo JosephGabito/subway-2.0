@@ -35,11 +35,17 @@ $error_login_message = '';
 
 $message_types = array();
 
-if ( isset( $_GET['login'] ) ) {
+$http_request_login = filter_input( INPUT_GET, 'login', FILTER_SANITIZE_SPECIAL_CHARS );
 
-	if ( 'failed' === $_GET['login'] ) {
+$http_request_type = filter_input( INPUT_GET, 'type', FILTER_SANITIZE_SPECIAL_CHARS );
 
-		if ( isset( $_GET['type'] ) ) {
+$http_request_logout = filter_input( INPUT_GET, 'loggedout', FILTER_SANITIZE_SPECIAL_CHARS );
+
+if ( isset( $http_request_login ) ) {
+
+	if ( 'failed' === $http_request_login ) {
+
+		if ( isset( $http_request_type ) ) {
 
 			$message_types = array(
 
@@ -74,23 +80,29 @@ if ( isset( $_GET['login'] ) ) {
 
 			$message = $message_types['default']['message'];
 
-			if ( array_key_exists( $_GET['type'], $message_types ) ) {
+			if ( array_key_exists( $http_request_type, $message_types ) ) {
 
-				$message = $message_types[ $_GET['type'] ]['message'];
+				$message = $message_types[ $http_request_type ]['message'];
 
 			}
 
-			$error_login_message = '<div id="message" class="error">'. esc_html( $message ) .'</div>';
+			$error_login_message = '<div id="message" class="error">' . esc_html( $message ) . '</div>';
 
 		} else {
 
-			$error_login_message = '<div id="message" class="error">'. esc_html__ ( 'Error: Invalid username and password combination.', 'subway' ).'</div>';
+			$error_login_message = '<div id="message" class="error">' . esc_html__( 'Error: Invalid username and password combination.', 'subway' ) . '</div>';
 
 		}
 	}
 }
 
-if ( isset( $_GET['_redirected'] ) ) {
+if ( isset( $http_request_logout ) ) {
+	$error_login_message = '<div id="message" class="success">' . esc_html__( 'You have logged out successfully.', 'subway' ) . '</div>';
+}
+
+$http_request_redirected = filter_input( INPUT_GET, '_redirected', FILTER_SANITIZE_SPECIAL_CHARS );
+
+if ( isset( $http_request_redirected ) ) {
 	$error_login_message = '<div id="message" class="success">' . esc_html__( 'Members only page. Please use the login form below to access the page.', 'subway' ) . '</div>';
 }
 
@@ -105,7 +117,7 @@ if ( isset( $_GET['_redirected'] ) ) {
 				<?php do_action( 'gears_login_form' ); ?>
 			</div>
 			<div class="subway-login-form-message">
-				<?php echo $error_login_message; ?>
+				<?php echo wp_kses_post( $error_login_message ); ?>
 			</div>
 			<div class="subway-login-form__form">
 				<?php echo wp_login_form( $args ); ?>
@@ -115,7 +127,8 @@ if ( isset( $_GET['_redirected'] ) ) {
 <?php } else { ?>
 	<div class="mg-top-35 mg-bottom-35 subway-login-sucessfull" style="background: #CDDC39; padding: 15px 15px 15px 15px;border-radius: 4px;color: #616161;">
 		<p style="margin-bottom: 0px;">
-			<?php echo esc_html__( apply_filters( 'subway_login_message', 'Great! You have succesfully login.' ), 'subway' ); ?>
+			<?php $success_message = apply_filters( 'subway_login_message_success', esc_html__( 'Great! You have succesfully login.', 'subway' ) ); ?>
+			<?php echo esc_html( $success_message ); ?>
 		</p>
 	</div>
 <?php } ?>
