@@ -1,0 +1,8 @@
+global_exclude_dirs:
+    - assets
+    - languages
+    - templates
+    - settings-fields
+
+exclude_patterns:
+    - subway.php
