@@ -98,9 +98,8 @@ final class Shortcodes
         
         $atts = array();
 
-        echo $this->renderTemplate($atts, 'login-form.php');
-
-        return;
+        return $this->renderTemplate($atts, 'login-form.php');
+         
     }
 
     /**
