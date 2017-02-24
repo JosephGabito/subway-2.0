@@ -55,5 +55,8 @@ Coming Soon
 
 == Changelog ==
 
+= 2.0.1 =
+* Bumped Version
+
 = 1.0 =
 * Initial Plugin release
