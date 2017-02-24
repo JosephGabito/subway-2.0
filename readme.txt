@@ -4,11 +4,17 @@ Donate link: https://www.paypal.me/dunhakdis/25
 Tags: login, login form, private site, private, wordpress private, wordpress members only, hide public, custom login form
 Requires at least: 4.0
 Tested up to: 4.8
-Stable tag: 1.0
+Stable tag: 2.0.1
 License: GPL
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Subway is a small plugin for WordPress that allows you hide the content of your website to non-logged in visitors and only displays them to logged in users.
+Hide the content of your website to non-logged in visitors and only displays them to logged in users.
+
+== Description ==
+
+<h4>Quick Overview</h4>
+
+Subway is a small plugin for WordPress that allows you <strong>hide the content</strong> of your website to <strong>non-logged in</strong> visitors and only displays them to logged in users.
 
 <h4>Description</h4>
 
