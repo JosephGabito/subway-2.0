@@ -1,0 +1,53 @@
+=== Subway - Private WordPress Site Option ===
+Contributors: dunhakdis
+Donate link: https://www.paypal.me/dunhakdis/25
+Tags: login, login form, private site, private, wordpress private, wordpress members only, hide public, custom login form
+Requires at least: 4.0
+Tested up to: 4.8
+Stable tag: 1.0
+License: GPL
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Subway is a small plugin for WordPress that allows you hide the content of your website to non-logged in visitors and only displays them to logged in users.
+
+<h4>Description</h4>
+
+This plugin redirects the users to the provided login page with a login form that allows them to type their username/email and password combination.
+
+It validates the users’ credentials and displays a set of configurable messages if there are errors such as invalid username, empty username, wrong password, and etcetera.
+
+The plugin has settings inside the Administration Panel (‘Settings’ > 'Subway') that allows you to configure where you want the user to be taken after he/she has successfully logged in, this can be a page, a custom URL, or just the default behavior.
+
+If you would like to contribute, report an issue or have any suggestions, visit the <a href="https://github.com/codehaiku/subway-2.0" title="Subway Github" target="_blank">Github Repository of Subway</a>. 
+
+<h4>Caveats</h4>
+
+Subway is only built for WordPress website owners to redirect non-logged in users to a custom login form. This plugin is not a replacement for Membership websites where a complex set of configurations are allowed. There are no payments model, subscriptions, and role types.
+
+Subway is good for Private Intranet Websites where authentication is required.
+
+== Installation ==
+
+This section describes how to install the plugin and get it working.
+
+e.g.
+
+1. Upload the full directory into your wp-content/plugins directory
+2. Activate the plugin at the plugin administration page
+3. Go to Settings > Widget Options and add predefined Classes if you need to
+4. When you drag or open any widgets you'll see the Widget Options below
+5. I hope you'll love this plugin :)
+
+== Frequently Asked Questions ==
+
+Coming Soon
+
+== Screenshots ==
+
+1. Admin Settings
+2. Sample Form
+
+== Changelog ==
+
+= 1.0 =
+* Initial Plugin release
