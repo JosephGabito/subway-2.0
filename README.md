@@ -3,7 +3,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/codehaiku/subway-2.0/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/codehaiku/subway-2.0/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/codehaiku/subway-2.0/badges/build.png?b=master)](https://scrutinizer-ci.com/g/codehaiku/subway-2.0/build-status/master)
 <h3><strong>Subway - Private WordPress Site Option</strong></h3>
 
-Subway is a plugin for WordPress that allows you hide the content of your website to non-logged in visitors and only displays them to logged in users. 
+Subway is a small plugin for WordPress that allows you to hide the content of your website to non-logged in visitors and only displays them to logged in users.
 
 This plugin redirects the users to the provided login page with a login form that allows them to type their username/email and password combination. 
 
