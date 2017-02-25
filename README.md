@@ -11,7 +11,7 @@ It validates the users’ credentials and displays a set of configurable message
 
 The plugin has settings inside the Administration Panel (‘Settings’ > 'Subway') that allows you to configure where you want the user to be taken after he/she has successfully logged in, this can be a page, a custom URL, or just the default behavior.
 
-<strong>Current Version: 2.0.2</strong>
+<strong>Current Version: 2.0.3</strong>
 
 <h3><strong>Caveats</strong></h3>
 
