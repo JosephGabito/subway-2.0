@@ -34,15 +34,16 @@ Subway is good for Private Intranet Websites where authentication is required.
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+<h4>Manual</h4>
 
-e.g.
+1. Download and unzip "subway.zip" plugin.
+2. Upload the entire "subway" directory to your '/wp-content/plugins/' directory.
+3. Activate the "Subway" plugin.
+4. Go to Settings > Subway to configure the redirection.
 
-1. Upload the full directory into your wp-content/plugins directory
-2. Activate the plugin at the plugin administration page
-3. Go to Settings > Widget Options and add predefined Classes if you need to
-4. When you drag or open any widgets you'll see the Widget Options below
-5. I hope you'll love this plugin :)
+<h4>Automatic</h4>
+
+<p>Click <a href="https://codex.wordpress.org/Managing_Plugins#Automatic_Plugin_Installation" title="automatic install" rel="nofollow">here</a> to learn how to automatically add the plugins using the built-in plugin installer.</p>
 
 == Frequently Asked Questions ==
 
@@ -54,6 +55,9 @@ Coming Soon
 2. Sample Form
 
 == Changelog ==
+
+= 2.0.2 =
+* Bug Fixes
 
 = 2.0.1 =
 * Bumped Version
