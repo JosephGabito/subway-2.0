@@ -1,20 +1,23 @@
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Subway 2.0\n"
+"Project-Id-Version: Subway 1.0\n"
 "POT-Creation-Date: 2017-03-12 11:01+0100\n"
-"PO-Revision-Date: 2016-05-23 19:45+0800\n"
+"PO-Revision-Date: 2017-03-12 11:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: Dunhakdis Software Creatives <dsc.official.mail@gmail.com>\n"
-"Language: en\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.12\n"
 "X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-KeywordsList: __;_e;esc_html__\n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-0: functions.php\n"
+"X-Poedit-SearchPath-1: login-form.php\n"
+"X-Poedit-SearchPath-2: private.php\n"
+"X-Poedit-SearchPath-3: subway.php\n"
+"X-Poedit-SearchPath-4: update-check.php\n"
 
 #: admin-settings.php:77
 msgid "Pages Visibility"
@@ -119,49 +122,54 @@ msgstr ""
 
 #: templates/login-form.php:27
 msgid "Username"
-msgstr ""
+msgstr "Nom d’utilisateur"
 
 #: templates/login-form.php:28
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
 
 #: templates/login-form.php:29
 msgid "Remember Me"
-msgstr ""
+msgstr "Se souvenir de moi"
 
 #: templates/login-form.php:30
 msgid "Log In"
-msgstr ""
+msgstr "Connexion"
 
 #: templates/login-form.php:60
 msgid ""
 "There was an error trying to sign-in to your account. Make sure the "
 "credentials below are correct."
 msgstr ""
+"Il y a eu une erreur pendant la connexion à votre compte. Assurez-vous que "
+"vos informations d’identification sont correctes."
 
 #: templates/login-form.php:63
 msgid "Required: Username and Password cannot be empty."
 msgstr ""
+"Les champs nom d'utilisateur et mot de passe ne peuvent pas être vides."
 
 #: templates/login-form.php:66
 msgid "Required: Username cannot be empty."
-msgstr ""
+msgstr "Le nom d'utilisateur ne peut pas être vide."
 
 #: templates/login-form.php:69
 msgid "Required: Password cannot be empty."
-msgstr ""
+msgstr "Le mot de passe ne peut pas être vide."
 
 #: templates/login-form.php:72
 msgid "Facebook email address is invalid or is not yet verified."
-msgstr ""
+msgstr "Adresse email Facebook n’est pas valide ou pas encore vérifiée."
 
 #: templates/login-form.php:75
 msgid "Facebook Application Error. Misconfigured or App is rejected."
 msgstr ""
+"Erreur d’Application Facebook. Problème de configuration ou Application "
+"rejetée."
 
 #: templates/login-form.php:78
 msgid "Unable to fetch your Facebook Profile."
-msgstr ""
+msgstr "Impossible de récupérer votre profil Facebook."
 
 #: templates/login-form.php:81
 msgid "Username or email address already exists"
@@ -173,11 +181,11 @@ msgstr ""
 
 #: templates/login-form.php:100
 msgid "Error: Invalid username and password combination."
-msgstr ""
+msgstr "Erreur: Nom d’utilisateur et/ou mot de passe incorrect."
 
 #: templates/login-form.php:107
 msgid "You have logged out successfully."
-msgstr ""
+msgstr "Vous vous êtes déconnecté avec succès!"
 
 #: templates/login-form.php:113
 msgid "Members only page. Please use the login form below to access the page."
@@ -185,4 +193,20 @@ msgstr ""
 
 #: templates/login-form.php:137
 msgid "Great! You have succesfully login."
-msgstr ""
+msgstr "Génial! Vous êtes connecté avec succès."
+
+#~ msgid ""
+#~ "Error: There was an error trying to sign-in to your account. Make sure "
+#~ "your credentials are correct"
+#~ msgstr ""
+#~ "Erreur: Il y eue une erreur lors de la tentative de connexion à votre "
+#~ "compte. Veuillez vérifier vos données de connexion."
+
+#~ msgid "Oops! Looks like you need to login in order to view the page."
+#~ msgstr "Vous devez vous identifier avant de pouvoir afficher cette page."
+
+#~ msgid "Account Sign-in"
+#~ msgstr "Connexion"
+
+#~ msgid "Forgot Password"
+#~ msgstr "J’ai oublié mon mot de passe"
