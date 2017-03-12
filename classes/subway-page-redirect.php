@@ -108,6 +108,7 @@ final class PageRedirect
         if (! is_user_logged_in() ) {
 
             if ($current_page_id !== $login_page_id ) {
+                $excluded_page = apply_filters( 'subway_excluded_page', $excluded_page, $current_page_id );
 
                 if (! in_array($current_page_id, $excluded_page, true) ) {
 
