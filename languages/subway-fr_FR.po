@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Subway 1.0\n"
-"POT-Creation-Date: 2017-03-12 11:01+0100\n"
-"PO-Revision-Date: 2017-03-12 11:01+0100\n"
+"POT-Creation-Date: 2017-03-12 11:57+0100\n"
+"PO-Revision-Date: 2017-03-12 11:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: Dunhakdis Software Creatives <dsc.official.mail@gmail.com>\n"
 "Language: fr\n"
@@ -47,21 +47,34 @@ msgstr ""
 msgid "Bypassing <em>wp-login.php</em>"
 msgstr ""
 
+#: admin-settings.php:162
+msgid ""
+"All settings related to the \n"
+"        \tvisibility of your site and pages."
+msgstr ""
+
+#: admin-settings.php:189
+msgid "Subway Settings"
+msgstr ""
+
 #: classes/subway-auth-redirect.php:59
 msgid "Username and Password cannot be empty."
-msgstr ""
+msgstr "Le nom d'utilisateur et le mot de passe ne peuvent pas être vides."
 
 #: classes/subway-auth-redirect.php:80
 msgid ""
 "You have successfully logged-in. \n"
 "                \tRedirecting you in few seconds..."
 msgstr ""
+"Vous vous êtes connecté avec succès. Redirection vers quelques secondes ..."
 
 #: classes/subway-enqueue.php:71
 msgid ""
 "An error occured while \n"
 "                    \ttransmitting the data. Refresh the page and try again"
 msgstr ""
+"Une erreur est survenue lors de la transmission des données. Rafraîchissez "
+"la page et essayez à nouveau"
 
 #: settings-fields/field-subway-is-public-form.php:25
 msgid ""
@@ -96,6 +109,29 @@ msgid ""
 "the login form (this will be done automatically after saving)"
 msgstr ""
 
+#: settings-fields/field-subway-redirect-option-form.php:42
+msgid "Custom Page"
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:54
+msgid "Custom URL"
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:66
+msgid "Default Behavior"
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:74
+msgid ""
+"Where do you want your members to go after logging-in? You can pick a page, "
+"a Custom URL, or just a WordPress Default behavior. Page and Custom URL has "
+"its settings."
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:82
+msgid "Select Page"
+msgstr ""
+
 #: settings-fields/field-subway-redirect-option-form.php:91
 msgid "-"
 msgstr ""
@@ -106,6 +142,14 @@ msgid ""
 "users. Selecting blank (-) will redirect the user to the default redirect "
 "defined in WordPress or other plugins. Choose \"Custom URL\" if you want to "
 "redirect to a custom URL or domain."
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:108
+msgid "Enter Redirect URL:"
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:111
+msgid "http://"
 msgstr ""
 
 #: settings-fields/field-subway-redirect-option-form.php:117
@@ -119,6 +163,44 @@ msgid ""
 "<strong>4</strong> where \"4\" is equal to the %1$s. Both variables refer to "
 "the current user that is logged-in."
 msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:124
+msgid ""
+"Leave empty to use existing WordPress or other 3rd party plugin redirect "
+"option."
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:130
+msgid ""
+"Warning: External URLs are not supported by WordPress Function "
+"(wp_safe_redirect) and will be redirected back to default WordPress behavior."
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:140
+msgid ""
+"By choosing the default behavior, the redirect type will be set to the "
+"default WordPress' behavior. For example, if you have plugins like Peter's "
+"Login Redirect. This option will disable Subway's redirect and use the "
+"Peter's Login Redirect Instead."
+msgstr ""
+
+#: shortcodes/subway-shortcodes.php:142
+#, php-format
+msgid "Subway Error: Unable to find template file in: %1s"
+msgstr ""
+
+#: subway.php:51
+msgid ""
+"Notice: Subway uses PHP Class Namespaces \n"
+"\t        \t\twhich is only available in servers with PHP 5.3.0 version and "
+"above. \n"
+"\t        \t\tUpdate your server's PHP version. You can deactivate \n"
+"\t        \t\tSubway in the meantime."
+msgstr ""
+
+#: templates/login-form-lost-password.php:26
+msgid "Forgot Password"
+msgstr "Mot de passe oublié"
 
 #: templates/login-form.php:27
 msgid "Username"
@@ -190,6 +272,12 @@ msgstr "Vous vous êtes déconnecté avec succès!"
 #: templates/login-form.php:113
 msgid "Members only page. Please use the login form below to access the page."
 msgstr ""
+"Page réservée aux membres. Veuillez vous connecter à l'aide du formulaire ci-"
+"dessous."
+
+#: templates/login-form.php:122
+msgid "Account Sign-in"
+msgstr "Connexion"
 
 #: templates/login-form.php:137
 msgid "Great! You have succesfully login."
@@ -204,9 +292,3 @@ msgstr "Génial! Vous êtes connecté avec succès."
 
 #~ msgid "Oops! Looks like you need to login in order to view the page."
 #~ msgstr "Vous devez vous identifier avant de pouvoir afficher cette page."
-
-#~ msgid "Account Sign-in"
-#~ msgstr "Connexion"
-
-#~ msgid "Forgot Password"
-#~ msgstr "J’ai oublié mon mot de passe"
