@@ -93,13 +93,26 @@ final class Shortcodes
      * 
      * @return void
      */
-    public function loginForm() 
+    public function loginForm( $atts )
     {
-        
-        $atts = array();
+        $atts = shortcode_atts( array(
+            'echo'           => true,
+            'form_id'        => 'loginform',
+            'label_username' => __( 'Username', 'subway' ),
+            'label_password' => __( 'Password', 'subway' ),
+            'label_remember' => __( 'Remember Me', 'subway' ),
+            'label_log_in'   => __( 'Log In', 'subway' ),
+            'id_username'    => 'user_login',
+            'id_password'    => 'user_pass',
+            'id_remember'    => 'rememberme',
+            'id_submit'      => 'wp-submit',
+            'remember'       => true,
+            'value_username' => '',
+            'value_remember' => false,
+            'redirect'       => home_url(),
+        ), $atts );
 
         return $this->renderTemplate($atts, 'login-form.php');
-         
     }
 
     /**

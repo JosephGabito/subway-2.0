@@ -21,23 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
 
-$args = array(
-	'echo'           => true,
-	'form_id'        => 'loginform',
-	'label_username' => __( 'Username', 'subway' ),
-	'label_password' => __( 'Password', 'subway' ),
-	'label_remember' => __( 'Remember Me', 'subway' ),
-	'label_log_in'   => __( 'Log In', 'subway' ),
-	'id_username'    => 'user_login',
-	'id_password'    => 'user_pass',
-	'id_remember'    => 'rememberme',
-	'id_submit'      => 'wp-submit',
-	'remember'       => true,
-	'value_username' => '',
-	'value_remember' => false,
-	'redirect' 		 => home_url(),
-);
-
 $error_login_message = '';
 
 $message_types = array();
@@ -127,7 +110,7 @@ if ( isset( $http_request_redirected ) ) {
 				<?php echo wp_kses_post( $error_login_message ); ?>
 			</div>
 			<div class="subway-login-form__form">
-				<?php echo wp_login_form( $args ); ?>
+				<?php echo wp_login_form( $atts ); ?>
 			</div>
 		</div>
 	</div>
