@@ -57,11 +57,10 @@ final class I18
     public function subwayLocalizePlugin() 
     {
 
-        $rel_path = SUBWAY_DIR_PATH . 'languages';
-
-        load_plugin_textdomain('subway', false, $rel_path);
+        load_plugin_textdomain('subway', false, basename( dirname( __FILE__ ) ) . '/languages'  );
 
         return;
+
     }
 
 }

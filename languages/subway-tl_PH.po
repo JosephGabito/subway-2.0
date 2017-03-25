@@ -1,0 +1,297 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Subway\n"
+"POT-Creation-Date: 2017-03-25 13:44+0800\n"
+"PO-Revision-Date: 2017-03-25 13:55+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fil\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.8.12\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: subway.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: admin-settings.php:77
+msgid "Pages Visibility"
+msgstr ""
+
+#: admin-settings.php:83
+msgid "Redirect Options"
+msgstr ""
+
+#: admin-settings.php:91
+msgid "Public Website"
+msgstr ""
+
+#: admin-settings.php:99
+msgid "Private Login Page"
+msgstr ""
+
+#: admin-settings.php:106
+msgid "Public Posts IDs"
+msgstr ""
+
+#: admin-settings.php:114
+msgid "Redirect Type"
+msgstr ""
+
+#: admin-settings.php:121
+msgid "Bypassing <em>wp-login.php</em>"
+msgstr ""
+
+#: admin-settings.php:162
+msgid ""
+"All settings related to the \n"
+"        \tvisibility of your site and pages."
+msgstr ""
+
+#: admin-settings.php:189
+msgid "Subway Settings"
+msgstr ""
+
+#: classes/subway-auth-redirect.php:59
+msgid "Username and Password cannot be empty."
+msgstr ""
+
+#: classes/subway-auth-redirect.php:80
+msgid ""
+"You have successfully logged-in. \n"
+"                \tRedirecting you in few seconds..."
+msgstr ""
+
+#: classes/subway-enqueue.php:71
+msgid ""
+"An error occured while \n"
+"                    \ttransmitting the data. Refresh the page and try again"
+msgstr ""
+
+#: settings-fields/field-subway-is-public-form.php:25
+msgid ""
+"This option will overwrite the 'Private Login Page' below. BuddyPress pages "
+"like user profile, members, and groups are still only available to the "
+"rightful owner of the profile."
+msgstr ""
+
+#: settings-fields/field-subway-lock-wp-admin.php:21
+#, php-format
+msgid ""
+"In case, you were locked out. Use the link below to bypass the log-in page "
+"and go directly \n"
+"\t\t\tto your website's wp-login URL (http://yoursiteurl.com/wp-login.php): "
+"<strong style='color: #e53935;'>%s</strong>"
+msgstr ""
+
+#: settings-fields/field-subway-login-page-form.php:50
+msgid "---"
+msgstr ""
+
+#: settings-fields/field-subway-login-page-form.php:54
+#, php-format
+msgid ""
+"Select a login page and save the changes to make your site private. Leave "
+"blank to make your site public. %1$s."
+msgstr ""
+
+#: settings-fields/field-subway-login-page-form.php:54
+msgid ""
+"You need to add \"[subway_login]\" shortcode in the selected page to show "
+"the login form (this will be done automatically after saving)"
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:42
+msgid "Custom Page"
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:54
+msgid "Custom URL"
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:66
+msgid "Default Behavior"
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:74
+msgid ""
+"Where do you want your members to go after logging-in? You can pick a page, "
+"a Custom URL, or just a WordPress Default behavior. Page and Custom URL has "
+"its settings."
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:82
+msgid "Select Page"
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:91
+msgid "-"
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:99
+msgid ""
+"The selected page will be used as the redirect endpoint for all of your "
+"users. Selecting blank (-) will redirect the user to the default redirect "
+"defined in WordPress or other plugins. Choose \"Custom URL\" if you want to "
+"redirect to a custom URL or domain."
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:108
+msgid "Enter Redirect URL:"
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:111
+msgid "http://"
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:117
+#, php-format
+msgid ""
+"When entering a custom domain, you can use a variable string such us: %1$s "
+"and %2$s. For example, http://yoursiteurl.com/members/<strong>%2$s</strong> "
+"will translate to http://yoursiteurl/members/<strong>admin</strong> where "
+"\"admin\" is equal to the %2$s variable; http://yoursiteurl.com/users/"
+"<strong>%1$s</strong> will translate to http://yoursiteurl.com/users/"
+"<strong>4</strong> where \"4\" is equal to the %1$s. Both variables refer to "
+"the current user that is logged-in."
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:124
+msgid ""
+"Leave empty to use existing WordPress or other 3rd party plugin redirect "
+"option."
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:130
+msgid ""
+"Warning: External URLs are not supported by WordPress Function "
+"(wp_safe_redirect) and will be redirected back to default WordPress behavior."
+msgstr ""
+
+#: settings-fields/field-subway-redirect-option-form.php:140
+msgid ""
+"By choosing the default behavior, the redirect type will be set to the "
+"default WordPress' behavior. For example, if you have plugins like Peter's "
+"Login Redirect. This option will disable Subway's redirect and use the "
+"Peter's Login Redirect Instead."
+msgstr ""
+
+#: shortcodes/subway-shortcodes.php:142
+#, php-format
+msgid "Subway Error: Unable to find template file in: %1s"
+msgstr ""
+
+#: subway.php:51
+msgid ""
+"Notice: Subway uses PHP Class Namespaces \n"
+"\t        \t\twhich is only available in servers with PHP 5.3.0 version and "
+"above. \n"
+"\t        \t\tUpdate your server's PHP version. You can deactivate \n"
+"\t        \t\tSubway in the meantime."
+msgstr ""
+
+#: templates/login-form-lost-password.php:26
+msgid "Forgot Password"
+msgstr ""
+
+#: templates/login-form.php:27
+msgid "Username"
+msgstr ""
+
+#: templates/login-form.php:28
+msgid "Password"
+msgstr ""
+
+#: templates/login-form.php:29
+msgid "Remember Me"
+msgstr ""
+
+#: templates/login-form.php:30
+msgid "Log In"
+msgstr ""
+
+#: templates/login-form.php:60
+msgid ""
+"There was an error trying to sign-in to your account. Make sure the "
+"credentials below are correct."
+msgstr ""
+
+#: templates/login-form.php:63
+msgid "Required: Username and Password cannot be empty."
+msgstr ""
+
+#: templates/login-form.php:66
+msgid "Required: Username cannot be empty."
+msgstr ""
+
+#: templates/login-form.php:69
+msgid "Required: Password cannot be empty."
+msgstr ""
+
+#: templates/login-form.php:72
+msgid "Facebook email address is invalid or is not yet verified."
+msgstr ""
+
+#: templates/login-form.php:75
+msgid "Facebook Application Error. Misconfigured or App is rejected."
+msgstr ""
+
+#: templates/login-form.php:78
+msgid "Unable to fetch your Facebook Profile."
+msgstr "Hindi namin makuha ang iyang profile sa Facebook."
+
+#: templates/login-form.php:81
+msgid "Username or email address already exists"
+msgstr ""
+
+#: templates/login-form.php:84
+msgid "Google Plus Authentication Error. Invalid Client ID or Secret."
+msgstr ""
+
+#: templates/login-form.php:100
+msgid "Error: Invalid username and password combination."
+msgstr "Error: Hindi tamang kombinasyon nang 'username' at 'password'"
+
+#: templates/login-form.php:107
+msgid "You have logged out successfully."
+msgstr "Ikaw ay matagumpay na naka alis sa website"
+
+#: templates/login-form.php:113
+msgid "Members only page. Please use the login form below to access the page."
+msgstr ""
+"Para sa mga miyembro lamang. Gamitin ang form sa ibaba para ma access ang "
+"page."
+
+#: templates/login-form.php:122
+msgid "Account Sign-in"
+msgstr ""
+
+#: templates/login-form.php:137
+msgid "Great! You have succesfully login."
+msgstr "Ikaw ay matagumpay na nakapasok sa website!"
+
+#. Plugin Name of the plugin/theme
+msgid "Subway"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Subway is a plugin for WordPress that allows you hide the content of your "
+"website to non-logged in visitors and only displays them to logged in users. "
+"This plugin redirects the users to the provided login page with a login form "
+"that allows them to type their username/email and password combination."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Dunhakdis"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://dunhakdis.com"
+msgstr ""
