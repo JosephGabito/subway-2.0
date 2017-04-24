@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/dunhakdis/25
 Tags: login, login form, private site, private, wordpress private, wordpress members only, hide public, custom login form
 Requires at least: 4.0
 Tested up to: 4.8
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 License: GPL
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
