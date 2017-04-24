@@ -1,11 +1,14 @@
+#Subway - Private WordPress Site Option
+
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/e85826fc-c1cb-47f1-9448-2a04b7b00eb1/big.png?x_cache=false)](https://insight.sensiolabs.com/projects/e85826fc-c1cb-47f1-9448-2a04b7b00eb1)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/codehaiku/subway-2.0/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/codehaiku/subway-2.0/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/codehaiku/subway-2.0/badges/build.png?b=master)](https://scrutinizer-ci.com/g/codehaiku/subway-2.0/build-status/master)
-<h3><strong>Subway - Private WordPress Site Option</strong></h3>
+
+![Plugin Version](https://img.shields.io/wordpress/plugin/v/subway.svg)&nbsp;![Total Plugin Downloads](https://img.shields.io/wordpress/plugin/dt/subway.svg)&nbsp;![Plugin Ratings](https://img.shields.io/wordpress/plugin/r/subway.svg)&nbsp;![Plugin Compatibility](https://img.shields.io/wordpress/v/subway.svg)&nbsp;![License](http://img.shields.io/:license-GPL--2.0%2B-red.svg?style=flat-square)&nbsp;
 
 Subway is a small plugin for WordPress that allows you to hide the content of your website to non-logged in visitors and only displays them to logged in users.
 
-This plugin redirects the users to the provided login page with a login form that allows them to type their username/email and password combination. 
+This plugin redirects the users to the provided login page with a login form that allows them to type their username/email and password combination.
 
 It validates the users’ credentials and displays a set of configurable messages if there are errors such as invalid username, empty username, wrong password, and etcetera.
 
@@ -13,25 +16,37 @@ The plugin has settings inside the Administration Panel (‘Settings’ > 'Subwa
 
 <strong>Current Version: 2.0.4</strong>
 
-<h3><strong>Caveats</strong></h3>
+<h4><strong>Screenshots</strong></h4>
 
-Subway is only built for WordPress website owners to redirect non-logged in users to a custom login form. This plugin is not a replacement for Membership websites where a complex set of configurations are allowed. There are no payments model, subscriptions, and role types.
+![Subway Setting and Login Box](https://dunhakdis.com/wp-content/uploads/2017/04/Subway-Plugin.png)
 
-Subway is good for Private Intranet Websites where membership is required.
+<h3><strong>Up and Running</strong></h3>
 
-<h3><strong>Installation</strong></h3>
+ - [Setup and Installation]()
+    - [Download]()
+    - [Installation]()
+    - [Setting up your Subway Login Page]()
 
-<strong>Manual:</strong>
+ - [Features and Usage]()
+    - [Setting up your Subway Login Page]()
+    - [Two Types of Page Visibility Setting]()
+    - [Three Types of Login Redirection]()
+    - [Allow the 'Default WordPress Login Page']()
+    - [Bypass the 'Subway Login Page']()
 
-Download and unzip the "subway.zip" plugin.
+Click [here](https://dunhakdis.com/subway-private-wordpress-site-option/) to see the full documentation.
 
-Upload the entire "subway" directory to your '/wp-content/plugins/' directory.
-
-Activate the "Subway" plugin through the Plugins menu in WordPress.
-
-Go to ‘Settings’ > ‘Reading’ to set-up the plugin.
+<h3><strong>Known Issues</strong></h3>
 
 
-<strong>Automatic:</strong>
+<h3><strong>Contributions</strong></h3>
+Contributions are highly welcome, and there are various ways you can contribute:
 
-Click here to learn how to automatically add the plugin using the built-in plugin installer.
+ - Spotted a bug or an issue? Share it with us on [GitHub](https://github.com/codehaiku/https://github.com/codehaiku/subway-2.0/issues/new).
+ - Want to share your bug fixes or share ideas for the new features? Send us a Pull Request.
+ - Send us feedback and suggestions for enhancements, share it with the [team ](https://github.com/codehaiku/https://github.com/codehaiku/subway-2.0/issues/new).
+ - Translators are welcome.
+
+<h3><strong>License</strong></h3>
+
+Subway is licensed under [GNU General Public License 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
