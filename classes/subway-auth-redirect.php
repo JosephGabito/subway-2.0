@@ -84,7 +84,7 @@ final class AuthRedirect
             }
         }
         
-        $subway_redirect_url = AuthRedirect::getLoginRedirectUrl('');
+        $subway_redirect_url = AuthRedirect::getLoginRedirectUrl('', $is_signin);
 
         $response['redirect_url'] = apply_filters(
             'subway_login_redirect', 
@@ -101,10 +101,11 @@ final class AuthRedirect
      * Returns the filtered redirect url for the current user.
      *
      * @param string $redirect_to The default redirect callback argument.
+     * @param mixed  $user        The object/array of the logged-in user.
      * 
-     * @return string               The final redirect url.
+     * @return string              The final redirect url.
      */
-    public static function getLoginRedirectUrl( $redirect_to ) 
+    public static function getLoginRedirectUrl( $redirect_to, $user ) 
     {
 
         $subway_redirect_type = get_option('subway_redirect_type');
@@ -153,18 +154,16 @@ final class AuthRedirect
 
             // Otherwise, get the custom url saved 
             // and let the user go into that page.
-            $current_user = wp_get_current_user();
-
-            if (! empty($current_user->ID) ) {
+            if (! empty($user->ID) ) {
                 $entered_custom_url = str_replace(
-                    '%user_id%', $current_user->ID, 
+                    '%user_id%', $user->ID, 
                     $entered_custom_url
                 );
             }
 
-            if (! empty($current_user->user_login) ) {
+            if (! empty($user->user_login) ) {
                 $entered_custom_url = str_replace(
-                    '%user_name%', $current_user->user_login, 
+                    '%user_name%', $user->user_login, 
                     $entered_custom_url
                 );
             }
