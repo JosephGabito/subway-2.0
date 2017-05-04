@@ -117,7 +117,7 @@ if ( isset( $http_request_redirected ) ) {
 <?php } else { ?>
 	<div class="mg-top-35 mg-bottom-35 subway-login-sucessfull" style="background: #CDDC39; padding: 15px 15px 15px 15px;border-radius: 4px;color: #616161;">
 		<p style="margin-bottom: 0px;">
-			<?php $success_message = apply_filters( 'subway_login_message_success', esc_html__( 'Great! You have succesfully login.', 'subway' ) ); ?>
+			<?php $success_message = apply_filters( 'subway_login_message_success', esc_html__( 'Great! You have succesfully logged in.', 'subway' ) ); ?>
 			<?php echo esc_html( $success_message ); ?>
 		</p>
 	</div>
