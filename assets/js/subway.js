@@ -89,7 +89,7 @@ jQuery(document).ready(function($) {
         });
 
         subway_login_request.fail(function(response) {
-           
+
             $('.subway-login-form-message').html(subway_config.login_http_error);
 
             $('#subway_preloader').remove();
