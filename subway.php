@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Subway
  * Description: Subway is a plugin for WordPress that allows you hide the content of your website to non-logged in visitors and only displays them to logged in users. This plugin redirects the users to the provided login page with a login form that allows them to type their username/email and password combination.
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: Dunhakdis
  * Author URI: http://dunhakdis.com
  * Text Domain: subway
