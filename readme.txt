@@ -3,8 +3,8 @@ Contributors: dunhakdis
 Donate link: https://www.paypal.me/dunhakdis/25
 Tags: login, login form, private site, private, wordpress private, wordpress members only, hide public, custom login form
 Requires at least: 4.0
-Tested up to: 4.8
-Stable tag: 2.0.6
+Tested up to: 4.9.2
+Stable tag: 2.0.7
 License: GPL
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,13 +54,3 @@ Subway is good for Private Intranet Websites where authentication is required.
 1. Admin Settings <a href="http://thrive-demo.dunhakdis.me/thrive-intranet-extranet-wordpress-theme/index.html" title="Thrive Intranet and Community Theme">(Thrive WordPress Theme)</a>
 2. Sample Form <a href="http://thrive-demo.dunhakdis.me/thrive-intranet-extranet-wordpress-theme/index.html" title="Thrive Intranet and Community Theme">(Thrive WordPress Theme)</a>
 
-== Changelog ==
-
-= 2.0.2 =
-* Bug Fixes
-
-= 2.0.1 =
-* Bumped Version
-
-= 1.0 =
-* Initial Plugin release
