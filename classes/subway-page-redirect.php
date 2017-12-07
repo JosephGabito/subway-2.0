@@ -60,6 +60,18 @@ final class PageRedirect
         // Already escaped inside 'subway_get_redirect_page_url'.
         $redirect_page = Options::getRedirectPageUrl(); // WPCS XSS OK.
 
+        // Turn off if is in 'wc-ajax' (woocommerce)
+        if ( function_exists( 'is_ajax') ) {
+            if ( is_ajax() ) {
+               return;
+            }
+        }
+
+        // Same for normal ajax requests.
+        if ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX  ) {
+            return;
+        }
+
         // Exit if site is public.
         if (Options::isPublicSite() ) {
             return;
