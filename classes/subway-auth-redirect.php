@@ -101,9 +101,9 @@ final class AuthRedirect
      * Returns the filtered redirect url for the current user.
      *
      * @param string $redirect_to The default redirect callback argument.
-     * @param mixed  $user        The object/array of the logged-in user.
+     * @param mixed  $user        This holds the meta info of currently logged-in user.
      *
-     * @return string              The final redirect url.
+     * @return string             The final redirect url.
      */
     public static function getLoginRedirectUrl( $redirect_to, $user )
     {
