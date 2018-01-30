@@ -6,9 +6,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- * 
+ *
  * PHP Version 5.4
- * 
+ *
  * @category Subway\Page\Redirect
  * @package  Subway
  * @author   Joseph G. <emailnotdisplayed@domain.tld>
@@ -31,7 +31,7 @@ if (! defined('ABSPATH') ) {
  * @author   Joseph G. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link     github.com/codehaiku/subway The Plugin Repository
- * @since    1.0  
+ * @since    1.0
  */
 final class PageRedirect
 {
@@ -41,8 +41,16 @@ final class PageRedirect
      *
      * @return void.
      */
-    public static function index() 
+    public static function index()
     {
+
+        // Additional filter for custom pages, taxonomy, links, parameterized urls, etc.
+        // Callback function/method must return true (boolean) to disable redirect.
+        $should_exit = apply_filters( 'subway/classes/subway-page-redirect/index/before-page-redirect', false );
+
+        if ( $should_exit ) {
+            return;
+        }
 
         // Only execute for non logged in users.
         if (is_user_logged_in() ) {
@@ -59,6 +67,8 @@ final class PageRedirect
 
         // Already escaped inside 'subway_get_redirect_page_url'.
         $redirect_page = Options::getRedirectPageUrl(); // WPCS XSS OK.
+
+        // do_action( 'subway/classes/subway-page-redirect/index/before_page_redirect' );
 
         // Turn off if is in 'wc-ajax' (woocommerce)
         if ( function_exists( 'is_ajax') ) {
@@ -137,4 +147,3 @@ final class PageRedirect
     }
 
 }
-
