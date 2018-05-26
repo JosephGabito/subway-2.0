@@ -88,7 +88,8 @@ final class AuthRedirect
 
         $response['redirect_url'] = apply_filters(
             'subway_login_redirect',
-            $subway_redirect_url
+            $subway_redirect_url,
+            $is_signin
         );
 
         echo wp_json_encode($response);
