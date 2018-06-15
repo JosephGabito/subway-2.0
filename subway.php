@@ -48,9 +48,9 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 		<div class="notice notice-error is-dismissible">
 	        <p>
 	        	<strong>
-	        		<?php esc_html_e( 'Notice: Subway uses PHP Class Namespaces 
-	        		which is only available in servers with PHP 5.3.0 version and above. 
-	        		Update your server\'s PHP version. You can deactivate 
+	        		<?php esc_html_e( 'Notice: Subway uses PHP Class Namespaces
+	        		which is only available in servers with PHP 5.3.0 version and above.
+	        		Update your server\'s PHP version. You can deactivate
 	        		Subway in the meantime.', 'subway' ); ?>
 	        	</strong>
 	        </p>
@@ -89,6 +89,9 @@ require_once SUBWAY_DIR_PATH . 'classes/subway-auth-redirect.php';
 // Include our scripts class.
 require_once SUBWAY_DIR_PATH . 'classes/subway-enqueue.php';
 
+// Include our scripts class.
+require_once SUBWAY_DIR_PATH . 'classes/subway-metabox.php';
+
 // Include Subway Shortcodes.
 require_once SUBWAY_DIR_PATH . 'shortcodes/subway-shortcodes.php';
 
@@ -110,3 +113,6 @@ add_filter( 'login_redirect', array( 'Subway\AuthRedirect', 'getLoginRedirectUrl
 
 // Change the default logout url to our sign-in page.
 add_action( 'wp_logout', array( 'Subway\AuthRedirect', 'logoutUrl' ), 10, 3 );
+
+// Adds the Subvway metabox.
+add_action( 'plugins_loaded', array( 'Subway\Metabox', 'initMetabox' ) );
