@@ -68,6 +68,8 @@ final class PageRedirect
         // Already escaped inside 'subway_get_redirect_page_url'.
         $redirect_page = Options::getRedirectPageUrl(); // WPCS XSS OK.
 
+		$is_private = Metabox::isPostPrivate( $current_post->ID );
+
         // do_action( 'subway/classes/subway-page-redirect/index/before_page_redirect' );
 
         // Turn off if is in 'wc-ajax' (woocommerce)
@@ -83,12 +85,12 @@ final class PageRedirect
         }
 
         // Exit if site is public.
-        if (Options::isPublicSite() ) {
+        if ( Options::isPublicSite() ) {
             return;
         }
 
         // Check if redirect page is empty or not.
-        if (empty($redirect_page) ) {
+        if ( empty( $redirect_page ) ) {
             return;
         }
 
@@ -127,11 +129,11 @@ final class PageRedirect
         }
 
         // Only execute the script for non-loggedin visitors.
-        if (! is_user_logged_in() ) {
+        if ( ! is_user_logged_in() ) {
 
             if ($current_page_id !== $login_page_id ) {
 
-                if (! in_array($current_page_id, $excluded_page, true) ) {
+                if ( ! in_array( $current_page_id, $excluded_page, true ) || in_array( $current_page_id, $excluded_page, true ) && true === $is_private ) {
 
                     wp_safe_redirect(
                         add_query_arg(
