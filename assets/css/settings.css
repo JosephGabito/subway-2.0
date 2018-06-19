@@ -1,0 +1,27 @@
+#wpbody {
+	display: none;
+}
+.subway-redirect-option-section {
+	background: #fff;
+	padding: 15px 20px;
+	margin: 15px 0;
+}
+.subway-redirect-type-choices > label {
+    margin-right: 15px;
+}
+
+.subway-redirect-type-choices > label:last-child {
+    margin-right:  0;
+}
+
+#subway_public_post {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+}
+.subway-settings-notice {
+	color: #e53935;
+	font-weight: bold;
+}
+.subway-settings-text-notice {
+	color: #e53935;
+}

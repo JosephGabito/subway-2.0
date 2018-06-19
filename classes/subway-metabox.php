@@ -158,6 +158,7 @@ final class Metabox
 	private function saveVisibilityMetabox( $post_id = '' )
 	{
 		$public_posts     = Options::getPublicPostsIdentifiers();
+		$posts_implode    = '';
 
 		$visibility_field = 'subway-visibility-settings-checkbox';
 		$visibility_nonce = filter_input(
@@ -184,15 +185,24 @@ final class Metabox
 		if ( empty( $post_visibility ) ) {
 			$post_visibility = 0;
 		}
-		if ( ! empty( $post_visibility ) ) {
-			$public_posts[] = $post_id;
+
+		if ( empty( $post_visibility ) ) {
+			if ( ! empty( $post_id ) ) {
+				if ( ! in_array( $post_id, $public_posts ) ) {
+					array_push( $public_posts, $post_id );
+				}
+			}
 		} else {
 			unset( $public_posts[ array_search( $post_id, $public_posts ) ] );
 		}
 
 		if ( ! empty( $post_id ) ) {
-			$public_posts = implode( ", ", $public_posts );
-			update_option( 'subway_public_post', $public_posts );
+			$posts_implode = implode( ", ", $public_posts );
+
+			if ( true === $is_valid_visibility_nonce ) {
+				update_option( 'subway_public_post', $posts_implode );
+			}
+
 			update_post_meta(
 				$post_id,
 				self::VISIBILITY_METAKEY,
