@@ -115,30 +115,39 @@ final class Metabox
      */
     public function visibilityMetabox( $post )
     {
-		$howto           = __( 'Tick the given checkbox to make this post/page private. Otherwise, uncheck to make this post/page public', 'subway' );
-		$private_label   = '<strong>' . __( 'private', 'subway' ) . '</strong>';
-		$setting_label   = __( 'Check to make this post ', 'subway' ) . $private_label;
-		$is_post_public  = self::isPostPublic( $post->ID );
-		$is_post_private = self::isPostPrivate( $post->ID );
+		$howto                   = __( 'Select a radio button to make this post/page public or private', 'subway' );
+		$public_label            = '<strong>' . __( 'public', 'subway' ) . '</strong>';
+		$public_setting_label    = __( 'Select to make this post ', 'subway' ) . $public_label;
+		$private_label           = '<strong>' . __( 'private', 'subway' ) . '</strong>';
+		$private_setting_label   = __( 'Select to make this post ', 'subway' ) . $private_label;
+		$is_post_public          = self::isPostPublic( $post->ID );
+		$is_post_private         = self::isPostPrivate( $post->ID );
+		$public_value            = '';
+		$private_value           = '';
+
+		if( $is_post_public ) {
+			$public_value = 'public';
+		}
+		if( $is_post_private ) {
+			$private_value = 'private';
+		}
 
         // Make sure the form request comes from WordPress
         wp_nonce_field(
             basename(__FILE__),
             'subway_post_visibility_nonce'
         );
-
-		if ( empty( $is_post_private ) ) {
-			if ( $is_post_public ) {
-				$is_post_private = false;
-			}
-		}
-
         ?>
         <label class="screen-reader-text" for="subway-visibility"><?php echo esc_html( $setting_label ); ?></label>
 
-		<label class="subway-visibility-settings-checkbox-label" for="subway-visibility-settings-checkbox">
-			<input type="checkbox" class="subway-visibility-settings-checkbox" id="subway-visibility-settings-checkbox" name="subway-visibility-settings-checkbox" value="1" <?php echo checked( 1, esc_attr( $is_post_private ), false ); ?>>
-			<?php echo wp_kses( $setting_label, array( 'strong' => array() ) ); ?>
+		<label class="subway-visibility-settings-checkbox-label" for="subway-visibility-public">
+			<input type="radio" class="subway-visibility-settings-radio" id="subway-visibility-public" name="subway-visibility-settings" value="public" <?php echo checked( 'public', esc_attr( $public_value ), false ); ?>>
+			<?php echo wp_kses( $public_setting_label, array( 'strong' => array() ) ); ?>
+		</label><br/>
+
+		<label class="subway-visibility-settings-checkbox-label" for="subway-visibility-private">
+			<input type="radio" class="subway-visibility-settings-radio" id="subway-visibility-private" name="subway-visibility-settings" value="private" <?php echo checked( 'private', esc_attr( $private_value ), false ); ?>>
+			<?php echo wp_kses( $private_setting_label, array( 'strong' => array() ) ); ?>
 		</label>
 
         <p class="howto"><?php echo esc_html( $howto ); ?></p>
@@ -157,21 +166,20 @@ final class Metabox
      */
 	private function saveVisibilityMetabox( $post_id = '' )
 	{
+
 		$public_posts     = Options::getPublicPostsIdentifiers();
+
 		$posts_implode    = '';
 
-		$visibility_field = 'subway-visibility-settings-checkbox';
+		$visibility_field = 'subway-visibility-settings';
+
 		$visibility_nonce = filter_input(
 			INPUT_POST,
 			'subway_post_visibility_nonce',
 			FILTER_SANITIZE_STRING
 		);
 
-		$post_visibility = filter_input(
-			INPUT_POST,
-			$visibility_field,
-			FILTER_SANITIZE_NUMBER_INT
-		);
+		$post_visibility = filter_input( INPUT_POST, $visibility_field, FILTER_SANITIZE_STRING );
 
 		$is_valid_visibility_nonce = self::isNonceValid(
 			$visibility_nonce
@@ -182,32 +190,34 @@ final class Metabox
 			return;
 		}
 
-		if ( empty( $post_visibility ) ) {
-			$post_visibility = 0;
-		}
-
-		if ( empty( $post_visibility ) ) {
+		if ( ! empty( $post_visibility ) ) {
 			if ( ! empty( $post_id ) ) {
-				if ( ! in_array( $post_id, $public_posts ) ) {
-					array_push( $public_posts, $post_id );
+				if ( 'public' === $post_visibility ) {
+					if ( ! in_array( $post_id, $public_posts ) ) {
+						array_push( $public_posts, $post_id );
+					}
+				}
+				if ( 'private' === $post_visibility ) {
+					unset( $public_posts[ array_search( $post_id, $public_posts ) ] );
 				}
 			}
-		} else {
-			unset( $public_posts[ array_search( $post_id, $public_posts ) ] );
 		}
 
 		if ( ! empty( $post_id ) ) {
 			$posts_implode = implode( ", ", $public_posts );
 
-			if ( true === $is_valid_visibility_nonce ) {
-				update_option( 'subway_public_post', $posts_implode );
-			}
+			if ( 'inherit' !== get_post_status ($post_id) ){
 
-			update_post_meta(
-				$post_id,
-				self::VISIBILITY_METAKEY,
-				$post_visibility
-			);
+				if ( true === $is_valid_visibility_nonce ) {
+					update_option( 'subway_public_post', $posts_implode );
+					update_post_meta(
+						$post_id,
+						self::VISIBILITY_METAKEY,
+						$post_visibility
+					);
+				}
+
+			}
 		}
 	}
 
@@ -227,7 +237,7 @@ final class Metabox
 	}
 
 	/**
-	 * Initialize metabox
+	 * Initialize metabox arguments.
 	 *
 	 * @param array $args    The arguments for the get_post_types().
 	 * @param string $output Your desired output for the data.
@@ -283,7 +293,7 @@ final class Metabox
 
 		if ( ! empty( $post_id ) ) {
 			$meta_value = get_post_meta( $post_id, self::VISIBILITY_METAKEY, true);
-			if ( true == $meta_value ) {
+			if ( 'private' === $meta_value ) {
 				return true;
 			}
 		}
@@ -292,7 +302,7 @@ final class Metabox
     }
 
 	/**
-     * Checks if a post is set to private.
+     * Checks if a post is set to public.
      *
      * @param integer $post_id Contains ID of the current post.
      *
