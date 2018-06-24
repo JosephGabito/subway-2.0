@@ -25,3 +25,9 @@
 .subway-settings-text-notice {
 	color: #e53935;
 }
+
+textarea#subway_public_post,
+select#subway_login_page,
+select#subway_redirect_page_id {
+	max-width: 620px;
+}
