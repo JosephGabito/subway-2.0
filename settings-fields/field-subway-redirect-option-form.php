@@ -21,48 +21,33 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function subway_redirect_option_form() {
 	?>
-
-	<style>
-		
-		.subway-redirect-option-section {
-			background: #fff;
-			padding: 15px 20px;
-			margin: 15px 0;
-		}
-
-	</style>
-	
 	<p class="subway-redirect-type-choices">
 
 		<!-- Page -->
 		<label for="subway_use_page">
-			
-			<input <?php checked( 'page', get_option( 'subway_redirect_type' ), true ); ?> value="page" name="subway_redirect_type" id="subway_use_page" type="radio" class="code" /> 
-			
+
+			<input <?php checked( 'page', get_option( 'subway_redirect_type' ), true ); ?> value="page" name="subway_redirect_type" id="subway_use_page" type="radio" class="code" />
+
 			<?php esc_html_e( 'Custom Page', 'subway' ); ?>
 
 		</label>
 
 		<!-- Custom URL -->
 
-		&nbsp;&nbsp;&nbsp;
-
 		<label for="subway_use_custom_url">
-			
-			<input <?php checked( 'custom_url', get_option( 'subway_redirect_type' ), true ); ?> value="custom_url" name="subway_redirect_type" id="subway_use_custom_url" type="radio" class="code" /> 
-			
+
+			<input <?php checked( 'custom_url', get_option( 'subway_redirect_type' ), true ); ?> value="custom_url" name="subway_redirect_type" id="subway_use_custom_url" type="radio" class="code" />
+
 			<?php esc_html_e( 'Custom URL', 'subway' ); ?>
 
 		</label>
 
 		<!-- Default Behavior -->
 
-		&nbsp;&nbsp;&nbsp;
-
 		<label for="subway_use_default">
-			
-			<input <?php checked( 'default', get_option( 'subway_redirect_type' ), true ); ?> value="default" name="subway_redirect_type" id="subway_use_default" type="radio" class="code" /> 
-			
+
+			<input <?php checked( 'default', get_option( 'subway_redirect_type' ), true ); ?> value="default" name="subway_redirect_type" id="subway_use_default" type="radio" class="code" />
+
 			<?php esc_html_e( 'Default Behavior', 'subway' ); ?>
 
 		</label>
@@ -75,9 +60,9 @@ function subway_redirect_option_form() {
 			);
 		?>
 	</p>
-	
+
 	<div id="subway_redirect_page_option_section" class="hidden subway-redirect-option-section">
-		
+
 		<label for="subway_redirect_page_id">
 			<?php esc_html_e( 'Select Page' ); ?>
 		</label>
@@ -95,7 +80,7 @@ function subway_redirect_option_form() {
 		?>
 
 		<p class="description">
-			
+
 			<?php _e( 'The selected page will be used as the redirect endpoint for all of your users. Selecting blank (-) will redirect the user to the default redirect defined in WordPress or other plugins. Choose "Custom URL" if you want to redirect to a custom URL or domain.', 'subway' ); ?>
 
 		</p>
@@ -103,12 +88,12 @@ function subway_redirect_option_form() {
 	</div>
 
 	<div id="subway_redirect_custom_url_option_section" class="hidden subway-redirect-option-section">
-		
+
 		<label for="subway_redirect_custom_url">
 			<?php esc_attr_e( 'Enter Redirect URL:', 'subway' ); ?>
 		</label>
 
-		<input value="<?php echo esc_attr( esc_url( get_option( 'subway_redirect_custom_url' ) ) ); ?>" type="text" name="subway_redirect_custom_url" placeholder="<?php esc_attr_e( 'http://', 'subway' ); ?>" 
+		<input value="<?php echo esc_attr( esc_url( get_option( 'subway_redirect_custom_url' ) ) ); ?>" type="text" name="subway_redirect_custom_url" placeholder="<?php esc_attr_e( 'http://', 'subway' ); ?>"
 		id="subway_redirect_custom_url" size="75" />
 
 		<p class="description"><br>
@@ -129,7 +114,7 @@ function subway_redirect_option_form() {
 
 			<?php esc_html_e( 'Warning: External URLs are not supported by WordPress Function (wp_safe_redirect) and will be redirected back to default WordPress behavior.', 'subway' ); ?>
 
-		</p> 
+		</p>
 
 	</div>
 
@@ -141,67 +126,5 @@ function subway_redirect_option_form() {
 			?>
 		</p>
 	</div>
-
-	<script>
-
-		jQuery( document ).ready( function( $ ) {
-
-			"use strict";
-
-			subway_toggle_use_custom_page();    
-			subway_toggle_use_custom_url();
-			subway_toggle_use_default();
-
-			$("#subway_use_page").on('click', function(){
-				subway_toggle_use_custom_page();    
-			});
-
-			$("#subway_use_custom_url").on('click', function(){
-				subway_toggle_use_custom_url();
-			});
-
-			$("#subway_use_default").on('click', function(){
-				subway_toggle_use_default();
-			});
-
-			function subway_toggle_use_default() {
-
-				if( $('#subway_use_default').is(':checked')) {
-
-					$('#subway_redirect_custom_url_option_section').addClass('hidden');
-					$('#subway_redirect_default_option_section').removeClass('hidden');
-					$('#subway_redirect_page_option_section').addClass('hidden');
-				}
-
-				return;
-			}
-
-			function subway_toggle_use_custom_url() {
-
-				if( $('#subway_use_custom_url').is(':checked')) { 
-					
-					$('#subway_redirect_custom_url_option_section').removeClass('hidden');
-					$('#subway_redirect_default_option_section').addClass('hidden');
-					$('#subway_redirect_page_option_section').addClass('hidden');
-
-				}
-
-				return;
-			}
-
-			function subway_toggle_use_custom_page() {
-
-				if( $('#subway_use_page').is(':checked')) { 
-
-					$('#subway_redirect_custom_url_option_section').addClass('hidden');
-					$('#subway_redirect_default_option_section').addClass('hidden');
-					$('#subway_redirect_page_option_section').removeClass('hidden');
-				}
-
-				return;
-			}
-
-		});
-	</script>
 	<?php
 }
