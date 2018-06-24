@@ -47,6 +47,8 @@ final class AuthRedirect
         // Set the header type to json.
         header('Content-Type: application/json');
 
+        $is_signin = new \WP_Error( 'broke', __( 'Unable to authenticate user', "subway" ) );
+
         $log = filter_input(INPUT_POST, 'log', FILTER_SANITIZE_STRING);
 
         $pwd = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_STRING);
