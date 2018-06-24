@@ -56,6 +56,8 @@ final class PageRedirect
         if (is_user_logged_in() ) {
             return;
         }
+        
+        $is_private = false;
 
         $queried_id = get_queried_object_id();
 
@@ -68,7 +70,9 @@ final class PageRedirect
         // Already escaped inside 'subway_get_redirect_page_url'.
         $redirect_page = Options::getRedirectPageUrl(); // WPCS XSS OK.
 
-		$is_private = Metabox::isPostPrivate( $current_post->ID );
+        if ( !empty( $current_post ) ) {
+		  $is_private = Metabox::isPostPrivate( $current_post->ID );
+        }
 
         // do_action( 'subway/classes/subway-page-redirect/index/before_page_redirect' );
 
