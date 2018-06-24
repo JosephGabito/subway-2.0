@@ -116,78 +116,44 @@ final class Metabox
     public function visibilityMetabox( $post )
     {
         $howto = __(
-            'Select a radio button to make this post/page public or private',
+            'Choose the accessibility of this page from the options above.',
             'subway'
         );
-        $public_label = '<strong>'. __('public', 'subway') .'</strong>';
-        $public_setting_label = __(
-            'Select to make this post ',
-            'subway'
-        ) . $public_label;
-        $private_label = '<strong>'. __('private', 'subway') .'</strong>';
-        $private_setting_label = __(
-            'Select to make this post ',
-            'subway'
-        ) . $private_label;
+      
+        $private_setting_label = __( 'Members Only', 'subway'  );
+
         $is_post_public          = self::isPostPublic($post->ID);
         $is_post_private         = self::isPostPrivate($post->ID);
-        $public_value            = '';
-        $private_value           = '';
-
-        if ($is_post_public ) {
-            $public_value = 'public';
-        }
-        if ($is_post_private ) {
-            $private_value = 'private';
-        }
 
         // Make sure the form request comes from WordPress
-        wp_nonce_field(
-            basename(__FILE__),
-            'subway_post_visibility_nonce'
-        );
+        wp_nonce_field(  basename(__FILE__),  'subway_post_visibility_nonce' );
+
+        // Disable the options (radio) when site is selected as public
         ?>
-
-        <label class="screen-reader-text" for="subway-visibility">
-        <?php echo esc_html($setting_label); ?>
-        </label>
-
-        <label class="subway-visibility-settings-checkbox-label"
-            for="subway-visibility-public">
-
-            <input type="radio" class="subway-visibility-settings-radio"
-            id="subway-visibility-public"
-            name="subway-visibility-settings" value="public"
-            <?php echo checked('public', esc_attr($public_value), false); ?>>
-
-            <?php
-                echo wp_kses(
-                    $public_setting_label,
-                    array(
-                    'strong' => array()
-                    )
-                );
-            ?>
-        </label><br/>
-
-        <label class="subway-visibility-settings-checkbox-label"
-            for="subway-visibility-private">
-
-            <input type="radio" class="subway-visibility-settings-radio"
-            id="subway-visibility-private" name="subway-visibility-settings"
-            value="private"
-        <?php echo checked('private', esc_attr($private_value), false); ?>>
-
-            <?php
-            echo wp_kses(
-                $private_setting_label,
-                array( 'strong' => array() )
-            );
-            ?>
-        </label>
-
-        <p class="howto"><?php echo esc_html($howto); ?></p>
-
+        
+        <?php if ( ! Options::isPublicSite() ):  ?>
+        <?php // Site is private. Give them some Beer! ?>
+            <p>
+                <label class="subway-visibility-settings-checkbox-label" for="subway-visibility-public">
+                    <input type="radio" class="subway-visibility-settings-radio" id="subway-visibility-public" name="subway-visibility-settings" value="public" <?php echo checked( false, $is_post_private, false); ?>>
+                    <?php esc_html_e( 'Public','subway') ?>
+                </label>
+            </p>
+            <p>
+                <label class="subway-visibility-settings-checkbox-label" for="subway-visibility-private">
+                    <input type="radio" class="subway-visibility-settings-radio" id="subway-visibility-private" name="subway-visibility-settings"
+                    value="private" <?php echo checked( true, $is_post_private, false); ?>>
+                    <?php esc_html_e( 'Members Only','subway') ?>
+                 </label>
+            </p>
+            <p class="howto"><?php echo esc_html($howto); ?></p>
+        <?php else: ?>
+            <?php // Site is public! Explain to them ?>
+            <p><em>
+                <?php esc_html_e('You have chosen to make your site public inside Settings > Subway. Make your site private so that you can select visibility options.', 'subway'); ?>
+            </em>
+            </p>
+        <?php endif; ?>
         <?php
     }
 
@@ -331,8 +297,18 @@ final class Metabox
     {
         $meta_value = '';
 
-        if (! empty($post_id) ) {
+        if ( ! empty( $post_id ) ) {
             $meta_value = get_post_meta($post_id, self::VISIBILITY_METAKEY, true);
+
+            // New page or old pages that don't have Subway'\ Visibility Options
+            if ( empty ( $meta_value ) ) {
+                // Get the value from the general settings (Settings > Subway)
+                $is_site_public = Options::isPublicSite();
+                if ( ! $is_site_public ) {
+                    // It's private.
+                    return true;
+                }
+            }
             if ('private' === $meta_value ) {
                 return true;
             }
