@@ -95,21 +95,10 @@ final class AdminSettings
 
         // Register the fields.
         $fields = array(
-            array(
-                'id' => 'subway_is_public',
-                'label' => __('Public Website', 'subway'),
-                'callback' => 'subway_is_public_form',
-                'section' => 'subway-settings-section',
-                'group' => 'subway-page-visibility-section',
-				'args'  => array(
-					'label_for' => 'subway_is_public',
-					'class'     => 'subway_is_public-option',
-				),
-            ),
-
+          
             array(
                 'id' => 'subway_login_page',
-                'label' => __('Private Login Page', 'subway'),
+                'label' => __('Login Page', 'subway'),
                 'callback' => 'subway_login_page_form',
                 'section' => 'subway-settings-section',
                 'group' => 'subway-page-visibility-section',
@@ -129,6 +118,17 @@ final class AdminSettings
 					'class'     => 'subway_public_post_deprecated-option ' . $hidden_class,
 				),
             ),
+            array(
+                'id' => 'subway_is_public',
+                'label' => __('Public Website', 'subway'),
+                'callback' => 'subway_is_public_form',
+                'section' => 'subway-settings-section',
+                'group' => 'subway-page-visibility-section',
+                'args'  => array(
+                    'label_for' => 'subway_is_public',
+                    'class'     => 'subway_is_public-option',
+                ),
+            ),
 
             array(
                 'id' => 'subway_redirect_type',
@@ -143,7 +143,7 @@ final class AdminSettings
             ),
             array(
                 'id' => 'subway_redirect_wp_admin',
-                'label' => __('Bypassing <em>wp-login.php</em>', 'subway'),
+                'label' => __('WP Login Link', 'subway'),
                 'callback' => 'subway_lock_wp_admin',
                 'section' => 'subway-settings-section',
                 'group' => 'subway-redirect-section',
