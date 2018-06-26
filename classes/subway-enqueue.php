@@ -48,13 +48,10 @@ final class Enqueue
 
         $signin_page = absint(get_option('subway_login_page'));
 
+        wp_enqueue_style('subway-style', SUBWAY_DIR_URL . 'assets/css/subway.css');
+
         // Only load the stylesheet and javascript documents inside our sign-in page.
         if ($post_id === $signin_page ) {
-
-            wp_enqueue_style(
-                'subway-style', 
-                SUBWAY_DIR_URL . 'assets/css/subway.css'
-            );
 
             if (! is_user_logged_in() ) {
 
