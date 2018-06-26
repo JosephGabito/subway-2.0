@@ -53,20 +53,11 @@ final class Metabox
      */
     public function __construct()
     {
-        add_action(
-            'add_meta_boxes',
-            array(
-            $this,
-            'addMetabox'
-            )
-        );
-        add_action(
-            'save_post',
-            array(
-            $this,
-            'saveMetaboxValues'
-            )
-        );
+        add_action( 'add_meta_boxes', array( $this,'addMetabox' ) );
+        add_action( 'save_post', array( $this, 'saveMetaboxValues' ) );
+        add_filter( 'the_content', array( $this, 'showContentToAllowedRoles' ));
+
+        return $this;
     }
 
     /**
@@ -98,8 +89,8 @@ final class Metabox
                 esc_html__('Subway: Visibility Option', 'subway'),
                 array( $this, 'visibilityMetabox' ),
                 $post_type,
-                'side',
-                'low'
+                'normal',
+                'high'
             );
         }
     }
@@ -122,7 +113,6 @@ final class Metabox
       
         $private_setting_label = __( 'Members Only', 'subway'  );
 
-        $is_post_public          = self::isPostPublic($post->ID);
         $is_post_private         = self::isPostPrivate($post->ID);
 
         // Make sure the form request comes from WordPress
@@ -146,6 +136,27 @@ final class Metabox
                     <?php esc_html_e( 'Members Only','subway') ?>
                  </label>
             </p>
+            <div id="subway-roles-access-visibility-fields">
+                <dl>
+                    <?php $post_allowed_user_roles = self::getAllowedUserRoles( $post->ID ); ?>
+                    <?php// print_r($post_allowed_user_roles); ?>
+                    <?php foreach (get_editable_roles() as $role_name => $role_info) { ?>
+                        <dt>
+                            <?php $id = "subway-visibility-settings-user-role-" . esc_html($role_name); ?>
+                            <label for="<?php echo esc_attr($id); ?>">
+                            <?php if ( in_array( $role_name, $post_allowed_user_roles ) ) { ?>
+                                <?php $checked = "checked"; ?>
+                            <?php } else { ?>
+                                <?php $checked = ""; ?>
+                            <?php } ?>
+                            <input <?php echo esc_attr($checked); ?> id="<?php echo esc_attr($id); ?>" type="checkbox" 
+                            name="subway-visibility-settings-user-role[]" class="subway-visibility-settings-role-access" value="<?php echo esc_attr($role_name); ?>" />
+                                <?php echo esc_html($role_info['name']); ?>
+                            </label>
+                        </dt>
+                  <?php } ?>
+                </dl>
+            </div>
             <p class="howto"><?php echo esc_html($howto); ?></p>
         <?php else: ?>
             <?php // Site is public! Explain to them ?>
@@ -176,25 +187,28 @@ final class Metabox
         $visibility_field = 'subway-visibility-settings';
 
         $visibility_nonce = filter_input(
-            INPUT_POST,
-            'subway_post_visibility_nonce',
+            INPUT_POST, 'subway_post_visibility_nonce',
             FILTER_SANITIZE_STRING
         );
 
         $post_visibility = filter_input(
-            INPUT_POST,
-            $visibility_field,
+            INPUT_POST,  $visibility_field,
             FILTER_SANITIZE_STRING
         );
 
         $is_valid_visibility_nonce = self::isNonceValid(
             $visibility_nonce
         );
+        
+        $allowed_roles = filter_input( INPUT_POST, 'subway-visibility-settings-user-role', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
         // verify taxonomies meta box nonce
         if (false === $is_valid_visibility_nonce ) {
             return;
         }
+
+        // Update user roles.
+        update_post_meta($post_id, 'subway-visibility-settings-allowed-user-roles', $allowed_roles);
 
         if (! empty($post_visibility) ) {
             if (! empty($post_id) ) {
@@ -337,6 +351,55 @@ final class Metabox
         }
 
         return false;
+    }
+
+    /**
+     * Get the allowed users roles
+     * 
+     * @param  integer $post_id The post ID.
+     * @return array The allowed roles.
+     */
+    public static function getAllowedUserRoles( $post_id = 0 ) 
+    {
+        $allowed_roles = array();
+        if ( ! empty ( $post_id ) ) {
+            $allowed_roles = get_post_meta( $post_id, 'subway-visibility-settings-allowed-user-roles' );
+            if ( ! empty( $allowed_roles ) ) {
+                return end( $allowed_roles );
+            }
+        }
+        return $allowed_roles;
+    }
+
+    /**
+     * Check if the current user has role for the current content.
+     * 
+     * @param  string $content The content of the post.
+     * @return string The content of the post.
+     */
+    public function showContentToAllowedRoles( $content ) {
+
+        $post_id = get_the_ID();
+        $allowed_user_roles = self::getAllowedUserRoles($post_id);
+
+        if ( is_user_logged_in() ) {
+
+            $user = wp_get_current_user();
+
+            if ( ! is_array( $user->roles ) ) {
+                $user->roles = (array) $user->roles;
+            }
+
+            $current_user_role = end( $user->roles );
+           
+            if ( ! in_array( $current_user_role, $allowed_user_roles ) ) {
+                return '<div id="subway-role-not-allowed"><p>'.esc_html__('You do not have the right privilege or role to view this page.','subway').'</p></div>';    
+            }
+
+        }
+        
+        return $content;
+
     }
 
 }
