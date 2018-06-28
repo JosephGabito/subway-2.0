@@ -3,16 +3,18 @@
  * This file is part of the Subway WordPress Plugin Package.
  * This file contains the class which handles the metabox of the plugin.
  *
- * (c) Jasper Jardin <jasper@useissuestabinstead.com>
+ * (c) Joseph G <jasper@useissuestabinstead.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
+ * Props: Jasper Jardin
+ * 
  * PHP Version 5.4
  *
  * @category Subway\Metabox
  * @package  Subway
- * @author   Jasper J. <emailnotdisplayed@domain.tld>
+ * @author   Joseph G. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
  * @version  GIT:github.com/codehaiku/subway
  * @link     github.com/codehaiku/subway The Plugin Repository
@@ -34,8 +36,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @link     github.com/codehaiku/subway The Plugin Repository
  * @since    2.0.9
  */
-final class Metabox
-{
+final class Metabox {
+
 
 	/**
 	 * Subway visibility meta value,
@@ -120,73 +122,73 @@ final class Metabox
 
 		// Disable the options (radio) when site is selected as public
 		?>
-        
-        <?php if ( ! Options::isPublicSite() ) :  ?>
-        <?php // Site is private. Give them some Beer! ?>
-            <p>
-                <label class="subway-visibility-settings-checkbox-label" for="subway-visibility-public">
-                    <input type="radio" class="subway-visibility-settings-radio" id="subway-visibility-public" name="subway-visibility-settings" value="public" <?php echo checked( false, $is_post_private, false ); ?>>
-                    <?php esc_html_e( 'Public', 'subway' ) ?>
-                </label>
-            </p>
-            <p>
-                <label class="subway-visibility-settings-checkbox-label" for="subway-visibility-private">
-                    <input type="radio" class="subway-visibility-settings-radio" id="subway-visibility-private" name="subway-visibility-settings"
-                    value="private" <?php echo checked( true, $is_post_private, false ); ?>>
-                    <?php esc_html_e( 'Members Only', 'subway' ) ?>
-                 </label>
-            </p>
-            <div id="subway-roles-access-visibility-fields" class="hidden">
-                <dl>
-                    <?php $post_allowed_user_roles = self::getAllowedUserRoles( $post->ID ); ?>
-                    <?php $editable_roles = get_editable_roles(); ?>
-                    <?php // Remove administrator for editable roles. ?>
-                    <?php unset( $editable_roles['administrator'] ); ?>
-                    <?php foreach ( $editable_roles as $role_name => $role_info ) { ?>
-                        <dt>
-                            <?php $id = 'subway-visibility-settings-user-role-' . esc_html( $role_name ); ?>
-                            <label for="<?php echo esc_attr( $id ); ?>">
-                            <?php if ( is_array( $post_allowed_user_roles ) && in_array( $role_name, $post_allowed_user_roles ) ) { ?>
-                                <?php $checked = 'checked'; ?>
-                            <?php } else { ?>
-                                <?php if ( false === $post_allowed_user_roles ) { ?>
-                                    <?php $checked = 'checked'; ?>
-                                <?php } else { ?>
-                                        <?php $checked = ''; ?>
-                                <?php } ?>
-                            <?php } ?>
-                            <input <?php echo esc_attr( $checked ); ?> id="<?php echo esc_attr( $id ); ?>" type="checkbox" 
-                            name="subway-visibility-settings-user-role[]" class="subway-visibility-settings-role-access" value="<?php echo esc_attr( $role_name ); ?>" />
-                                <?php echo esc_html( $role_info['name'] ); ?>
-                            </label>
-                        </dt>
-                    <?php } ?>
-                    <p class="howto"><?php echo esc_html_e( 'Uncheck the user roles that you do not want to have access to this content','subway' ); ?></p>
-                </dl>
-            </div>
-            <script>
-                jQuery(document).ready(function(){
-                    'use strict';
-                    if ( $('#subway-visibility-private').is(':checked') ) {
-                        $('#subway-roles-access-visibility-fields').css('display', 'block');
-                    }
-                    $('.subway-visibility-settings-radio').click(function(){
-                        $('#subway-roles-access-visibility-fields').css('display', 'none');
-                        if ( $('#subway-visibility-private').is(':checked') ) {
-                            $('#subway-roles-access-visibility-fields').css('display', 'block');
-                        }
-                    });
-                });
-            </script>
-            <p class="howto"><?php echo esc_html( $howto ); ?></p>
-        <?php else : ?>
-            <?php // Site is public! Explain to them ?>
-            <p><em>
-                <?php esc_html_e( 'You have chosen to make your site public inside Settings > Subway. Make your site private so that you can select visibility options.', 'subway' ); ?>
-            </em>
-            </p>
-        <?php endif; ?>
-        <?php
+		
+		<?php if ( ! Options::isPublicSite() ) :  ?>
+		<?php // Site is private. Give them some Beer! ?>
+			<p>
+				<label class="subway-visibility-settings-checkbox-label" for="subway-visibility-public">
+					<input type="radio" class="subway-visibility-settings-radio" id="subway-visibility-public" name="subway-visibility-settings" value="public" <?php echo checked( false, $is_post_private, false ); ?>>
+					<?php esc_html_e( 'Public', 'subway' ) ?>
+				</label>
+			</p>
+			<p>
+				<label class="subway-visibility-settings-checkbox-label" for="subway-visibility-private">
+					<input type="radio" class="subway-visibility-settings-radio" id="subway-visibility-private" name="subway-visibility-settings"
+					value="private" <?php echo checked( true, $is_post_private, false ); ?>>
+					<?php esc_html_e( 'Members Only', 'subway' ) ?>
+				 </label>
+			</p>
+			<div id="subway-roles-access-visibility-fields" class="hidden">
+				<dl>
+					<?php $post_allowed_user_roles = self::getAllowedUserRoles( $post->ID ); ?>
+					<?php $editable_roles = get_editable_roles(); ?>
+					<?php // Remove administrator for editable roles. ?>
+					<?php unset( $editable_roles['administrator'] ); ?>
+					<?php foreach ( $editable_roles as $role_name => $role_info ) { ?>
+						<dt>
+							<?php $id = 'subway-visibility-settings-user-role-' . esc_html( $role_name ); ?>
+							<label for="<?php echo esc_attr( $id ); ?>">
+							<?php if ( is_array( $post_allowed_user_roles ) && in_array( $role_name, $post_allowed_user_roles ) ) { ?>
+								<?php $checked = 'checked'; ?>
+							<?php } else { ?>
+								<?php if ( false === $post_allowed_user_roles ) { ?>
+									<?php $checked = 'checked'; ?>
+								<?php } else { ?>
+										<?php $checked = ''; ?>
+								<?php } ?>
+							<?php } ?>
+							<input <?php echo esc_attr( $checked ); ?> id="<?php echo esc_attr( $id ); ?>" type="checkbox" 
+							name="subway-visibility-settings-user-role[]" class="subway-visibility-settings-role-access" value="<?php echo esc_attr( $role_name ); ?>" />
+								<?php echo esc_html( $role_info['name'] ); ?>
+							</label>
+						</dt>
+					<?php } ?>
+					<p class="howto"><?php echo esc_html_e( 'Uncheck the user roles that you do not want to have access to this content','subway' ); ?></p>
+				</dl>
+			</div>
+			<script>
+				jQuery(document).ready(function(){
+					'use strict';
+					if ( $('#subway-visibility-private').is(':checked') ) {
+						$('#subway-roles-access-visibility-fields').css('display', 'block');
+					}
+					$('.subway-visibility-settings-radio').click(function(){
+						$('#subway-roles-access-visibility-fields').css('display', 'none');
+						if ( $('#subway-visibility-private').is(':checked') ) {
+							$('#subway-roles-access-visibility-fields').css('display', 'block');
+						}
+					});
+				});
+			</script>
+			<p class="howto"><?php echo esc_html( $howto ); ?></p>
+		<?php else : ?>
+			<?php // Site is public! Explain to them ?>
+			<p><em>
+				<?php esc_html_e( 'You have chosen to make your site public inside Settings > Subway. Make your site private so that you can select visibility options.', 'subway' ); ?>
+			</em>
+			</p>
+		<?php endif; ?>
+		<?php
 	}
 
 	/**
@@ -225,6 +227,9 @@ final class Metabox
 		// verify taxonomies meta box nonce
 		if ( false === $is_valid_visibility_nonce ) {
 			return;
+		}
+		if ( empty( $allowed_roles ) ) {
+			$allowed_roles = array();
 		}
 
 		// Update user roles.
@@ -381,16 +386,20 @@ final class Metabox
 	public static function getAllowedUserRoles( $post_id = 0 ) {
 
 		$allowed_roles = array();
+
 		if ( ! empty( $post_id ) ) {
 			if ( metadata_exists( 'post', $post_id, 'subway-visibility-settings-allowed-user-roles' ) ) {
-				$allowed_roles = get_post_meta( $post_id, 'subway-visibility-settings-allowed-user-roles' );
-				if ( ! empty( $allowed_roles ) ) {
-					return end( $allowed_roles );
+				$allowed_roles = get_post_meta( $post_id, 'subway-visibility-settings-allowed-user-roles', true );
+				if ( ! is_null( $allowed_roles ) ) {
+					return $allowed_roles;
+				} else {
+					return false;
 				}
 			} else {
 				return false;
 			}
 		}
+
 		return $allowed_roles;
 	}
 
@@ -405,6 +414,10 @@ final class Metabox
 		$post_id = get_the_ID();
 		$allowed_user_roles = self::getAllowedUserRoles( $post_id );
 
+		if ( ! is_singular() && is_main_query() ) {
+			return $content;
+		}
+
 		if ( is_user_logged_in() ) {
 
 			$user = wp_get_current_user();
@@ -415,11 +428,14 @@ final class Metabox
 
 			$current_user_role = end( $user->roles );
 
-			$no_privilege = '<div class="subway-role-not-allowed"><p>'.esc_html__( 'You do not have the right privilege or role to view this page.', 'subway' ).'</p></div>';
+			$no_privilege = '<div class="subway-role-not-allowed"><p>' . apply_filters( 'subway-content-restricted-to-role', esc_html__( 'You do not have the right privilege or role to view this page.', 'subway' ) ) . '</p></div>';
 
-			if ( is_array( $allowed_user_roles ) ) {
-				if ( ! in_array( $current_user_role, $allowed_user_roles ) ) {
-					return $no_privilege;
+			// Restrict access to non admins only.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				if ( is_array( $allowed_user_roles ) ) {
+					if ( ! in_array( $current_user_role, $allowed_user_roles ) ) {
+						return $no_privilege;
+					}
 				}
 			}
 
