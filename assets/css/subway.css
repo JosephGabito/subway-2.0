@@ -19,3 +19,15 @@
     max-width: 500px;
     display: block;
 }
+.subway-role-not-allowed {
+	display: block;
+    padding: 10px 15px;
+    background: #da4709;
+    color: #fff;
+    margin-bottom: 35px;
+    border-radius: 6px;
+    box-shadow: 0px 1px 4px #aba3a3;
+}
+.subway-role-not-allowed p {
+	margin: 0;
+}
