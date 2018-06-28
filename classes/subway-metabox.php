@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  *
  * Props: Jasper Jardin
- * 
+ *
  * PHP Version 5.4
  *
  * @category Subway\Metabox
@@ -448,4 +448,5 @@ final class Metabox {
 		return $content;
 
 	}
+
 }
