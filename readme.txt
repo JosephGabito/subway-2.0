@@ -20,18 +20,15 @@ Subway is a small plugin for WordPress that allows you <strong>hide the content<
 
 This plugin redirects the users to the provided login page with a login form that allows them to type their username/email and password combination.
 
-It validates the users’ credentials and displays a set of configurable messages if there are errors such as invalid username, empty username, wrong password, and etcetera.
-
-The plugin has settings inside the Administration Panel (‘Settings’ > 'Subway') that allows you to configure where you want the user to be taken after he/she has successfully logged in, this can be a page, a custom URL, or just the default behavior.
+The plugin has settings inside the Administration Panel (‘Settings’ > ‘Subway’) that allows you to configure where you want the user to be taken after he/she has successfully logged in, this can be a page, a custom URL, or just the default behaviour. You can also make individual posts/page public or ‘members only’
 
 If you would like to contribute, report an issue or have any suggestions, visit the <a href="https://github.com/codehaiku/subway-2.0" title="Subway Github" target="_blank">Github Repository of Subway</a>. 
 
 <h4>Caveats</h4>
 
-Subway is only built for WordPress website owners to redirect non-logged in users to a custom login form. This plugin is not a replacement for Membership websites where a complex set of configurations are allowed. There are no payments model, subscriptions, and role types.
+Subway is only built for WordPress website owners to redirect non-logged in users to a custom login form. This plugin is not a replacement for Membership websites where a complex set of configurations are allowed. There are no payments model, subscriptions.
 
 Subway is good for Private Intranet Websites where authentication is required.
-
 == Installation ==
 
 <h4>Manual</h4>
@@ -51,6 +48,7 @@ Subway is good for Private Intranet Websites where authentication is required.
 
 == Screenshots ==
 
-1. Admin Settings <a href="http://thrive-demo.dunhakdis.me/thrive-intranet-extranet-wordpress-theme/index.html" title="Thrive Intranet and Community Theme">(Thrive WordPress Theme)</a>
-2. Sample Form <a href="http://thrive-demo.dunhakdis.me/thrive-intranet-extranet-wordpress-theme/index.html" title="Thrive Intranet and Community Theme">(Thrive WordPress Theme)</a>
+1. Post Settings 
+2. Admin Settings <a href="http://thrive-demo.dunhakdis.me/thrive-intranet-extranet-wordpress-theme/index.html" title="Thrive Intranet and Community Theme">(Thrive WordPress Theme)</a>
+3. Sample Form <a href="http://thrive-demo.dunhakdis.me/thrive-intranet-extranet-wordpress-theme/index.html" title="Thrive Intranet and Community Theme">(Thrive WordPress Theme)</a>
 
