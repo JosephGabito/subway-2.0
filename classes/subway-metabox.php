@@ -122,7 +122,8 @@ final class Metabox {
 
 		// Disable the options (radio) when site is selected as public
 		?>
-		
+		<input type="hidden" name="subway-visibility-form-submitted" value="1" />
+
 		<?php if ( ! Options::isPublicSite() ) :  ?>
 		<?php // Site is private. Give them some Beer! ?>
 			<p>
@@ -184,7 +185,7 @@ final class Metabox {
 		<?php else : ?>
 			<?php // Site is public! Explain to them ?>
 			<p><em>
-				<?php esc_html_e( 'You have chosen to make your site public inside Settings > Subway. Make your site private so that you can select visibility options.', 'subway' ); ?>
+				<?php esc_html_e( 'You have chosen to make your site public inside Settings > Subway.  Subway visibility options will be turned off.', 'subway' ); ?>
 			</em>
 			</p>
 		<?php endif; ?>
@@ -202,6 +203,16 @@ final class Metabox {
 	 */
 	public function saveVisibilityMetabox( $post_id = '' ) {
 
+		if ( wp_is_post_autosave( $post_id ) ) {
+			return;
+		}
+
+		$is_form_submitted = filter_input( INPUT_POST, 'subway-visibility-form-submitted', FILTER_DEFAULT );
+
+		if ( ! $is_form_submitted ) {
+			return;
+		}
+
 		$public_posts     = Options::getPublicPostsIdentifiers();
 
 		$posts_implode    = '';
@@ -213,14 +224,9 @@ final class Metabox {
 			FILTER_SANITIZE_STRING
 		);
 
-		$post_visibility = filter_input(
-			INPUT_POST,  $visibility_field,
-			FILTER_SANITIZE_STRING
-		);
+		$post_visibility = filter_input( INPUT_POST,  $visibility_field, FILTER_SANITIZE_STRING );
 
-		$is_valid_visibility_nonce = self::isNonceValid(
-			$visibility_nonce
-		);
+		$is_valid_visibility_nonce = self::isNonceValid( $visibility_nonce );
 
 		$allowed_roles = filter_input( INPUT_POST, 'subway-visibility-settings-user-role', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
@@ -388,16 +394,21 @@ final class Metabox {
 		$allowed_roles = array();
 
 		if ( ! empty( $post_id ) ) {
+
+			// Check if metadata exists for the following post.
 			if ( metadata_exists( 'post', $post_id, 'subway-visibility-settings-allowed-user-roles' ) ) {
 				$allowed_roles = get_post_meta( $post_id, 'subway-visibility-settings-allowed-user-roles', true );
 				if ( ! is_null( $allowed_roles ) ) {
 					return $allowed_roles;
-				} else {
-					return false;
 				}
+				return false;
+				
 			} else {
 				return false;
 			}
+
+		} else {
+			return false;
 		}
 
 		return $allowed_roles;
