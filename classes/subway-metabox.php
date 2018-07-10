@@ -397,6 +397,7 @@ final class Metabox {
 
 			// Check if metadata exists for the following post.
 			if ( metadata_exists( 'post', $post_id, 'subway-visibility-settings-allowed-user-roles' ) ) {
+
 				$allowed_roles = get_post_meta( $post_id, 'subway-visibility-settings-allowed-user-roles', true );
 				if ( ! is_null( $allowed_roles ) ) {
 					return $allowed_roles;
@@ -431,23 +432,13 @@ final class Metabox {
 
 		if ( is_user_logged_in() ) {
 
-			$user = wp_get_current_user();
-
-			if ( ! is_array( $user->roles ) ) {
-				$user->roles = (array) $user->roles;
-			}
-
-			$current_user_role = end( $user->roles );
-
 			$no_privilege = '<div class="subway-role-not-allowed"><p>' . apply_filters( 'subway-content-restricted-to-role', esc_html__( 'You do not have the right privilege or role to view this page.', 'subway' ) ) . '</p></div>';
 
 			// Restrict access to non admins only.
 			if ( ! current_user_can( 'manage_options' ) ) {
-				if ( is_array( $allowed_user_roles ) ) {
-					if ( ! in_array( $current_user_role, $allowed_user_roles ) ) {
-						return $no_privilege;
-					}
-				}
+				if ( ! self::currentUserCanViewPage( $post_id ) ) {
+					return $no_privilege;
+				}	
 			}
 
 			// Return the content if the post is not yet saved.
@@ -458,6 +449,47 @@ final class Metabox {
 
 		return $content;
 
+	}
+
+	/**
+	 * Check to see if current user has a specific roles to view the page
+	 * 
+	 * @return boolean True on success. Otherwise, false.
+	 */
+	public function currentUserCanViewPage( $post_id = 0 ) {
+
+		$allowed_roles = self::getAllowedUserRoles( $post_id );
+		
+		// if $allowed_roles is not set, it means meta data is not yet available.
+		// Post roles are checked but are not yet save. So allow viewing.
+		if ( ! $allowed_roles ) {
+			return true;
+		}
+
+		// Only check for logged-in users.
+		if ( is_user_logged_in() ) {
+			
+			$can_view = false;
+
+			$user = wp_get_current_user();
+
+			if ( ! is_array( $user->roles ) ) {
+				$user->roles = (array) $user->roles;
+			}
+
+			if ( ! empty( $user->roles ) && is_array( $user->roles ) ) {
+				foreach( $user->roles as $current_user_role ) {
+					if ( in_array( $current_user_role, $allowed_roles ) ) {
+						$can_view = true;
+					}
+				}
+			}
+
+			return $can_view;
+		
+		}
+
+		return false;
 	}
 
 }

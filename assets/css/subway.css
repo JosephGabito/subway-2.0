@@ -11,12 +11,7 @@
 .subway-login-form { width: 350px; }
 .gglcptch_recaptcha { width: 303px; display: block; margin: 0 auto 30px;}
 .subway-login-sucessfull {
-    background: #CDDC39;
-    padding: 15px 15px 15px 15px;
-    border-radius: 4px;
-    color: #616161;
-    margin: 15px auto;
-    max-width: 500px;
+    color: #673AB7;
     display: block;
 }
 .subway-role-not-allowed {
