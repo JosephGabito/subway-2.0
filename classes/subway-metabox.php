@@ -168,7 +168,7 @@ final class Metabox {
 				</dl>
 			</div>
 			<script>
-				jQuery(document).ready(function(){
+				jQuery(document).ready(function($){
 					'use strict';
 					if ( $('#subway-visibility-private').is(':checked') ) {
 						$('#subway-roles-access-visibility-fields').css('display', 'block');
