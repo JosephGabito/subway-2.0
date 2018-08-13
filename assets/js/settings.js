@@ -18,10 +18,7 @@ jQuery(document).ready(function($) {
 	$( '.subway_redirect_wp_admin-option' ).parents( '.form-table' ).prev().addClass( 'subway_redirect_options_title' );
 
 	var $elements_affected = [
- 		'.subway_redirect_options_title',
  		'.subway_public_post_deprecated-option',
- 		'.subway_redirect_type-option',
- 		'.subway_redirect_wp_admin-option'
  	];
 
  	subway_is_checkbox_checked( '#subway_is_public', $elements_affected, 'hidden' );
@@ -43,7 +40,7 @@ jQuery(document).ready(function($) {
 	});
 
 	function subway_toggle_use_default() {
-
+		
 		if( $('#subway_use_default').is(':checked')) {
 
 			$('#subway_redirect_custom_url_option_section').addClass('hidden');
