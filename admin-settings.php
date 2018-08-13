@@ -138,7 +138,7 @@ final class AdminSettings
                 'group' => 'subway-redirect-section',
 				'args'  => array(
 					'label_for' => 'subway_redirect_type',
-					'class'     => 'subway_redirect_type-option ' . $hidden_class,
+					'class'     => 'subway_redirect_type-option ',
 				),
             ),
             array(
@@ -149,7 +149,7 @@ final class AdminSettings
                 'group' => 'subway-redirect-section',
 				'args'  => array(
 					'label_for' => 'subway_redirect_wp_admin',
-					'class'     => 'subway_redirect_wp_admin-option ' . $hidden_class,
+					'class'     => 'subway_redirect_wp_admin-option ',
 				),
             ),
         );
