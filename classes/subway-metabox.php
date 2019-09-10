@@ -249,7 +249,9 @@ final class Metabox {
 					}
 				}
 				if ( 'private' === $post_visibility ) {
-					unset( $public_posts[ array_search( $post_id, $public_posts ) ] );
+					if ( in_array( $post_id, $public_posts ) ) {
+						unset( $public_posts[ array_search( $post_id, $public_posts ) ] );
+					}
 				}
 			}
 		}
