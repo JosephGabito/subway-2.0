@@ -26,3 +26,10 @@
 .subway-role-not-allowed p {
 	margin: 0;
 }
+
+
+.subway-restricted-area{
+    background: #ea6161;
+    color: #fff;
+    padding: 5px 15px;
+}
