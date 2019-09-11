@@ -76,7 +76,7 @@ final class AdminSettings
 
         // Register our settings section.
         add_settings_section(
-            'subway-page-visibility-section', __('Pages Visibility', 'subway'),
+            'subway-page-visibility-section', __('General', 'subway'),
             array( $this, 'sectionCallback' ), 'subway-settings-section'
         );
 
@@ -107,29 +107,6 @@ final class AdminSettings
 					'class'     => 'subway_login_page-option',
 				),
             ),
-            array(
-                'id' => 'subway_public_post_deprecated',
-                'label' => __('Public Posts IDs', 'subway'),
-                'callback' => 'subway_public_post',
-                'section' => 'subway-settings-section',
-                'group' => 'subway-page-visibility-section',
-				'args'  => array(
-					'label_for' => 'subway_public_post_deprecated',
-					'class'     => 'subway_public_post_deprecated-option ' . $hidden_class,
-				),
-            ),
-            array(
-                'id' => 'subway_is_public',
-                'label' => __('Public Website', 'subway'),
-                'callback' => 'subway_is_public_form',
-                'section' => 'subway-settings-section',
-                'group' => 'subway-page-visibility-section',
-                'args'  => array(
-                    'label_for' => 'subway_is_public',
-                    'class'     => 'subway_is_public-option',
-                ),
-            ),
-
             array(
                 'id' => 'subway_redirect_type',
                 'label' => __('Redirect Type', 'subway'),

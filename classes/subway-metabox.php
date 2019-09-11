@@ -57,7 +57,6 @@ final class Metabox {
 
 		add_action( 'add_meta_boxes', array( $this, 'addMetabox' ) );
 		add_action( 'save_post', array( $this, 'saveMetaboxValues' ) );
-		add_filter( 'the_content', array( $this, 'showContentToAllowedRoles' ) );
 
 		return $this;
 	}
@@ -165,6 +164,33 @@ final class Metabox {
 						</dt>
 					<?php } ?>
 					<p class="howto"><?php echo esc_html_e( 'Uncheck the user roles that you do not want to have access to this content','subway' ); ?></p>
+					<p>
+						<dl>
+							<dt>
+								<strong>
+									<?php esc_html_e('No Access Control', 'subway'); ?>
+								</strong>
+							</dt>
+						</dl>
+						<dl>
+							<label>
+								<input type="radio" name="subway-visibility-settings-no-access-type" />
+								<?php esc_html_e('Redirect (302) to', 'subway'); ?> 
+								<a target="_blank" href="<?php echo esc_url( Options::getRedirectPageUrl() ); ?>" title="<?php esc_attr_e('Login Page', 'subway'); ?>">
+									<?php esc_html_e('Login Page', 'subway'); ?>
+								</a>
+							</label>
+						</dl>
+						<dl>
+							<label>
+								<input type="radio" name="subway-visibility-settings-no-access-type" />
+								<?php esc_html_e('Block Post Content', 'subway'); ?>
+							</label>
+						</dl>
+					</p>
+					<p class="howto">
+						<?php esc_html_e('Choose what type of behaviour would you like to have if the user has no access to the content.', 'subway'); ?>
+					</p>
 				</dl>
 			</div>
 			<script>
@@ -343,41 +369,17 @@ final class Metabox {
 
 		$meta_value = '';
 
-		if ( ! empty( $post_id ) ) {
+		if ( ! empty( $post_id ) ) 
+		{
 			$meta_value = get_post_meta( $post_id, self::VISIBILITY_METAKEY, true );
-
-			// New page or old pages that don't have Subway'\ Visibility Options
-			if ( empty( $meta_value ) ) {
-				// Get the value from the general settings (Settings > Subway)
-				$is_site_public = Options::isPublicSite();
-				if ( ! $is_site_public ) {
-					// It's private.
-					return true;
-				}
+			// Pages that dont have meta values yet. 
+			if ( empty( $meta_value ) ) 
+			{
+				// Give it a public visibility.
+				return false;
 			}
-			if ( 'private' === $meta_value ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Checks if a post is set to public.
-	 *
-	 * @param integer $post_id Contains ID of the current post.
-	 *
-	 * @since  2.0.9
-	 * @access public
-	 * @return boolean true Returns true if post is public. Otherwise false.
-	 */
-	public static function isPostPublic( $post_id ) {
-
-		$public_post = Options::getPublicPostsIdentifiers();
-
-		if ( ! empty( $post_id ) ) {
-			if ( ! in_array( $post_id, $public_post, true ) ) {
+			if ( 'private' === $meta_value ) 
+			{
 				return true;
 			}
 		}
@@ -418,80 +420,75 @@ final class Metabox {
 	}
 
 	/**
-	 * Check if the current user has role for the current content.
+	 * Gets the role of the user.
 	 *
-	 * @param  string $content The content of the post.
-	 * @return string The content of the post.
+	 * @param  integer $user id The user id.
+	 * @return array The user roles.
 	 */
-	public function showContentToAllowedRoles( $content ) {
+	public function getUserRole( $user_id = 0 ) 
+	{
 
-		$post_id = get_the_ID();
-		$allowed_user_roles = self::getAllowedUserRoles( $post_id );
-
-		if ( ! is_singular() && is_main_query() ) {
-			return $content;
+		$roles = array();
+		
+		$user = get_userdata( absint( $user_id ) );
+		
+		if ( ! empty( $user->roles ) ) {
+			$roles = $user->roles;
 		}
 
-		if ( is_user_logged_in() ) {
-
-			$no_privilege = '<div class="subway-role-not-allowed"><p>' . apply_filters( 'subway-content-restricted-to-role', esc_html__( 'You do not have the right privilege or role to view this page.', 'subway' ) ) . '</p></div>';
-
-			// Restrict access to non admins only.
-			if ( ! current_user_can( 'manage_options' ) ) {
-				if ( ! self::currentUserCanViewPage( $post_id ) ) {
-					return $no_privilege;
-				}	
-			}
-
-			// Return the content if the post is not yet saved.
-			if ( false === $allowed_user_roles ) {
-				return $content;
-			}
-		}
-
-		return $content;
-
+		return $roles;
 	}
 
 	/**
-	 * Check to see if current user has a specific roles to view the page
-	 * 
-	 * @return boolean True on success. Otherwise, false.
+	 * Gets the subscription type of the specific post type.
+	 *
+	 * @param  integer $post_id The post id.
+	 * @return array The subscription type.
 	 */
-	public function currentUserCanViewPage( $post_id = 0 ) {
+	public function getSubscriptionType( $post_id = 0 ) {
 
-		$allowed_roles = self::getAllowedUserRoles( $post_id );
-		
-		// if $allowed_roles is not set, it means meta data is not yet available.
-		// Post roles are checked but are not yet save. So allow viewing.
-		if ( ! $allowed_roles ) {
+		$user_roles = get_post_meta( $post_id, 'subway-visibility-settings-allowed-user-roles', true );
+
+		$visibility = get_post_meta( $post_id, 'subway_visibility_meta_key', true);
+
+		if ( empty( $visibility ) ) { $visibility = 'public'; }
+
+		if ( empty( $user_roles ) ) { $user_roles = array(); }
+
+		return array( 
+				'type' => $visibility, 
+				'roles' => $user_roles, 
+				'subscription_type' => array() 
+			);
+
+	}
+
+	public function isCurrentUserSubscribedTo($post_id) 
+	{
+		// Yes, for admin.
+		if ( current_user_can('manage_plugins') )
+		{
 			return true;
 		}
-
-		// Only check for logged-in users.
-		if ( is_user_logged_in() ) {
-			
-			$can_view = false;
-
-			$user = wp_get_current_user();
-
-			if ( ! is_array( $user->roles ) ) {
-				$user->roles = (array) $user->roles;
-			}
-
-			if ( ! empty( $user->roles ) && is_array( $user->roles ) ) {
-				foreach( $user->roles as $current_user_role ) {
-					if ( in_array( $current_user_role, $allowed_roles ) ) {
-						$can_view = true;
-					}
-				}
-			}
-
-			return $can_view;
+	
+		// Check the subscribe type of the current post type.
+		$post_subscribe_type = Metabox::getSubscriptionType( $post_id );
 		
+		if ( 'private' === $post_subscribe_type['type'] )
+		{
+			$user_role = Metabox::getUserRole( get_current_user_id() );
+
+			// If the user role matches checked subscription role.
+			if ( empty( array_intersect( $user_role, $post_subscribe_type['roles'] ) ) ) {
+				return false;
+			}
 		}
 
-		return false;
+		return true;
+	}
+
+	public function isPostTypeRedirect() {
+		return true;
 	}
 
 }
