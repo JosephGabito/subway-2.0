@@ -46,7 +46,7 @@ final class SinglePostTypeService {
 	{	
 		$current_page_id = get_the_id();
 		
-		$is_post_type_redirect = Metabox::isPostTypeRedirect();
+		$is_post_type_redirect = Metabox::isPostTypeRedirect( $current_page_id );
 
 		$login_page_id = intval( get_option('subway_login_page') );
 
