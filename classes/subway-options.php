@@ -105,4 +105,18 @@ final class Options
         }
         return false;
     }
+
+    public static function getPostNoAccessType( $post_id )
+    {
+        $allowed_no_access_type = array('block_content', 'redirect');
+
+        $post_no_access_type = get_post_meta($post_id, 'subway-visibility-settings-no-access-type', true );
+        
+        if ( empty( $post_no_access_type ) || ! in_array( $post_no_access_type, $allowed_no_access_type ) ) 
+        {
+            $post_no_access_type = 'block_content';
+        }
+
+        return $post_no_access_type;
+    }
 }
