@@ -44,6 +44,9 @@ define( 'SUBWAY_DIR_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 // Define Subway URL Path.
 define( 'SUBWAY_DIR_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
+// Freemius SDK.
+require_once SUBWAY_DIR_PATH . 'freemius.php';
+
 // Include Subway i18n.
 require_once SUBWAY_DIR_PATH . 'i18.php';
 
