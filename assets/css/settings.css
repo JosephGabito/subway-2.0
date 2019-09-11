@@ -31,7 +31,3 @@ select#subway_login_page,
 select#subway_redirect_page_id {
 	max-width: 620px;
 }
-/*Disable public post textarea*/
-.subway_public_post_deprecated-option  {
-	display: none;
-}
