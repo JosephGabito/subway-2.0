@@ -87,7 +87,7 @@ final class Metabox {
 		foreach ( $post_types as $post_type => $value ) {
 			add_meta_box(
 				'subway_visibility_metabox',
-				esc_html__( 'Subway: Visibility Option', 'subway' ),
+				esc_html__( 'Membership Access', 'subway' ),
 				array( $this, 'visibilityMetabox' ),
 				$post_type,
 				'side',
@@ -493,6 +493,25 @@ final class Metabox {
 			if ( empty( array_intersect( $user_role, $post_subscribe_type['roles'] ) ) ) {
 				return false;
 			}
+		}
+
+		return true;
+	}
+
+	public function isCurrentUserSubscribedToPartial( $post_id = 0, $roles = array(), $subscription_type = array() )
+	{
+		// Yes, for admin.
+		if ( current_user_can('manage_plugins') )
+		{
+			return true;
+		}
+
+		// Get the current user role.
+		$user_role = Metabox::getUserRole( get_current_user_id() );
+		
+		// If the user role matches checked subscription role.
+		if ( empty( array_intersect( $user_role, $roles ) ) ) {
+			return false;
 		}
 
 		return true;
