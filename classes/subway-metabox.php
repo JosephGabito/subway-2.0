@@ -172,19 +172,25 @@ final class Metabox {
 								</strong>
 							</dt>
 						</dl>
+						<!-- No Access Type -->
+						<?php $no_access_type = Options::getPostNoAccessType( $post->ID ); ?>
 						<dl>
 							<label>
-								<input type="radio" name="subway-visibility-settings-no-access-type" />
-								<?php esc_html_e('Redirect (302) to', 'subway'); ?> 
-								<a target="_blank" href="<?php echo esc_url( Options::getRedirectPageUrl() ); ?>" title="<?php esc_attr_e('Login Page', 'subway'); ?>">
-									<?php esc_html_e('Login Page', 'subway'); ?>
+								<input value="block_content" <?php checked( 'block_content', $no_access_type, true ); ?> type="radio" name="subway-visibility-settings-no-access-type" />
+								<?php esc_html_e('Block Content', 'subway'); ?>
+								<a href="#" title="<?php esc_attr_e('Customize', 'subway'); ?>">
+									&#8599; <?php esc_html_e('Edit Message ', 'subway'); ?>
 								</a>
 							</label>
 						</dl>
+
 						<dl>
 							<label>
-								<input type="radio" name="subway-visibility-settings-no-access-type" />
-								<?php esc_html_e('Block Post Content', 'subway'); ?>
+								<input value="redirect" <?php checked( 'redirect', $no_access_type, true ); ?> type="radio" name="subway-visibility-settings-no-access-type" />
+								<?php esc_html_e('Redirect (302) to', 'subway'); ?> 
+								<a target="_blank" href="<?php echo esc_url( Options::getRedirectPageUrl() ); ?>" title="<?php esc_attr_e('Login Page', 'subway'); ?>">
+									&#8599; <?php esc_html_e('Login Page ', 'subway'); ?>
+								</a>
 							</label>
 						</dl>
 					</p>
@@ -247,8 +253,7 @@ final class Metabox {
 
 		$visibility_nonce = filter_input(
 			INPUT_POST, 'subway_post_visibility_nonce',
-			FILTER_SANITIZE_STRING
-		);
+			FILTER_SANITIZE_STRING );
 
 		$post_visibility = filter_input( INPUT_POST,  $visibility_field, FILTER_SANITIZE_STRING );
 
@@ -260,12 +265,18 @@ final class Metabox {
 		if ( false === $is_valid_visibility_nonce ) {
 			return;
 		}
+
 		if ( empty( $allowed_roles ) ) {
 			$allowed_roles = array();
 		}
 
 		// Update user roles.
 		update_post_meta( $post_id, 'subway-visibility-settings-allowed-user-roles', $allowed_roles );
+
+		// Update no access control.
+		$no_access_type = filter_input( INPUT_POST,  'subway-visibility-settings-no-access-type', FILTER_SANITIZE_STRING );
+
+		update_post_meta( $post_id, 'subway-visibility-settings-no-access-type', $no_access_type );
 
 		if ( ! empty( $post_visibility ) ) {
 			if ( ! empty( $post_id ) ) {
@@ -463,7 +474,7 @@ final class Metabox {
 
 	}
 
-	public function isCurrentUserSubscribedTo($post_id) 
+	public function isCurrentUserSubscribedTo($post_id = 0) 
 	{
 		// Yes, for admin.
 		if ( current_user_can('manage_plugins') )
@@ -487,8 +498,14 @@ final class Metabox {
 		return true;
 	}
 
-	public function isPostTypeRedirect() {
-		return true;
+	public function isPostTypeRedirect($post_id = 0) {
+		$post_no_access_type = get_post_meta( $post_id, 'subway-visibility-settings-no-access-type', true );
+		if ( !empty ( $post_no_access_type ) ) {
+			if ( 'redirect' === $post_no_access_type ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
