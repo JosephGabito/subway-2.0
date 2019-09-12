@@ -27,7 +27,7 @@ if (! defined('ABSPATH') ) {
  * This class contains methods for deciding if 
  * it will display the content for current session or not. 
  *
- * @category Subway\Auth\Redirect
+ * @category Subway\Classes\Services\SinglePostTypeService
  * @package  Subway
  * @author   Joseph G. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
