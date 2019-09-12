@@ -36,13 +36,14 @@ if (! defined('ABSPATH') ) {
  */
 final class AuthService {
 
-	public function loadComponent() {
+	public function start() 
+	{
 		
-		$components = array('single-post-type');
+		$components = array('single-post-type', 'widget');
 
 		foreach( $components as $component ) 
 		{
-			require_once SUBWAY_DIR_PATH . 'classes/services/single-post-type.php';
+			require_once SUBWAY_DIR_PATH . 'classes/services/'.sanitize_title($component).'.php';
 		}
 
 		return;
