@@ -29,9 +29,13 @@
 
 .widget-subway-no-access-message,
 .subway-restricted-area{
-    background: rgb(255, 240, 240);
-    border: 1px solid #f7b6b2;
+    background: #e2e2e2;
+    border: 1px solid #c5c5c5;
     color: #444;
     padding: 5px 15px;
 }
 
+.widget-subway-no-access-message p:last-child,
+.subway-restricted-area p:last-child {
+    margin-bottom: 0;
+}
