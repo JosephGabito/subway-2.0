@@ -78,12 +78,12 @@ final class WidgetService {
 					// Show the widget if the settings are set to public.
 					if ( 'private' === $access_type )
 					{
+						echo wp_kses_post( $this->getNoAcessMessage( $settings, $args ) );
 						// Do check for roles and subscription type here.
 						return false;
 					} 
 					return true;
 				}
-
 
 				return true;
 			}
@@ -105,6 +105,21 @@ final class WidgetService {
 	{
 		
 		return $new_instance;
+	}
+
+	public function getNoAcessMessage( $settings, $args )
+	{
+		?>
+		<?php if ( isset( $settings['subway-widget-access-roles-message'] ) ): ?>
+			<?php if ( ! empty ( $settings['subway-widget-access-roles-message'] ) ): ?>
+				<?php echo $args['before_widget']; ?>
+				<div class="widget-subway-no-access-message">
+					<?php echo $settings['subway-widget-access-roles-message']; ?>
+				</div>
+				<?php echo $args['after_widget']; ?>
+			<?php endif; ?>
+		<?php endif; ?>
+		<?php
 	}
 }
 
