@@ -93,7 +93,9 @@ final class SinglePostTypeService {
 		if ( ! Metabox::isCurrentUserSubscribedTo( $post_id ) )
 		{
 			// @TODO
-			return "<h2>Content is not available. Sign-in or Register to unlock content.</2>";
+			$wrap_start = '<div class="widget-subway-no-access-message">';
+			$wrap_end = '</div>';
+			return $wrap_start . "<p>Content is not available. Sign-in or Register to unlock content.</p>" . $wrap_end;
 		}
 
 		return $content;
