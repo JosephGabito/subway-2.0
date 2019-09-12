@@ -19,8 +19,9 @@
  */
 ?>
 <h4>
-	<a class="subway-widget-options-toggle" data-target="subway-<?php echo esc_attr( $widget->id ); ?>" href="#">
-		<?php esc_html_e('Edit Membership Access', 'subway'); ?>&nbsp; &#9662;
+	<a class="subway-widget-options-toggle button" data-target="subway-<?php echo esc_attr( $widget->id ); ?>" href="#">
+		<span class="dashicons dashicons-lock"></span>
+		<?php esc_html_e('Edit Membership Access', 'subway'); ?>
 	</a>
 </h4>
 <?php if ( ! isset( $instance['subway-widget-access-type'] ) ): ?>
@@ -36,7 +37,7 @@
 		$class = "active"; 
 	endif;
 ?>
-<div id="subway-<?php echo esc_attr( $widget->id ); ?>" class="subway-widget-membership-options">
+<div id="subway-<?php echo esc_attr( $widget->id ); ?>" class="subway-widget-membership-options" style="display: none;">
 	<hr/>
 	<dl>
 		<p>
