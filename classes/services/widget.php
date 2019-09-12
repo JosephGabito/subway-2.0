@@ -45,7 +45,7 @@ final class WidgetService {
 		// Handle the updating of the widget options.
 		add_action('widget_update_callback', array( $this, 'saveWidgetOptions'), 10, 2);
 		// Control the display of the widget.
-		add_filter( 'widget_display_callback', array( $this, 'authorizeUserWidget'), 10, 3 );
+		add_filter('widget_display_callback', array( $this, 'authorizeUserWidget'), 10, 3 );
 
 		return;
 	}
@@ -74,10 +74,22 @@ final class WidgetService {
 				// Show the widget if the settings are set to public.
 				if ( 'private' === $access_type )
 				{
-					echo wp_kses_post( $this->getNoAcessMessage( $settings, $args ) );
+					
 					// Do check for roles and subscription type here.
+					$current_user_roles = Metabox::getUserRole( get_current_user_id() );
+					$widget_roles_allowed = $settings['subway-widget-access-roles'];
+
+					// Allow if the user has roles.
+					if ( array_intersect( $current_user_roles, $widget_roles_allowed ) ) {
+						return true;
+					}
+					
+					echo wp_kses_post( $this->getNoAcessMessage( $settings, $args ) );
+
 					return false;
+
 				} 
+				
 				return true;
 			}
 
