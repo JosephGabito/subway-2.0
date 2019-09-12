@@ -3,12 +3,10 @@
  * This file is part of the Subway WordPress Plugin Package.
  * This file contains the class which handles the metabox of the plugin.
  *
- * (c) Joseph G <jasper@useissuestabinstead.com>
+ * (c) Joseph G <emailnotdisplayed@domain.ltd>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * Props: Jasper Jardin
  *
  * PHP Version 5.4
  *
@@ -142,6 +140,7 @@ final class Metabox {
 				<dl>
 					<?php $post_allowed_user_roles = self::getAllowedUserRoles( $post->ID ); ?>
 					<?php $editable_roles = get_editable_roles(); ?>
+				
 					<?php // Remove administrator for editable roles. ?>
 					<?php unset( $editable_roles['administrator'] ); ?>
 					<?php foreach ( $editable_roles as $role_name => $role_info ) { ?>
@@ -508,7 +507,7 @@ final class Metabox {
 
 		// Get the current user role.
 		$user_role = Metabox::getUserRole( get_current_user_id() );
-		
+
 		// If the user role matches checked subscription role.
 		if ( empty( array_intersect( $user_role, $roles ) ) ) {
 			return false;
