@@ -41,4 +41,8 @@ select#subway_redirect_page_id {
 .subway-widget-membership-options dl p {
 	margin: 0 0 5px 0;
 }
+.subway-widget-options-toggle .dashicons-lock {
+	margin-top: 2px;
+    margin-left: -5px;
+}
 
