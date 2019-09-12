@@ -31,3 +31,14 @@ select#subway_login_page,
 select#subway_redirect_page_id {
 	max-width: 620px;
 }
+
+.subway-widget-access-type-roles {
+    display: none;
+}
+.subway-widget-access-type-roles.active {
+    display: block;
+}
+.subway-widget-membership-options dl p {
+	margin: 0 0 5px 0;
+}
+

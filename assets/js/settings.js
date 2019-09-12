@@ -39,6 +39,19 @@ jQuery(document).ready(function($) {
 		subway_toggle_use_default();
 	});
 
+	$('body').on('click', '.subway-widget-options-toggle', function(e){
+		e.preventDefault();
+		subway_toggle_widget_options( $(this) );
+	});
+
+	$("body").on('click', '.subway-access-role-public-toggle > input[type=radio]', function(){
+		$('#'+$(this).attr('data-target')).removeClass('active');
+	});
+
+	$("body").on('click', '.subway-access-role-private-toggle > input[type=radio]', function(){
+		$('#'+$(this).attr('data-target')).addClass('active');
+	});
+
 	function subway_toggle_use_default() {
 		
 		if( $('#subway_use_default').is(':checked')) {
@@ -106,4 +119,12 @@ jQuery(document).ready(function($) {
 		return;
 	}
 
+	function subway_toggle_widget_options( el ) 
+	{
+		var target = el.attr('data-target');
+			$('#' + target).toggle();
+		return;
+	}	
+
 });
+

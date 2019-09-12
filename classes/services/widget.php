@@ -52,45 +52,41 @@ final class WidgetService {
 
 	public function authorizeUserWidget( $settings, $widget, $args )
 	{	
-		//@todo
-		if ( $widget->id_base == 'search' )
+		// Show all widgets to administrator.
+		if ( current_user_can('manage_options') )
 		{
-			
-			// Show all widgets to administrator.
-			if ( current_user_can('manage_options') )
-			{
-				return true;
-			}
-			// Show all widgets that don't have access types.
-			if ( ! isset( $settings['subway-widget-access-type'] ) ) 
-			{
-				return true;
-			}
-
-			// Check if access type options are saved.
-			if ( isset( $settings['subway-widget-access-type'] ) )
-			{
-				$access_type = $settings['subway-widget-access-type'];
-					
-				// Check to see if access type from options are valid.
-				if ( in_array( $access_type, $this->allowed_access_type ) )
-				{
-					// Show the widget if the settings are set to public.
-					if ( 'private' === $access_type )
-					{
-						echo wp_kses_post( $this->getNoAcessMessage( $settings, $args ) );
-						// Do check for roles and subscription type here.
-						return false;
-					} 
-					return true;
-				}
-
-				return true;
-			}
-			
-			return false;
+			return true;
+		}
+		// Show all widgets that don't have access types.
+		if ( ! isset( $settings['subway-widget-access-type'] ) ) 
+		{
+			return true;
 		}
 
+		// Check if access type options are saved.
+		if ( isset( $settings['subway-widget-access-type'] ) )
+		{
+			$access_type = $settings['subway-widget-access-type'];
+				
+			// Check to see if access type from options are valid.
+			if ( in_array( $access_type, $this->allowed_access_type ) )
+			{
+				// Show the widget if the settings are set to public.
+				if ( 'private' === $access_type )
+				{
+					echo wp_kses_post( $this->getNoAcessMessage( $settings, $args ) );
+					// Do check for roles and subscription type here.
+					return false;
+				} 
+				return true;
+			}
+
+			return true;
+		}
+		
+		echo wp_kses_post( $this->getNoAcessMessage( $settings, $args ) );
+
+		return false;
 
 	}
 
@@ -103,7 +99,9 @@ final class WidgetService {
 
 	public function saveWidgetOptions( $instance, $new_instance )
 	{
-		
+		if ( ! isset( $new_instance['subway-widget-access-roles'] ) ) {
+			$new_instance['subway-widget-access-roles'] = array();
+		}
 		return $new_instance;
 	}
 

@@ -29,7 +29,9 @@
 
 .widget-subway-no-access-message,
 .subway-restricted-area{
-    background: #ea6161;
-    color: #fff;
+    background: rgb(255, 240, 240);
+    border: 1px solid #f7b6b2;
+    color: #444;
     padding: 5px 15px;
 }
+

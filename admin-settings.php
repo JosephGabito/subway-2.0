@@ -214,7 +214,6 @@ final class AdminSettings
      * @return void
      */
 	public function registerSettingsScripts() {
-
 		// Registers the Subway settings Javascript.
 	    wp_register_script( 'subway-settings-script', plugins_url('/assets/js/settings.js', __FILE__) );
 	    wp_register_style( 'subway-settings-style', plugins_url('/assets/css/settings.css', __FILE__) );
@@ -229,8 +228,9 @@ final class AdminSettings
      * @return void
      */
 	public function enqueueSettingsScripts( $hook ) {
+
 		// Checks if page hook is Subway settings page.
-		if ( 'settings_page_subway' === $hook ) {
+		if ( in_array( $hook, array('settings_page_subway', 'widgets.php' ) ) ) {
 			// Enqueues the script only on the Subway Settings page.
 			wp_enqueue_script( 'subway-settings-script' );
 			wp_enqueue_style( 'subway-settings-style' );

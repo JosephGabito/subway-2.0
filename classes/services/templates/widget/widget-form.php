@@ -18,41 +18,64 @@
  * @link     github.com/codehaiku/subway-2.0 The Plugin Repository
  */
 ?>
+<h4>
+	<a class="subway-widget-options-toggle" data-target="subway-<?php echo esc_attr( $widget->id ); ?>" href="#">
+		<?php esc_html_e('Edit Membership Access', 'subway'); ?>&nbsp; &#9662;
+	</a>
+</h4>
+<?php if ( ! isset( $instance['subway-widget-access-type'] ) ): ?>
+	<?php array_push( $instance, 'subway-widget-access-type' ); ?>
+<?php endif; ?>
+<?php if ( empty ( $instance['subway-widget-access-type'] ) ): ?>
+	<?php $instance['subway-widget-access-type'] = 'public'; ?>
+<?php endif; ?>
 
-<div id="#">
-
+<?php 
+	$class = "";
+	if ( 'private' === $instance['subway-widget-access-type'] ):
+		$class = "active"; 
+	endif;
+?>
+<div id="subway-<?php echo esc_attr( $widget->id ); ?>" class="subway-widget-membership-options">
+	<hr/>
 	<dl>
-		<h4>
-			<a href="#">
-				<?php esc_html_e('Edit Membership Access', 'subway'); ?>&nbsp; &#9662;
-			</a>
-		</h4>
 		<p>
-			<label>
-			<input <?php checked( $instance['subway-widget-access-type'], 'public', true ); ?> type="radio" id="<?php echo $widget->get_field_id('subway-widget-access-type'); ?>" name="<?php echo $widget->get_field_name('subway-widget-access-type'); ?>" value="public" />
+			
+			<label class="subway-access-role-public-toggle">
+			<input data-target="subway-access-role-<?php echo esc_attr($widget->id); ?>" 
+			<?php checked( $instance['subway-widget-access-type'], 'public', true ); ?> type="radio" id="<?php echo $widget->get_field_id('subway-widget-access-type'); ?>" name="<?php echo $widget->get_field_name('subway-widget-access-type'); ?>" value="public" />
 				<?php esc_html_e('Public', 'subway'); ?>
 			</label>
 		</p>
 		<p>
-			<label>
-			<input <?php checked( $instance['subway-widget-access-type'], 'private', true ); ?> type="radio" id="<?php echo $widget->get_field_id('subway-widget-access-type'); ?>" name="<?php echo esc_attr( $widget->get_field_name('subway-widget-access-type') ); ?>" value="private" />
+			<label class="subway-access-role-private-toggle">
+			<input data-target="subway-access-role-<?php echo esc_attr($widget->id); ?>" 
+			<?php checked( $instance['subway-widget-access-type'], 'private', true ); ?> type="radio" id="<?php echo $widget->get_field_id('subway-widget-access-type'); ?>" name="<?php echo esc_attr( $widget->get_field_name('subway-widget-access-type') ); ?>" value="private" />
 				<?php esc_html_e('Private', 'subway'); ?>
 			</label>
 		</p>
-		<div class="subway-widget-access-type-roles">
+		<div id="subway-access-role-<?php echo esc_attr($widget->id); ?>" class="subway-widget-access-type-roles <?php echo esc_attr( $class ); ?>">
 			<?php $editable_roles = get_editable_roles(); ?>
 			<?php unset( $editable_roles['administrator'] ); ?>
 			<dl>
 				<?php foreach ( $editable_roles as $role_name => $role_info ): ?>
 					<dt style="margin-bottom: 5px;">
 						<label>
+							<?php
 
-							<?php $widget_roles = $instance['subway-widget-access-roles']; ?>
-							
-							<?php 
+							$widget_roles = array();
+
 							$checked = "";
-							if ( in_array( $role_name, $widget_roles ) ) 
-							{
+
+							if ( isset( $instance['subway-widget-access-roles'] ) ) {
+								$widget_roles = (array)$instance['subway-widget-access-roles']; 
+							}
+
+							if ( gettype( $widget_roles ) !== gettype( $instance['subway-widget-access-roles'] ) ) {
+							 	$checked = 'checked'; 
+							}
+
+							if ( in_array( $role_name, $widget_roles ) ) {
 								$checked = 'checked'; 
 							}
 							?>
