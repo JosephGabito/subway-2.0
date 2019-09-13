@@ -46,9 +46,10 @@ final class Options
 
         $selected_login_post_id = intval(get_option('subway_login_page'));
 
+        // Default to wp_login_url()
         if (0 === $selected_login_post_id ) {
 
-            return;
+            return trailingslashit( wp_login_url() );
 
         }
 
