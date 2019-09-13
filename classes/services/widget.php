@@ -9,7 +9,7 @@
  *
  * PHP Version 5.4
  *
- * @category Subway\Auth\Redirect
+ * @category Subway\WidgetSerivce
  * @package  Subway
  * @author   Joseph G. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -89,7 +89,7 @@ final class WidgetService {
 					return false;
 
 				} 
-				
+
 				return true;
 			}
 
