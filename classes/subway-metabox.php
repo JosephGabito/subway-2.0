@@ -87,9 +87,7 @@ final class Metabox {
 				'subway_visibility_metabox',
 				esc_html__( 'Membership Access', 'subway' ),
 				array( $this, 'visibilityMetabox' ),
-				$post_type,
-				'side',
-				'high'
+				$post_type, 'side', 'high'
 			);
 		}
 	}
@@ -121,7 +119,6 @@ final class Metabox {
 		?>
 		<input type="hidden" name="subway-visibility-form-submitted" value="1" />
 
-		<?php if ( ! Options::isPublicSite() ) :  ?>
 		<?php // Site is private. Give them some Beer! ?>
 			<p>
 				<label class="subway-visibility-settings-checkbox-label" for="subway-visibility-public">
@@ -129,6 +126,9 @@ final class Metabox {
 					<?php esc_html_e( 'Public', 'subway' ) ?>
 				</label>
 			</p>
+			<?php $current_page_id = get_the_id(); ?>
+			<?php $login_page_id = intval( get_option('subway_login_page') ); ?>
+			<?php if ( $current_page_id !== $login_page_id ): ?>
 			<p>
 				<label class="subway-visibility-settings-checkbox-label" for="subway-visibility-private">
 					<input type="radio" class="subway-visibility-settings-radio" id="subway-visibility-private" name="subway-visibility-settings"
@@ -136,6 +136,7 @@ final class Metabox {
 					<?php esc_html_e( 'Members Only', 'subway' ) ?>
 				 </label>
 			</p>
+			<?php endif ;?>
 			<div id="subway-roles-access-visibility-fields" class="hidden">
 				<dl>
 					<?php $post_allowed_user_roles = self::getAllowedUserRoles( $post->ID ); ?>
@@ -193,9 +194,12 @@ final class Metabox {
 							</label>
 						</dl>
 					</p>
-					<p class="howto">
-						<?php esc_html_e('Choose what type of behaviour would you like to have if the user has no access to the content.', 'subway'); ?>
-					</p>
+
+					
+						<p class="howto">
+							<?php esc_html_e('Choose what type of behaviour would you like to have if the user has no access to the content.', 'subway'); ?>
+						</p>
+					
 				</dl>
 			</div>
 			<script>
@@ -212,14 +216,13 @@ final class Metabox {
 					});
 				});
 			</script>
-			<p class="howto"><?php echo esc_html( $howto ); ?></p>
-		<?php else : ?>
-			<?php // Site is public! Explain to them ?>
-			<p><em>
-				<?php esc_html_e( 'You have chosen to make your site public inside Settings > Subway.  Subway visibility options will be turned off.', 'subway' ); ?>
-			</em>
-			</p>
-		<?php endif; ?>
+			<?php if ( $current_page_id !== $login_page_id ): ?>
+				<p class="howto"><?php echo esc_html( $howto ); ?></p>
+			<?php else: ?>
+				<p class="howto">
+					<?php esc_html_e('This page is selected as your login page. You cannot make this page private.'); ?>
+				</p>
+			<?php endif ;?>
 		<?php
 	}
 
