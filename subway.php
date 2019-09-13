@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name:  Subway Private Membership 
- * Description: A Membership plugin for WordPress. Take control of your exclusive content. Give access to paying members only. 
+ * Plugin Name:  Subway Membership Payment and Subscription
+ * Description: It helps you build a membership website with out spending thousands of bucks. Lock content base on user roles or subscription types. Take control of your exclusive content.
  * Version: 3.0
  * Author: Dunhakdis
  * Author URI: http://dunhakdis.com
