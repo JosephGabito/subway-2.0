@@ -38,8 +38,7 @@ final class AuthService {
 
 	public function start() 
 	{
-		
-		$components = array('single-post-type', 'widget');
+		$components = array('single-post-type', 'widget', 'taxonomy');
 
 		foreach( $components as $component ) 
 		{
