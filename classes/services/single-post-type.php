@@ -61,7 +61,7 @@ final class SinglePostTypeService {
 		if( ! $is_post_type_redirect ) {
 			return;
 		}
-
+		// Prevent infinite loop.
 		if( $current_page_id === $login_page_id ) 
 		{
 			return;
@@ -81,17 +81,18 @@ final class SinglePostTypeService {
 
 	public function singlePostTypeContent( $content )
 	{
-		
+
 		// Only run on main query.
-		if ( ! is_singular() && is_main_query() ) 
+		if ( ! is_singular() && is_main_query() && ! is_feed() ) 
 		{
 			return $content;
-		} 
-		
+		}
+
 		$post_id = get_the_id();
 
 		if ( ! Metabox::isCurrentUserSubscribedTo( $post_id ) )
 		{
+			
 			// @TODO
 			$wrap_start = '<div class="widget-subway-no-access-message">';
 			$wrap_end = '</div>';
