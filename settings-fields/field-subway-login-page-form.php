@@ -47,7 +47,7 @@ function subway_login_page_form() {
 		array(
 		'name' => 'subway_login_page',
 		'selected' => intval( $subway_login_page_id ),
-		'show_option_none' => esc_html__( '---', 'subway' ),
+		'show_option_none' => esc_html__( '*/wp-login.php', 'subway' ),
 		)
 	);
 

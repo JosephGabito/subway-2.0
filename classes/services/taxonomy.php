@@ -38,13 +38,14 @@ if (! defined('ABSPATH') ) {
 final class TaxonomyService {
 	
 	public function __construct()
-	{
-		$taxonomy = 'category';
+	{	
+		$taxonomies = get_taxonomies( array() );
+		foreach ( $taxonomies as $taxonomy => $value ):
+			add_action( $taxonomy . '_edit_form_fields', array($this, 'taxonomyOption'), 10123, 2 );
+			// Save the changes made on the "presenters" taxonomy, using our callback function  
+			add_action( 'edited_'. $taxonomy, array($this, 'saveTaxonomyOption'), 10, 2 ); 
+		endforeach;
 		
-		add_action( $taxonomy . '_edit_form_fields', array($this, 'taxonomyOption'), 10123, 2 );
-
-		// Save the changes made on the "presenters" taxonomy, using our callback function  
-		add_action( 'edited_'. $taxonomy, array($this, 'saveTaxonomyOption'), 10, 2 ); 
 
 		add_action( 'wp', array( $this, 'authorizeTaxonomyTerm' ) );
 

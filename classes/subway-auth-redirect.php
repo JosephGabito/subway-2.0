@@ -190,10 +190,12 @@ final class AuthRedirect
     {
 
         $subway_login_page = Options::getRedirectPageUrl();
-
+       
         // Return the default login url if there is no log-in page defined.
         if (empty($subway_login_page) ) {
-            return $login_url;
+
+            return trailingslashit( site_url( 'wp-login.php', 'login' ) );
+
         }
 
         // Otherwise, return the Subway login page.

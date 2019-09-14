@@ -96,3 +96,4 @@ add_action( 'wp_logout', array( 'Subway\AuthRedirect', 'logoutUrl' ), 10, 3 );
 
 // Adds the Subvway metabox.
 add_action( 'plugins_loaded', array( 'Subway\Metabox', 'initMetabox' ) );
+
