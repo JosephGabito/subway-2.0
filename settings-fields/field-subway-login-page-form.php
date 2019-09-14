@@ -45,9 +45,9 @@ function subway_login_page_form() {
 
 	wp_dropdown_pages(
 		array(
-		'name' => 'subway_login_page',
-		'selected' => intval( $subway_login_page_id ),
-		'show_option_none' => esc_html__( '*/wp-login.php', 'subway' ),
+			'name' => 'subway_login_page',
+			'selected' => intval( $subway_login_page_id ),
+			'show_option_none' => esc_html__( '*/wp-login.php', 'subway' ),
 		)
 	);
 
