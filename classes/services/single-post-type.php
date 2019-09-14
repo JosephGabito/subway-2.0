@@ -44,8 +44,8 @@ final class SinglePostTypeService {
 
 	public function singlePostTypeRedirect()
 	{	
-		$current_page_id = get_the_id();
-		
+		$current_page_id = get_queried_object_id();
+
 		$is_post_type_redirect = Metabox::isPostTypeRedirect( $current_page_id );
 
 		$login_page_id = intval( get_option('subway_login_page') );
@@ -81,18 +81,18 @@ final class SinglePostTypeService {
 
 	public function singlePostTypeContent( $content )
 	{
-
 		// Only run on main query.
 		if ( ! is_singular() && is_main_query() && ! is_feed() ) 
 		{
 			return $content;
 		}
 
-		$post_id = get_the_id();
+		$post_id = get_queried_object_id();
 
 		if ( ! Metabox::isCurrentUserSubscribedTo( $post_id ) )
 		{
-			$access_block_message = get_post_meta( $post_id, 'subway-visibility-settings-no-access-type', true );
+
+			$access_block_message = get_post_meta( $post_id, 'subway-visibility-settings-no-access-type-message', true );
 			if ( ! empty ( $access_block_message ) ) 
 			{
 				$wrap_start = '<div class="widget-subway-no-access-message">';

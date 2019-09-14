@@ -182,6 +182,9 @@ final class Metabox {
 									&#8599; <?php esc_html_e('Edit Message ', 'subway'); ?>
 								</a>
 							</label>
+							<p class="howto">
+							<?php esc_html_e("Note: 'Block Content' option might not work for some content that are plugin-generated. In that case, try using the 'Redirect(302) option.", 'subway'); ?>
+							</p>
 						</dl>
 
 						<dl>
@@ -205,8 +208,9 @@ final class Metabox {
 								<h4>
 									<?php esc_html_e('Block Content Message', 'subway'); ?>
 								</h4>
-								<?php $access_type_block_message = get_post_meta( $post->ID, 'subway-visibility-settings-no-access-type', true); ?>
-								<textarea class="widefat" id="subway-visibility-settings-no-access-type" name="subway-visibility-settings-no-access-type"><?php echo wp_kses_post($access_type_block_message); ?></textarea>
+								<?php $access_type_block_message = get_post_meta( $post->ID, 'subway-visibility-settings-no-access-type-message', true); ?>
+							
+								<textarea class="widefat" id="subway-visibility-settings-no-access-type-message" name="subway-visibility-settings-no-access-type-message"><?php echo wp_kses_post($access_type_block_message); ?></textarea>
 							</label>
 						</dl>
 					</p>
@@ -326,9 +330,9 @@ final class Metabox {
 			}
 		}
 
-		$access_type_block_message = filter_input( INPUT_POST, 'subway-visibility-settings-no-access-type', FILTER_DEFAULT);
+		$access_type_block_message = filter_input( INPUT_POST, 'subway-visibility-settings-no-access-type-message', FILTER_DEFAULT);
 		if ( ! empty( $access_type_block_message)) {
-			update_post_meta( $post_id, 'subway-visibility-settings-no-access-type', $access_type_block_message );
+			update_post_meta( $post_id, 'subway-visibility-settings-no-access-type-message', $access_type_block_message );
 		}
 
 		return;
