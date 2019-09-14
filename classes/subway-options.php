@@ -46,21 +46,18 @@ final class Options
 
         $selected_login_post_id = intval(get_option('subway_login_page'));
 
-        if (0 === $selected_login_post_id ) {
+        $login_url = site_url( 'wp-login.php', 'login' );
 
-            return site_url( 'wp-login.php', 'login' );;
-
-        }
-
-        $login_post = get_post($selected_login_post_id);
+        $login_post = get_post( $selected_login_post_id );
 
         if (! empty($login_post) ) {
 
-            return trailingslashit(get_permalink($login_post->ID));
+            $login_url = trailingslashit(get_permalink($login_post->ID));
 
         }
-
-        return false;
+        
+        return add_query_arg( apply_filters( 'subway_redirected_url', 
+            array('_redirected'=> 'redirected') ), $login_url );
 
     }
 
