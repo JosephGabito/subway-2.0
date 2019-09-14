@@ -195,10 +195,25 @@ final class Metabox {
 						</dl>
 					</p>
 
-					
-						<p class="howto">
-							<?php esc_html_e('Choose what type of behaviour would you like to have if the user has no access to the content.', 'subway'); ?>
-						</p>
+					<p class="howto">
+						<?php esc_html_e('Choose what type of behaviour would you like to have if the user has no access to the content.', 'subway'); ?>
+					</p>
+
+					<p>
+						<dl>
+							<label>
+								<h4>
+									<?php esc_html_e('Block Content Message', 'subway'); ?>
+								</h4>
+								<?php $access_type_block_message = get_post_meta( $post->ID, 'subway-visibility-settings-no-access-type', true); ?>
+								<textarea class="widefat" id="subway-visibility-settings-no-access-type" name="subway-visibility-settings-no-access-type"><?php echo wp_kses_post($access_type_block_message); ?></textarea>
+							</label>
+						</dl>
+					</p>
+					<p class="howto">
+						<?php esc_html_e('Add message for partial content block. This message will show if you choose "Block Content Message" option no "No Access Control"', 'subway'); ?>
+					</p>
+					<hr/>
 					
 				</dl>
 			</div>
@@ -310,6 +325,13 @@ final class Metabox {
 				}
 			}
 		}
+
+		$access_type_block_message = filter_input( INPUT_POST, 'subway-visibility-settings-no-access-type', FILTER_DEFAULT);
+		if ( ! empty( $access_type_block_message)) {
+			update_post_meta( $post_id, 'subway-visibility-settings-no-access-type', $access_type_block_message );
+		}
+
+		return;
 	}
 
 	/**
