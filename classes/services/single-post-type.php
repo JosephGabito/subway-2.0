@@ -92,11 +92,13 @@ final class SinglePostTypeService {
 
 		if ( ! Metabox::isCurrentUserSubscribedTo( $post_id ) )
 		{
-			
-			// @TODO
-			$wrap_start = '<div class="widget-subway-no-access-message">';
-			$wrap_end = '</div>';
-			return $wrap_start . "<p>Content is not available. Sign-in or Register to unlock content.</p>" . $wrap_end;
+			$access_block_message = get_post_meta( $post_id, 'subway-visibility-settings-no-access-type', true );
+			if ( ! empty ( $access_block_message ) ) 
+			{
+				$wrap_start = '<div class="widget-subway-no-access-message">';
+				$wrap_end = '</div>';
+				return $wrap_start . wp_kses_post( $access_block_message ) . $wrap_end;
+			}
 		}
 
 		return $content;
