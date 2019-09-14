@@ -93,7 +93,10 @@ if ( isset( $http_request_logout ) ) {
 $http_request_redirected = filter_input( INPUT_GET, '_redirected', FILTER_SANITIZE_SPECIAL_CHARS );
 
 if ( isset( $http_request_redirected ) ) {
-	$error_login_message = '<div id="message" class="success">' . esc_html__( 'Members only page. Please use the login form below to access the page.', 'subway' ) . '</div>';
+	$message = get_option('subway_redirected_message_login_form',
+		esc_html__('Members only page. Please use the login form below to access the page.','subway'));
+
+	$error_login_message = '<div id="message" class="success">' . wp_kses_post( $message ) . '</div>';
 }
 
 ?>
