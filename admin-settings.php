@@ -86,6 +86,12 @@ final class AdminSettings
             array( $this, 'redirectCallback' ), 'subway-settings-section'
         );
 
+         // Register Redirect Options pages.
+        add_settings_section(
+            'subway-messages-section', __('Messages', 'subway'),
+            array( $this, 'messagesCallback' ), 'subway-settings-section'
+        );
+
 		$is_public_site = Options::isPublicSite();
 		$hidden_class = '';
 
@@ -128,6 +134,28 @@ final class AdminSettings
 					'label_for' => 'subway_redirect_wp_admin',
 					'class'     => 'subway_redirect_wp_admin-option ',
 				),
+            ),
+            array(
+                'id' => 'subway_partial_message',
+                'label' => __('Partial Block Message', 'subway'),
+                'callback' => 'subway_messages',
+                'section' => 'subway-settings-section',
+                'group' => 'subway-messages-section',
+                'args'  => array(
+                    'label_for' => 'subway_messages',
+                    'class'     => 'subway_messages-option ',
+                ),
+            ),
+            array(
+                'id' => 'subway_redirected_message_login_form',
+                'label' => __('Login Form Message', 'subway'),
+                'callback' => 'subway_redirected_message_login_form',
+                'section' => 'subway-settings-section',
+                'group' => 'subway-messages-section',
+                'args'  => array(
+                    'label_for' => 'subway_redirected_message_login_form',
+                    'class'     => 'subway_messages-option ',
+                ),
             ),
         );
 
@@ -173,6 +201,9 @@ final class AdminSettings
         return;
     }
 
+    public function messagesCallback() {
+        return;
+    }
     /**
      * Callback function for the second Section.
      *
