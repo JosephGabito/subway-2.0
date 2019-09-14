@@ -115,8 +115,8 @@ final class Shortcodes
         if ( ! $is_user_subscribed )
         {
             
-            $message = '<p><strong>Join or Subscribe to our 
-            website to unlock this content. <a href="#">See Membership</a></strong></p>';    
+            $message = get_option('subway_partial_message', 
+                esc_html__('Please login to see this content','subway'));  
 
             return apply_filters(
                 'subway_partial_hide_message', 
