@@ -5,10 +5,10 @@
 #subway-settings-form .description { max-width: 700px; }
 #subway_preloader { display: inline-block; position: relative; }
 .subway-login-form__form .login-submit { position: relative; clear: both; }
-.login-remember { float: left; }
+.login-remember { float: left; width: 50%; }
 .login-remember label { margin: 0; }
-.subway-login-lost-password { float: right; }
-.subway-login-form { width: 350px; }
+.subway-login-lost-password { float: right; width: 50%; text-align: right;}
+.subway-login-form { max-width: 500px; }
 .gglcptch_recaptcha { width: 303px; display: block; margin: 0 auto 30px;}
 .subway-login-sucessfull {
     color: #673AB7;
@@ -39,4 +39,63 @@
 .widget-subway-no-access-message p:last-child,
 .subway-restricted-area p:last-child {
     margin-bottom: 0;
+}
+
+.subway-login-form__form #wp-submit {
+    background: rgb(17,39,43);
+    background: linear-gradient(0deg, rgb(14, 133, 228) 0%, rgb(0, 118, 212) 35%, rgb(84, 168, 234) 100%);
+    border: 1px solid #455fec;
+    color: #906c6c;
+    border-radius: 8px;
+    padding: 10px 15px;
+    line-height: 1em;
+    min-width: 150px;
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+}
+.login-submit { margin: 0; } 
+
+.subway-login-form-form {
+    overflow: hidden;
+    background: #fdfdfd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 1px 4px 100px -20px #e2e2e2;
+    border: 1px solid #ddd;
+}
+
+.subway-login-form-form #user_login,
+.subway-login-form-form #user_pass{
+    width: 100%;
+}
+.subway-login-form__actions {
+display: block;
+    margin: -20px -20px 20px -20px;
+    background: #eaeaea;
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+    box-shadow: inset 0px -10px 25px -30px #676767;
+}
+.subway-login-form__actions h3 {
+    margin: 0;
+    font-weight: bold;
+    color: #222;
+}
+
+.subway-login-form-message .success,
+.subway-login-form-message .error{
+    background: rgba(255, 0, 0, 0.0784313725490196);
+    padding: 10px;
+    color: rgba(255, 0, 0, 0.87);
+    border-radius: 5px;
+    font-size: medium;
+    margin-bottom: 20px;
+    border: 1px solid #ff000030;
+}
+
+.subway-login-form-message .success {
+    background: rgba(76, 175, 80, 0.28);
+    color: #4CAF50;
+    border: 1px solid #4caf507a;
 }
