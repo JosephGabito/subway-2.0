@@ -137,10 +137,6 @@ final class AdminSettings
             array( $this, 'general_cb' )
         );
 
-        add_options_page(
-            'Subway Settings', 'Subway', 'manage_options',
-            'subway', array( $this, 'optionsPageGeneral' )
-        );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueSettingsScripts' ) );
 
@@ -167,13 +163,19 @@ final class AdminSettings
 
         // Register our settings section.
         add_settings_section(
-            'subway-page-visibility-section', __('General', 'subway'),
+            'subway-page-visibility-section', __('Pages', 'subway'),
             array( $this, 'sectionCallback' ), 'subway-settings-section'
+        );
+
+        // Register Archives Options pages.
+        add_settings_section(
+            'subway-archives-section', __('Archives', 'subway'),
+            array( $this, 'archivesCallback' ), 'subway-settings-section'
         );
 
         // Register Redirect Options pages.
         add_settings_section(
-            'subway-redirect-section', __('Redirect Options', 'subway'),
+            'subway-redirect-section', __('Login Redirect', 'subway'),
             array( $this, 'redirectCallback' ), 'subway-settings-section'
         );
 
@@ -185,7 +187,8 @@ final class AdminSettings
 
         // Register the fields.
         $fields = array(
-          
+            
+            // Login page settings.
             array(
                 'id' => 'subway_login_page',
                 'label' => __('Login Page', 'subway'),
@@ -197,6 +200,20 @@ final class AdminSettings
 					'class'     => 'subway_login_page-option',
 				),
             ),
+            // Author archive access settings.
+            array(
+                'id' => 'subway_author_archives',
+                'label' => __('Author', 'subway'),
+                'callback' => 'subway_author_archives',
+                'section' => 'subway-settings-section',
+                'group' => 'subway-archives-section',
+                'args'  => array(
+                    'label_for' => 'subway_archives_access_type',
+                    'class'     => 'subway_archives_access_type-option ',
+                ),
+            ),
+           
+            // Login redirect type.
             array(
                 'id' => 'subway_redirect_type',
                 'label' => __('Redirect Type', 'subway'),
@@ -208,6 +225,7 @@ final class AdminSettings
 					'class'     => 'subway_redirect_type-option ',
 				),
             ),
+            // Login link notice.
             array(
                 'id' => 'subway_redirect_wp_admin',
                 'label' => __('WP Login Link', 'subway'),
@@ -219,6 +237,7 @@ final class AdminSettings
 					'class'     => 'subway_redirect_wp_admin-option ',
 				),
             ),
+            // Partial message settings.
             array(
                 'id' => 'subway_partial_message',
                 'label' => __('Partial Block Message', 'subway'),
@@ -230,6 +249,7 @@ final class AdminSettings
                     'class'     => 'subway_messages-option ',
                 ),
             ),
+            // Login form settings.
             array(
                 'id' => 'subway_redirected_message_login_form',
                 'label' => __('Login Form Message', 'subway'),
@@ -266,6 +286,9 @@ final class AdminSettings
         // Register Redirect Custom URL Settings.
         register_setting('subway-settings-group', 'subway_redirect_custom_url');
 
+        // Register Author Archive Settings.
+        register_setting('subway-settings-group', 'subway_author_archives_roles');
+
 		$this->registerSettingsScripts();
 
         return;
@@ -278,14 +301,29 @@ final class AdminSettings
      */
     public function sectionCallback()
     {
-        echo esc_html_e(
-            'All settings related to the
-        	visibility of your site and pages.', 'subway'
-        );
+        ?>
+        <p class="howto subway-tooltip">
+            <?php
+            echo esc_html_e('Memberships needs a few pages to operate properly. Create and assign existing pages to each of the corresponding option.', 'subway');
+            ?>
+        </p>
+        <?php
         return;
     }
 
     public function messagesCallback() {
+        return;
+    }
+
+    public function archivesCallback()
+    {
+        ?>
+        <p class="howto">
+            <?php esc_html_e('WordPress contains default archives for Authors, Date, Custom Posts Types, and Custom Taxonomies. ', 'subway'); ?>
+            <br/>
+            <?php esc_html_e('You can choose the access type below for each archive.', 'subway'); ?>
+        </p>
+        <?php
         return;
     }
     /**
@@ -295,6 +333,14 @@ final class AdminSettings
      */
     public function redirectCallback()
     {
+        ?>
+        <p class="howto subway-tooltip">
+            <?php
+                esc_html_e('Where do you want your members to go after logging-in? You can pick a page, a Custom URL, or just a WordPress Default behavior. Page and Custom URL has its settings.', 'subway'
+                );
+            ?>
+        </p>
+        <?php
         return;
     }
 
@@ -345,7 +391,8 @@ final class AdminSettings
 	public function enqueueSettingsScripts( $hook ) {
 
 		// Checks if page hook is Subway settings page.
-		if ( in_array( $hook, array('settings_page_subway', 'widgets.php' ) ) ) {
+      
+		if ( in_array( $hook, array('memberships_page_subway-membership-general', 'widgets.php' ) ) ) {
 			// Enqueues the script only on the Subway Settings page.
 			wp_enqueue_script( 'subway-settings-script' );
 			wp_enqueue_style( 'subway-settings-style' );

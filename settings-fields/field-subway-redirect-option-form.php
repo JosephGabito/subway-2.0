@@ -54,13 +54,6 @@ function subway_redirect_option_form() {
 
 	</p>
 
-	<p class="description">
-		<?php
-			esc_html_e('Where do you want your members to go after logging-in? You can pick a page, a Custom URL, or just a WordPress Default behavior. Page and Custom URL has its settings.', 'subway'
-			);
-		?>
-	</p>
-
 	<div id="subway_redirect_page_option_section" class="hidden subway-redirect-option-section">
 
 		<label for="subway_redirect_page_id">
