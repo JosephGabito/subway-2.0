@@ -9,7 +9,7 @@
  *
  * PHP Version 5.4
  *
- * @category Subway\Auth\AuthorArchives
+ * @category Subway\Auth\DateArchives
  * @package  Subway
  * @author   Joseph G. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -27,19 +27,20 @@ if (! defined('ABSPATH') ) {
  * This class contains methods for deciding if 
  * it will display the content for current session or not. 
  *
- * @category Subway\Auth\AuthorArchives
+ * @category Subway\Auth\DateArchives
  * @package  Subway
  * @author   Joseph G. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link     github.com/codehaiku/subway The Plugin Repository
  * @since    1.0
  */
-final class AuthorArchives 
+final class DateArchives 
 {
 	
 	public function __construct()
 	{
 		add_action('wp', array($this, 'redirectUser'));
+		
 		return;
 	}
 
@@ -50,10 +51,10 @@ final class AuthorArchives
 			return;
 		}
 
-		if ( is_author() )
+		if ( is_date() )
 		{
 
-			if ( $this->isAuthorArchiveLock() )
+			if ( $this->isDateArchiveLock() )
 			{
 				$login_url = \Subway\Options::getRedirectPageUrl();
 				wp_safe_redirect( $login_url, 302 );
@@ -64,37 +65,37 @@ final class AuthorArchives
 		return;
 	}
 
-	public function getAuthorArchiveAccessType()
+	public function getDateArchiveAccessType()
 	{
-		return apply_filters('set_author_archive_default_access_type', 'public');
+		return apply_filters('set_date_archive_default_access_type', 'public');
 	}
 
-	public function isAuthorArchiveLock()
+	public function isDateArchiveLock()
 	{
-		$option_is_author_archive_locked = false;
+		$option_is_date_archive_locked = false;
 
-		$author_archive_access_type = $this->getAuthorArchiveAccessType();
+		$date_archive_access_type = $this->getDateArchiveAccessType();
 
-		if ( 'private' === $author_archive_access_type ) 
+		if ( 'private' === $date_archive_access_type ) 
 		{
-			$option_is_author_archive_locked = true;
+			$option_is_date_archive_locked = true;
 
 			$current_user_role = Metabox::getUserRole( get_current_user_id() );
 
-			$allowed_user_roles = (array)get_option('subway_options_author_archives_allowed_rules', array());
+			$allowed_user_roles = (array)get_option('subway_options_date_archives_allowed_rules', array());
 
 			if ( array_intersect( $current_user_role, $allowed_user_roles ) ) 
 			{
 				// Unlock the archive page.
-				$option_is_author_archive_locked = false;
+				$option_is_date_archive_locked = false;
 			}
 			
 		}
 
-		return apply_filters('is_author_archive_lock', $option_is_author_archive_locked );
+		return apply_filters('is_author_date_lock', $option_is_date_archive_locked );
 
 	}
 	
 }
 
-new AuthorArchives();
+new DateArchives();
