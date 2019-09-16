@@ -92,13 +92,6 @@ final class AdminSettings
             array( $this, 'messagesCallback' ), 'subway-settings-section'
         );
 
-		$is_public_site = Options::isPublicSite();
-		$hidden_class = '';
-
-		if ( $is_public_site ) {
-			$hidden_class = 'hidden';
-		}
-
         // Register the fields.
         $fields = array(
           
