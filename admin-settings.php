@@ -56,14 +56,105 @@ final class AdminSettings
     public function adminMenu()
     {
 
+        // Add top-level menu "Membership".
+        add_menu_page(
+            esc_html__('Memberships Settings', 'subway'),
+            esc_html__('Memberships', 'subway'),
+            'manage_options',
+            'subway-membership',
+            array( $this, 'test'),
+            'dashicons-clipboard',
+            2
+        );
+
+        // Add 'general' sub menu page.
+        add_submenu_page( 
+            'subway-membership', 
+            esc_html__('Memberships: General Settings', 'subway'), 
+            esc_html__('General Settings', 'subway'), 
+            'manage_options', 
+            'subway-membership-general', 
+            array( $this, 'optionsPageGeneral' )
+        );
+
+         // Add 'Payment Gateways' sub menu page.
+        add_submenu_page( 
+            'subway-membership', 
+            esc_html__('Memberships: Payment Gateways', 'subway'), 
+            esc_html__('Payment Gateways', 'subway'), 
+            'manage_options', 
+            'subway-membership-emails', 
+            array( $this, 'general_cb' )
+        );
+
+        // Add 'Reports' sub menu page.
+        add_submenu_page( 
+            'subway-membership', 
+            esc_html__('Memberships: Reports', 'subway'), 
+            esc_html__('Reports', 'subway'), 
+            'manage_options', 
+            'subway-membership-emails', 
+            array( $this, 'general_cb' )
+        );
+
+        // Add 'Emails' sub menu page.
+        add_submenu_page( 
+            'subway-membership', 
+            esc_html__('Memberships: Email Settings', 'subway'), 
+            esc_html__('Emails', 'subway'), 
+            'manage_options', 
+            'subway-membership-emails', 
+            array( $this, 'general_cb' )
+        );
+
+        // Add 'BuddyPress' sub menu page.
+        add_submenu_page( 
+            'subway-membership', 
+            esc_html__('Memberships: BuddyPress', 'subway'), 
+            esc_html__('BuddyPress', 'subway'), 
+            'manage_options', 
+            'subway-membership-emails', 
+            array( $this, 'general_cb' )
+        );
+
+        // Add 'bbPress' sub menu page.
+        add_submenu_page( 
+            'subway-membership', 
+            esc_html__('Memberships: bbPress', 'subway'), 
+            esc_html__('bbPress', 'subway'), 
+            'manage_options', 
+            'subway-membership-emails', 
+            array( $this, 'general_cb' )
+        );
+
+        // Add 'Manual' sub menu page.
+        add_submenu_page( 
+            'subway-membership', 
+            esc_html__('Memberships: Manual', 'subway'), 
+            esc_html__('Documentation', 'subway'), 
+            'manage_options', 
+            'subway-membership-emails', 
+            array( $this, 'general_cb' )
+        );
+
         add_options_page(
             'Subway Settings', 'Subway', 'manage_options',
-            'subway', array( $this, 'optionsPage' )
+            'subway', array( $this, 'optionsPageGeneral' )
         );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueSettingsScripts' ) );
 
         return;
+    }
+
+    public function test()
+    {
+        echo 'tae';
+    }
+
+    public function general_cb()
+    {
+        echo 'general';
     }
 
     /**
@@ -212,13 +303,13 @@ final class AdminSettings
      *
      * @return void
      */
-    public function optionsPage()
+    public function optionsPageGeneral()
     {
         ?>
 
         <div class="wrap">
             <h2>
-                <?php esc_html_e('Subway Settings', 'subway'); ?>
+                <?php esc_html_e('General Settings', 'subway'); ?>
              </h2>
              <form id="subway-settings-form" action="options.php" method="POST">
                 <?php settings_fields('subway-settings-group'); ?>
