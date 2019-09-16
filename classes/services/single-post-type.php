@@ -39,7 +39,7 @@ final class SinglePostTypeService {
 	public function __construct()  
 	{
 		add_action('the_content', array( $this, 'singlePostTypeContent'));
-		add_action('get_header', array( $this, 'singlePostTypeRedirect'));
+		add_action('wp', array( $this, 'singlePostTypeRedirect'));
 	}
 
 	public function singlePostTypeRedirect()
