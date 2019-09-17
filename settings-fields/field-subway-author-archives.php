@@ -1,5 +1,4 @@
 <?php
-
 function subway_author_archives()
 {
 	?>
@@ -29,8 +28,10 @@ function subway_author_archives()
 			
 			<?php $checked = ''; ?>
 
-			<?php if ( in_array( $role_name, $subway_author_archives_roles ) ): ?>
-				<?php $checked = 'checked'; ?>
+			<?php if ( is_array( $subway_author_archives_roles ) ): ?>
+				<?php if ( in_array( $role_name, $subway_author_archives_roles ) ): ?>
+					<?php $checked = 'checked'; ?>
+				<?php endif; ?>
 			<?php endif; ?>
 
 			<?php if ( ! $subway_author_archives_roles ) {?>
