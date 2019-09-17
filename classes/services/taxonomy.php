@@ -39,13 +39,15 @@ final class TaxonomyService {
 	
 	public function __construct()
 	{	
-		$taxonomies = get_taxonomies( array() );
+		$query_args = array( 'public' => true,'show_ui' => true );
+		$taxonomies = get_taxonomies( $query_args, 'names');
+	
 		foreach ( $taxonomies as $taxonomy => $value ):
-			add_action( $taxonomy . '_edit_form_fields', array($this, 'taxonomyOption'), 10123, 2 );
+			// 999 since we want our meta to display last.
+			add_action( $taxonomy . '_edit_form_fields', array($this, 'taxonomyOption'), 999, 2 );
 			// Save the changes made on the "presenters" taxonomy, using our callback function  
 			add_action( 'edited_'. $taxonomy, array($this, 'saveTaxonomyOption'), 10, 2 ); 
 		endforeach;
-		
 
 		add_action( 'wp', array( $this, 'authorizeTaxonomyTerm' ) );
 
@@ -102,17 +104,22 @@ final class TaxonomyService {
 
 		        	<?php $editable_roles = get_editable_roles(); ?>
 		        	<?php $selected_roles = get_term_meta( $term->term_id, 'subway_membership_access_type_roles', true ); ?>
-		        	
+		        
 		        	<?php // Set the default to 'check all'?>
 		        	<?php unset( $editable_roles['administrator'] ); ?>
+
 					<?php foreach ( $editable_roles as $role_name => $role_info ): ?>
+
 						<?php $checked = ''; ?>
 						<?php if ( in_array( $role_name, (array)$selected_roles ) ): ?>
 							<?php $checked = 'checked'; ?>
 						<?php endif; ?>
-						<?php if ( false === $selected_roles ): ?>
+
+						<?php //Check the checkbox if there are no meta available. ?>
+						<?php if ( "string" === gettype( $selected_roles ) ): ?>
 			        		<?php $checked = 'checked'; ?>
 			        	<?php endif; ?>
+
 						<dt>
 			        		<label>
 			        			<input <?php echo esc_attr($checked); ?> value="<?php echo esc_attr($role_name); ?>" name="subway_term_meta[subway_membership_access_type_role][]" type="checkbox" />
