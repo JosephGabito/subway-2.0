@@ -36,6 +36,10 @@ if (! defined('ABSPATH') ) {
 final class Helpers
 {
 
+    public function __construct()
+    {
+        return;
+    }
     /**
      * Exit wrapper.
      * 
@@ -44,5 +48,19 @@ final class Helpers
     public static function close() 
     {
         exit;
+    }
+
+    public static function displayRolesCheckboxes( $args )
+    {
+        $post_id = get_the_id();
+       
+        $defaults = array(
+                'name' => '',
+                'option_name' => ''
+            );
+
+        $args = wp_parse_args( $args, $defaults );
+
+        require SUBWAY_DIR_PATH . 'templates/roles-checkbox.php';
     }
 }

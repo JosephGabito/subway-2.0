@@ -83,6 +83,7 @@ display: block;
     color: #222;
 }
 
+.subway-comment-closed,
 .subway-login-form-message .success,
 .subway-login-form-message .error{
     background: rgba(255, 0, 0, 0.0784313725490196);

@@ -86,12 +86,30 @@ final class Metabox {
 
 		foreach ( $post_types as $post_type => $value ) {
 			add_meta_box(
+				'subway_comment_metabox',
+				esc_html__( 'Membership Discussion', 'subway' ),
+				array( $this, 'discussionMetabox' ),
+				$post_type, 'side', 'high'
+			);
+
+			add_meta_box(
 				'subway_visibility_metabox',
 				esc_html__( 'Membership Access', 'subway' ),
 				array( $this, 'visibilityMetabox' ),
 				$post_type, 'side', 'high'
 			);
+			
 		}
+	}
+
+	public function discussionMetabox()
+	{
+		
+		$post_id = get_the_id();
+
+		require_once SUBWAY_DIR_PATH . 'classes/services/templates/metabox/comment.php';
+
+		return;
 	}
 
 	/**
@@ -105,14 +123,9 @@ final class Metabox {
 	 */
 	public function visibilityMetabox( $post ) {
 
-		$howto = __(
-			'Choose the accessibility of this page from the options above.',
-			'subway'
-		);
-
 		$private_setting_label = __( 'Members Only', 'subway' );
 
-		$is_post_private         = self::isPostPrivate( $post->ID );
+		$is_post_private = self::isPostPrivate( $post->ID );
 
 		// Make sure the form request comes from WordPress
 		wp_nonce_field( basename( __FILE__ ),  'subway_post_visibility_nonce' );
@@ -120,12 +133,10 @@ final class Metabox {
 		// Disable the options (radio) when site is selected as public
 		?>
 		<input type="hidden" name="subway-visibility-form-submitted" value="1" />
-
-		<?php // Site is private. Give them some Beer! ?>
 			<p>
 				<label class="subway-visibility-settings-checkbox-label" for="subway-visibility-public">
 					<input type="radio" class="subway-visibility-settings-radio" id="subway-visibility-public" name="subway-visibility-settings" value="public" <?php echo checked( false, $is_post_private, false ); ?>>
-					<?php esc_html_e( 'Public', 'subway' ) ?>
+					<?php esc_html_e( 'Anyone', 'subway' ) ?>
 				</label>
 			</p>
 			<?php $current_page_id = get_the_id(); ?>
@@ -140,88 +151,69 @@ final class Metabox {
 			</p>
 			<?php endif ;?>
 			<div id="subway-roles-access-visibility-fields" class="hidden">
-				<dl>
-					<?php $post_allowed_user_roles = self::getAllowedUserRoles( $post->ID ); ?>
-					<?php $editable_roles = get_editable_roles(); ?>
 				
-					<?php // Remove administrator for editable roles. ?>
-					<?php unset( $editable_roles['administrator'] ); ?>
-					<?php foreach ( $editable_roles as $role_name => $role_info ) { ?>
-						<dt>
-							<?php $id = 'subway-visibility-settings-user-role-' . esc_html( $role_name ); ?>
-							<label for="<?php echo esc_attr( $id ); ?>">
-							<?php if ( is_array( $post_allowed_user_roles ) && in_array( $role_name, $post_allowed_user_roles ) ) { ?>
-								<?php $checked = 'checked'; ?>
-							<?php } else { ?>
-								<?php if ( false === $post_allowed_user_roles ) { ?>
-									<?php $checked = 'checked'; ?>
-								<?php } else { ?>
-										<?php $checked = ''; ?>
-								<?php } ?>
-							<?php } ?>
-							<input <?php echo esc_attr( $checked ); ?> id="<?php echo esc_attr( $id ); ?>" type="checkbox" 
-							name="subway-visibility-settings-user-role[]" class="subway-visibility-settings-role-access" value="<?php echo esc_attr( $role_name ); ?>" />
-								<?php echo esc_html( $role_info['name'] ); ?>
-							</label>
-						</dt>
-					<?php } ?>
-					<p class="howto"><?php echo esc_html_e( 'Uncheck the user roles that you do not want to have access to this content','subway' ); ?></p>
-					<p>
-						<dl>
-							<dt>
-								<strong>
-									<?php esc_html_e('No Access Control', 'subway'); ?>
-								</strong>
-							</dt>
-						</dl>
-						<!-- No Access Type -->
-						<?php $no_access_type = Options::getPostNoAccessType( $post->ID ); ?>
-						<dl>
-							<label>
-								<input value="block_content" <?php checked( 'block_content', $no_access_type, true ); ?> type="radio" name="subway-visibility-settings-no-access-type" />
-								<?php esc_html_e('Block Content', 'subway'); ?>
-								<a href="#" title="<?php esc_attr_e('Customize', 'subway'); ?>">
-									&#8599; <?php esc_html_e('Edit Message ', 'subway'); ?>
-								</a>
-							</label>
-							<p class="howto">
-								<strong><?php esc_html_e('Note: ', 'subway'); ?></strong>
-								<?php esc_html_e("'Block Content' option might not work for some content that are plugin-generated. In that case, try using the 'Redirect(302) option.", 'subway'); ?>
-							</p>
-						</dl>
+				<?php 
+					$cb_args = array();
+					$cb_args['name'] = 'subway-visibility-settings-user-role';
+					$cb_args['saved_roles'] = self::getAllowedUserRoles($post->ID);
+					$cb_args['howto'] = esc_html__('Uncheck the user roles that you do not want to have access to this content', 'subway')
+				?>
+				<?php Helpers::displayRolesCheckboxes( $cb_args ); ?>
 
-						<dl>
-							<label>
-								<input value="redirect" <?php checked( 'redirect', $no_access_type, true ); ?> type="radio" name="subway-visibility-settings-no-access-type" />
-								<?php esc_html_e('Redirect (302) to', 'subway'); ?> 
-								<a target="_blank" href="<?php echo esc_url( Options::getRedirectPageUrl() ); ?>" title="<?php esc_attr_e('Login Page', 'subway'); ?>">
-									&#8599; <?php esc_html_e('Login Page ', 'subway'); ?>
-								</a>
-							</label>
-						</dl>
-					</p>
-
-					<p class="howto">
-						<?php esc_html_e('Choose what type of behaviour would you like to have if the user has no access to the content.', 'subway'); ?>
-					</p>
-
-					<p>
-						<dl>
-							<label>
-								<h4>
-									<?php esc_html_e('Block Content Message', 'subway'); ?>
-								</h4>
-								<?php $access_type_block_message = get_post_meta( $post->ID, 'subway-visibility-settings-no-access-type-message', true); ?>
-								<textarea class="widefat" id="subway-visibility-settings-no-access-type-message" name="subway-visibility-settings-no-access-type-message"><?php echo wp_kses_post($access_type_block_message); ?></textarea>
-							</label>
-						</dl>
-					</p>
-					<p class="howto">
-						<?php esc_html_e('This message will show if you choose "Block Content" option "No Access Control"', 'subway'); ?>
-					</p>
-					<hr/>
-					
+				<dl>
+					<dt>
+						<strong>
+							<?php esc_html_e('No Access Control', 'subway'); ?>
+						</strong>
+					</dt>
 				</dl>
+				<!-- No Access Type -->
+				<?php $no_access_type = Options::getPostNoAccessType( $post->ID ); ?>
+				<dl>
+					<label>
+						<input value="block_content" <?php checked( 'block_content', $no_access_type, true ); ?> type="radio" name="subway-visibility-settings-no-access-type" />
+						<?php esc_html_e('Block Content', 'subway'); ?>
+						<a href="#" title="<?php esc_attr_e('Customize', 'subway'); ?>">
+							&#8599; <?php esc_html_e('Edit Message ', 'subway'); ?>
+						</a>
+					</label>
+					<p class="howto">
+						<strong><?php esc_html_e('Note: ', 'subway'); ?></strong>
+						<?php esc_html_e("'Block Content' option might not work for some content that are plugin-generated. In that case, try using the 'Redirect(302) option.", 'subway'); ?>
+					</p>
+				</dl>
+
+				<dl>
+					<label>
+						<input value="redirect" <?php checked( 'redirect', $no_access_type, true ); ?> type="radio" name="subway-visibility-settings-no-access-type" />
+						<?php esc_html_e('Redirect (302) to', 'subway'); ?> 
+						<a target="_blank" href="<?php echo esc_url( Options::getRedirectPageUrl() ); ?>" title="<?php esc_attr_e('Login Page', 'subway'); ?>">
+							&#8599; <?php esc_html_e('Login Page ', 'subway'); ?>
+						</a>
+					</label>
+				</dl>
+			</p>
+
+			<p class="howto">
+				<?php esc_html_e('Choose what type of behaviour would you like to have if the user has no access to the content.', 'subway'); ?>
+			</p>
+
+			<p>
+				<dl>
+					<label>
+						<h4>
+							<?php esc_html_e('Block Content Message', 'subway'); ?>
+						</h4>
+						<?php $access_type_block_message = get_post_meta( $post->ID, 'subway-visibility-settings-no-access-type-message', true); ?>
+						<textarea class="widefat" id="subway-visibility-settings-no-access-type-message" name="subway-visibility-settings-no-access-type-message"><?php echo wp_kses_post($access_type_block_message); ?></textarea>
+					</label>
+				</dl>
+			</p>
+			<p class="howto">
+				<?php esc_html_e('This message will show if you choose "Block Content" option "No Access Control"', 'subway'); ?>
+			</p>
+			<hr/>
+					
 			</div>
 			<script>
 				jQuery(document).ready(function($){
@@ -238,7 +230,9 @@ final class Metabox {
 				});
 			</script>
 			<?php if ( $current_page_id !== $login_page_id ): ?>
-				<p class="howto"><?php echo esc_html( $howto ); ?></p>
+				<p class="howto">
+					<?php esc_html_e('Choose the accessibility of this page from the options above.', 'subway'); ?>
+				</p>
 			<?php else: ?>
 				<p class="howto">
 					<?php esc_html_e('This page is selected as your login page. You cannot make this page private.'); ?>
@@ -284,7 +278,9 @@ final class Metabox {
 
 		$allowed_roles = filter_input( INPUT_POST, 'subway-visibility-settings-user-role', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
-		// verify taxonomies meta box nonce
+		$comments_allowed_roles = filter_input( INPUT_POST, 'subway_post_discussion_roles', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+		// Check the nonce.
 		if ( false === $is_valid_visibility_nonce ) {
 			return;
 		}
@@ -293,8 +289,15 @@ final class Metabox {
 			$allowed_roles = array();
 		}
 
+		if ( empty ( $comments_allowed_roles ) ) {
+			$comments_allowed_roles = array();
+		}
+
 		// Update user roles.
 		update_post_meta( $post_id, 'subway-visibility-settings-allowed-user-roles', $allowed_roles );
+
+		// Update comment user roles.
+		update_post_meta( $post_id, 'subway_post_discussion_roles', $comments_allowed_roles );
 
 		// Update no access control.
 		$no_access_type = filter_input( INPUT_POST,  'subway-visibility-settings-no-access-type', FILTER_SANITIZE_STRING );
@@ -348,11 +351,12 @@ final class Metabox {
 	 *
 	 * @since  2.0.9
 	 * @access public
-	 * @return boolean false Returns false if nonce is not valid.
+	 * @return void
 	 */
 	public function saveMetaboxValues( $post_id ) {
 
 		$this->saveVisibilityMetabox( $post_id );
+
 		return;
 	}
 
@@ -368,10 +372,9 @@ final class Metabox {
 	 */
 	public static function getPostTypes( $args = '', $output = '' ) {
 
-		if ( empty( $args ) ) {
-			$args = array(
-			'public'   => true,
-			);
+		if ( empty( $args ) ) 
+		{
+			$args = array( 'public'=> true );
 			$output = 'names';
 		}
 
