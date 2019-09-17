@@ -206,11 +206,15 @@ final class AdminSettings
                 'label' => __('Author', 'subway'),
                 'callback' => 'subway_author_archives',
                 'section' => 'subway-settings-section',
-                'group' => 'subway-archives-section',
-                'args'  => array(
-                    'label_for' => 'subway_archives_access_type',
-                    'class'     => 'subway_archives_access_type-option ',
-                ),
+                'group' => 'subway-archives-section'
+            ),
+            // Date archive access settings.
+            array(
+                'id' => 'subway_date_archives',
+                'label' => __('Date', 'subway'),
+                'callback' => 'subway_date_archives',
+                'section' => 'subway-settings-section',
+                'group' => 'subway-archives-section'
             ),
            
             // Login redirect type.
@@ -288,6 +292,9 @@ final class AdminSettings
 
         // Register Author Archive Settings.
         register_setting('subway-settings-group', 'subway_author_archives_roles');
+
+        // Register Date Archive Settings.
+        register_setting('subway-settings-group', 'subway_date_archives_roles');
 
 		$this->registerSettingsScripts();
 
