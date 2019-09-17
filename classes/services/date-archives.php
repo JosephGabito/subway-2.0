@@ -67,7 +67,11 @@ final class DateArchives
 
 	public function getDateArchiveAccessType()
 	{
-		return apply_filters('set_date_archive_default_access_type', 'public');
+		$access_type = get_option('subway_date_archives','public' );
+		if ( ! $access_type ) {
+			$access_type = 'public';
+		}
+		return apply_filters('set_date_archive_default_access_type', $access_type);
 	}
 
 	public function isDateArchiveLock()
@@ -82,7 +86,7 @@ final class DateArchives
 
 			$current_user_role = Metabox::getUserRole( get_current_user_id() );
 
-			$allowed_user_roles = (array)get_option('subway_options_date_archives_allowed_rules', array());
+			$allowed_user_roles = (array)get_option('subway_date_archives_roles', array());
 
 			if ( array_intersect( $current_user_role, $allowed_user_roles ) ) 
 			{
