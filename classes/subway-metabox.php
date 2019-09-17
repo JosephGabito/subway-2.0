@@ -51,12 +51,14 @@ final class Metabox {
 	 * @since  2.0.9
 	 * @return void
 	 */
-	public function __construct() {
+	public function __construct() 
+	{
 
 		add_action( 'add_meta_boxes', array( $this, 'addMetabox' ) );
 		add_action( 'save_post', array( $this, 'saveMetaboxValues' ) );
 
 		return $this;
+
 	}
 
 	/**
@@ -183,7 +185,8 @@ final class Metabox {
 								</a>
 							</label>
 							<p class="howto">
-							<?php esc_html_e("Note: 'Block Content' option might not work for some content that are plugin-generated. In that case, try using the 'Redirect(302) option.", 'subway'); ?>
+								<strong><?php esc_html_e('Note: ', 'subway'); ?></strong>
+								<?php esc_html_e("'Block Content' option might not work for some content that are plugin-generated. In that case, try using the 'Redirect(302) option.", 'subway'); ?>
 							</p>
 						</dl>
 
@@ -209,13 +212,12 @@ final class Metabox {
 									<?php esc_html_e('Block Content Message', 'subway'); ?>
 								</h4>
 								<?php $access_type_block_message = get_post_meta( $post->ID, 'subway-visibility-settings-no-access-type-message', true); ?>
-							
 								<textarea class="widefat" id="subway-visibility-settings-no-access-type-message" name="subway-visibility-settings-no-access-type-message"><?php echo wp_kses_post($access_type_block_message); ?></textarea>
 							</label>
 						</dl>
 					</p>
 					<p class="howto">
-						<?php esc_html_e('Add message for partial content block. This message will show if you choose "Block Content Message" option no "No Access Control"', 'subway'); ?>
+						<?php esc_html_e('This message will show if you choose "Block Content" option "No Access Control"', 'subway'); ?>
 					</p>
 					<hr/>
 					
@@ -331,6 +333,7 @@ final class Metabox {
 		}
 
 		$access_type_block_message = filter_input( INPUT_POST, 'subway-visibility-settings-no-access-type-message', FILTER_DEFAULT);
+		
 		if ( ! empty( $access_type_block_message)) {
 			update_post_meta( $post_id, 'subway-visibility-settings-no-access-type-message', $access_type_block_message );
 		}
