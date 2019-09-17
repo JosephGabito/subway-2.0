@@ -75,8 +75,7 @@ require_once SUBWAY_DIR_PATH . 'classes/subway-metabox.php';
 require_once SUBWAY_DIR_PATH . 'shortcodes/subway-shortcodes.php';
 
 // Start loading components.
-$service = new Subway\AuthService(); 
-$service->start();
+add_action('init', array( 'Subway\AuthService', 'start') );
 
 // Ajax listener for handling user login.
 add_action( 'wp_ajax_nopriv_subway_logging_in', array( 'Subway\AuthRedirect', 'handleAuthentication' ) );
