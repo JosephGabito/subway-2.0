@@ -244,19 +244,23 @@ final class AdminSettings
             // Partial message settings.
             array(
                 'id' => 'subway_partial_message',
-                'label' => __('Partial Block Message', 'subway'),
+                'label' => __('Partial Content Block', 'subway'),
                 'callback' => 'subway_messages',
                 'section' => 'subway-settings-section',
-                'group' => 'subway-messages-section',
-                'args'  => array(
-                    'label_for' => 'subway_messages',
-                    'class'     => 'subway_messages-option ',
-                ),
+                'group' => 'subway-messages-section'
             ),
-            // Login form settings.
+            // Commenting message.
+            array(
+                'id' => 'subway_comment_limited_message',
+                'label' => __('Limited Comment', 'subway'),
+                'callback' => 'subway_comment_limited_message',
+                'section' => 'subway-settings-section',
+                'group' => 'subway-messages-section'
+            ),
+            // Login form message settings.
             array(
                 'id' => 'subway_redirected_message_login_form',
-                'label' => __('Login Form Message', 'subway'),
+                'label' => __('Login Form', 'subway'),
                 'callback' => 'subway_redirected_message_login_form',
                 'section' => 'subway-settings-section',
                 'group' => 'subway-messages-section',

@@ -52,26 +52,40 @@ final class Comments
 		
 		$post_id = get_the_id();
 
-		if ( ! empty ( $requested_post_id ) )
+		$access_type = get_post_meta( $post_id, 'subway_post_discussion_access_type', true );
+
+		// Allow commenting when editor unchecked the 'Limit to roles or membership types'.
+		if ( empty ( $access_type ) )
 		{
-			$post_id = $requested_post_id;
+			return apply_filters('subway_post_discussion_allow_comment', true);
 		}
-
-		if ( current_user_can( 'manage_option' ) ) {
-			return true;
-		}
-
-		$current_user_roles = MetaBox::getUserRole( get_current_user_id() );
-
-		$allowed_user_roles = get_post_meta( $post_id, 'subway_post_discussion_roles', true );
-
-		if ( array_intersect( $current_user_roles, (array)$allowed_user_roles ) )
+		// If access type is not empty. 
+		// Editor limits the commenting.
+		if ( ! empty ( $access_type ) )
 		{
-			return true;
-		}
+			// Handle comment submission.
+			if ( ! empty ( $requested_post_id ) )
+			{
+				$post_id = $requested_post_id;
+			}
+			// Allow administrator.
+			if ( current_user_can( 'manage_option' ) ) 
+			{
+				return apply_filters('subway_post_discussion_allow_comment', true);
+			}
+			// Allow specific roles only.
+			$current_user_roles = MetaBox::getUserRole( get_current_user_id() );
 
+			$allowed_user_roles = get_post_meta( $post_id, 'subway_post_discussion_roles', true );
+
+			if ( array_intersect( $current_user_roles, (array)$allowed_user_roles ) )
+			{
+				return apply_filters('subway_post_discussion_allow_comment', true);
+			}
+
+		}
 		
-		return false;
+		return apply_filters('subway_post_discussion_allow_comment', false);
 
 	}
 
@@ -81,7 +95,7 @@ final class Comments
 		if ( ! $this->currentUserCanComment() )
 		{
 			echo '<div class="subway-comment-closed">';
-				echo 'Your current role limits you to reading comments only.';
+				echo wp_kses_post( get_option('subway_comment_limited_message',esc_html__('Commenting is limited.','subway') ) );
 			echo '</div>';
 		}
 

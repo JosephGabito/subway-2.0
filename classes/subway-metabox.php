@@ -296,6 +296,10 @@ final class Metabox {
 		// Update user roles.
 		update_post_meta( $post_id, 'subway-visibility-settings-allowed-user-roles', $allowed_roles );
 
+		// Update comment access type.
+		$subway_post_discussion_access_type = filter_input( INPUT_POST,  'subway_post_discussion_access_type', FILTER_SANITIZE_STRING );
+		update_post_meta( $post_id, 'subway_post_discussion_access_type', $subway_post_discussion_access_type);
+
 		// Update comment user roles.
 		update_post_meta( $post_id, 'subway_post_discussion_roles', $comments_allowed_roles );
 
