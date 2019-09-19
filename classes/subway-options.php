@@ -44,15 +44,24 @@ final class Options
     public static function getRedirectPageUrl() 
     {
 
-        $selected_login_post_id = intval(get_option('subway_login_page'));
+        $selected_login_post_id = intval( get_option('subway_login_page') );
+
+        // Redirect logged in user to different page.
+        if ( is_user_logged_in() )
+        {
+            if ( ! empty( intval( get_option('subway_logged_in_user_no_access_page') ) ) )
+            {
+                $selected_login_post_id = intval( get_option('subway_logged_in_user_no_access_page') );
+            }
+        }
 
         $login_url = site_url( 'wp-login.php', 'login' );
 
-        $login_post = get_post( $selected_login_post_id );
+        $destination_post = get_post( $selected_login_post_id );
 
-        if (! empty($login_post) ) {
+        if (! empty( $destination_post ) ) {
 
-            $login_url = trailingslashit(get_permalink($login_post->ID));
+            $login_url = trailingslashit(get_permalink($destination_post->ID));
 
         }
         
