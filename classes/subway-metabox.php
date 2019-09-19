@@ -170,13 +170,15 @@ final class Metabox {
 				<!-- No Access Type -->
 				<?php $no_access_type = Options::getPostNoAccessType( $post->ID ); ?>
 				<dl>
-					<label>
-						<input value="block_content" <?php checked( 'block_content', $no_access_type, true ); ?> type="radio" name="subway-visibility-settings-no-access-type" />
-						<?php esc_html_e('Block Content', 'subway'); ?>
-						<a href="#" title="<?php esc_attr_e('Customize', 'subway'); ?>">
-							&#8599; <?php esc_html_e('Edit Message ', 'subway'); ?>
-						</a>
-					</label>
+					<p>
+						<label>
+							<input value="block_content" <?php checked( 'block_content', $no_access_type, true ); ?> type="radio" name="subway-visibility-settings-no-access-type" />
+							<?php esc_html_e('Block Content', 'subway'); ?>
+							<a href="#" title="<?php esc_attr_e('Customize', 'subway'); ?>">
+								&#8599; <?php esc_html_e('Edit Message ', 'subway'); ?>
+							</a>
+						</label>
+					</p>
 					<p class="howto">
 						<strong><?php esc_html_e('Note: ', 'subway'); ?></strong>
 						<?php esc_html_e("'Block Content' option might not work for some content that are plugin-generated. In that case, try using the 'Redirect(302) option.", 'subway'); ?>
@@ -184,13 +186,15 @@ final class Metabox {
 				</dl>
 
 				<dl>
-					<label>
-						<input value="redirect" <?php checked( 'redirect', $no_access_type, true ); ?> type="radio" name="subway-visibility-settings-no-access-type" />
-						<?php esc_html_e('Redirect (302) to', 'subway'); ?> 
-						<a target="_blank" href="<?php echo esc_url( Options::getRedirectPageUrl() ); ?>" title="<?php esc_attr_e('Login Page', 'subway'); ?>">
-							&#8599; <?php esc_html_e('Login Page ', 'subway'); ?>
-						</a>
-					</label>
+					<p>
+						<label>
+							<input value="redirect" <?php checked( 'redirect', $no_access_type, true ); ?> type="radio" name="subway-visibility-settings-no-access-type" />
+							<?php esc_html_e('Redirect (302) to', 'subway'); ?> 
+							<a target="_blank" href="<?php echo esc_url( Options::getRedirectPageUrl() ); ?>" title="<?php esc_attr_e('Login Page', 'subway'); ?>">
+								&#8599; <?php esc_html_e('Login Page ', 'subway'); ?>
+							</a>
+						</label>
+					</p>
 				</dl>
 			</p>
 
@@ -512,14 +516,17 @@ final class Metabox {
 
 	}
 
-	public function isCurrentUserSubscribedTo($post_id = 0) 
+	public function isCurrentUserSubscribedTo( $post_id = 0 ) 
 	{
 		// Yes, for admin.
 		if ( current_user_can('manage_plugins') )
 		{
 			return true;
 		}
-	
+		
+		if ( empty( $post_id ) ) {
+			return true;
+		}
 		// Check the subscribe type of the current post type.
 		$post_subscribe_type = Metabox::getSubscriptionType( $post_id );
 		
@@ -528,7 +535,8 @@ final class Metabox {
 			$user_role = Metabox::getUserRole( get_current_user_id() );
 
 			// If the user role matches checked subscription role.
-			if ( empty( array_intersect( $user_role, $post_subscribe_type['roles'] ) ) ) {
+			if ( ! array_intersect( $user_role, $post_subscribe_type['roles'] ) ) 
+			{
 				return false;
 			}
 		}

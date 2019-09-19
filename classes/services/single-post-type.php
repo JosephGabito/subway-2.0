@@ -87,18 +87,17 @@ final class SinglePostTypeService {
 			return $content;
 		}
 
+
 		$post_id = get_queried_object_id();
 
 		if ( ! Metabox::isCurrentUserSubscribedTo( $post_id ) )
 		{
-
 			$access_block_message = get_post_meta( $post_id, 'subway-visibility-settings-no-access-type-message', true );
-			if ( ! empty ( $access_block_message ) ) 
-			{
-				$wrap_start = '<div class="widget-subway-no-access-message">';
-				$wrap_end = '</div>';
-				return $wrap_start . wp_kses_post( $access_block_message ) . $wrap_end;
-			}
+			
+			$wrap_start = '<div class="widget-subway-no-access-message">';
+			$wrap_end = '</div>';
+
+			return $wrap_start . wp_kses_post( $access_block_message ) . $wrap_end;
 		}
 
 		return $content;

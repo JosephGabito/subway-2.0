@@ -18,7 +18,8 @@ global $post;
 </p>
 <?php endif; ?>
 <div class="subway-access-type-wrap <?php echo esc_attr( $hidden ); ?>">
-	<label>
+	<p>
+		<label>
 		<?php $access_type = get_post_meta( $post_id, 'subway_post_discussion_access_type', true ); ?>
 		
 		<input <?php checked( $access_type, '1', true ); ?> name="subway_post_discussion_access_type" type="checkbox" value="1" />
@@ -27,6 +28,7 @@ global $post;
 				<?php esc_html_e('Check to limit commenting to specific roles. Use WordPress\'s discussion settings to disable comment for everyone.', 'subway'); ?>
 			</p>
 	</label>
+	</p>
 	<h4>
 		<?php esc_html_e('Allowed Roles', 'subway'); ?>
 	</h4>
