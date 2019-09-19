@@ -40,6 +40,7 @@ final class Comments
 	{
 		
 		add_filter('comments_open', array( $this, 'restrictComment'), 10, 2 );
+	
 		add_action('comment_form_comments_closed', array( $this, 'displayMessage' ) );
 
 		return;
@@ -48,7 +49,6 @@ final class Comments
 
 	public function currentUserCanComment()
 	{
-		$requested_post_id = filter_input( INPUT_POST, 'comment_post_ID', FILTER_VALIDATE_INT);
 		
 		$post_id = get_the_id();
 
@@ -63,11 +63,6 @@ final class Comments
 		// Editor limits the commenting.
 		if ( ! empty ( $access_type ) )
 		{
-			// Handle comment submission.
-			if ( ! empty ( $requested_post_id ) )
-			{
-				$post_id = $requested_post_id;
-			}
 			// Allow administrator.
 			if ( current_user_can( 'manage_option' ) ) 
 			{
@@ -102,16 +97,32 @@ final class Comments
 	}
 	public function restrictComment()
 	{
+		// Check if coming from submit form.
+		$requested_post_id = filter_input( INPUT_POST, 'comment_post_ID', FILTER_VALIDATE_INT);
 
-		if ( current_user_can( 'manage_option' ) ) 
-		{
-			return true;
+		// Handle comment submission.
+		$post_id = get_the_id();
+		// Post is coming from submit comment.
+		if ( ! empty ( $requested_post_id ) ) {
+			$post_id = $requested_post_id;
 		}
 
-		if ( $this->currentUserCanComment()) 
-		{
+		$current_post = get_post( $post_id );
+		
+     	if ( "open" === $current_post->comment_status ) 
+     	{
 
-			return true;
+			if ( current_user_can( 'manage_option' ) ) 
+			{
+				return true;
+			}
+
+			if ( $this->currentUserCanComment()) 
+			{
+
+				return true;
+			}
+
 		}
 
 		return false;

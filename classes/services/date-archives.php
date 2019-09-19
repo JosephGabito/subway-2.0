@@ -53,7 +53,6 @@ final class DateArchives
 
 		if ( is_date() )
 		{
-
 			if ( $this->isDateArchiveLock() )
 			{
 				$login_url = \Subway\Options::getRedirectPageUrl();
@@ -87,7 +86,7 @@ final class DateArchives
 			$current_user_role = Metabox::getUserRole( get_current_user_id() );
 
 			$allowed_user_roles = (array)get_option('subway_date_archives_roles', array());
-
+			
 			if ( array_intersect( $current_user_role, $allowed_user_roles ) ) 
 			{
 				// Unlock the archive page.

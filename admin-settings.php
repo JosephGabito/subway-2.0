@@ -200,6 +200,14 @@ final class AdminSettings
 					'class'     => 'subway_login_page-option',
 				),
             ),
+            // Redirect page for logged-in users.
+            array(
+                'id' => 'subway_logged_in_user_no_access_page',
+                'label' => __('No Access Page', 'subway'),
+                'callback' => 'subway_logged_in_user_no_access_page',
+                'section' => 'subway-settings-section',
+                'group' => 'subway-page-visibility-section'
+            ),
             // Author archive access settings.
             array(
                 'id' => 'subway_author_archives',
