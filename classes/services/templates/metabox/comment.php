@@ -13,7 +13,8 @@ global $post;
 	<strong>
 		<?php esc_html_e('Commenting is currently not allowed.', 'subway'); ?>
 	</strong>
-	<br/>
+</p>
+<p class="howto">
 	<?php esc_html_e("Set 'Allow comments' in 'Discussion' section to allow comments.", 'subway'); ?>
 </p>
 <?php endif; ?>

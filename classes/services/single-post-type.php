@@ -44,6 +44,8 @@ final class SinglePostTypeService {
 
 	public function singlePostTypeRedirect()
 	{	
+		$internal_pages = Options::getInternalPages();
+
 		$current_page_id = get_queried_object_id();
 
 		$is_post_type_redirect = Metabox::isPostTypeRedirect( $current_page_id );
@@ -62,7 +64,7 @@ final class SinglePostTypeService {
 			return;
 		}
 		// Prevent infinite loop.
-		if( $current_page_id === $login_page_id ) 
+		if( in_array( $current_page_id, $internal_pages ) ) 
 		{
 			return;
 		}
@@ -81,12 +83,20 @@ final class SinglePostTypeService {
 
 	public function singlePostTypeContent( $content )
 	{
+		
+		$internal_pages = Options::getInternalPages();
+		$current_page_id = get_queried_object_id();
+
 		// Only run on main query.
 		if ( ! is_singular() && is_main_query() && ! is_feed() ) 
 		{
 			return $content;
 		}
-
+		// Just show the content if current page is internal page.
+		if( in_array( $current_page_id, $internal_pages ) ) 
+		{
+			return $content;
+		}
 
 		$post_id = get_queried_object_id();
 

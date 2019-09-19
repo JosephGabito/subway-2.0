@@ -125,4 +125,14 @@ final class Options
 
         return $post_no_access_type;
     }
+
+    public static function getInternalPages()
+    {
+        // Login Page.
+        $login_page = (int)get_option('subway_login_page');
+        // No Access Page.
+        $no_access_page = (int)get_option('subway_logged_in_user_no_access_page');
+        // Return the pages.
+        return array_diff( [$login_page, $no_access_page], [0]);
+    }
 }

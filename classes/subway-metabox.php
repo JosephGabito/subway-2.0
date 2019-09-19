@@ -139,9 +139,12 @@ final class Metabox {
 					<?php esc_html_e( 'Anyone', 'subway' ) ?>
 				</label>
 			</p>
+			
 			<?php $current_page_id = get_the_id(); ?>
-			<?php $login_page_id = intval( get_option('subway_login_page') ); ?>
-			<?php if ( $current_page_id !== $login_page_id ): ?>
+	
+			<?php $internal_pages = Options::getInternalPages(); ?>
+
+			<?php if ( ! in_array( $current_page_id, $internal_pages ) ): ?>
 			<p>
 				<label class="subway-visibility-settings-checkbox-label" for="subway-visibility-private">
 					<input type="radio" class="subway-visibility-settings-radio" id="subway-visibility-private" name="subway-visibility-settings"
@@ -169,6 +172,7 @@ final class Metabox {
 				</dl>
 				<!-- No Access Type -->
 				<?php $no_access_type = Options::getPostNoAccessType( $post->ID ); ?>
+				
 				<dl>
 					<p>
 						<label>
@@ -179,12 +183,34 @@ final class Metabox {
 							</a>
 						</label>
 					</p>
-					<p class="howto">
-						<strong><?php esc_html_e('Note: ', 'subway'); ?></strong>
-						<?php esc_html_e("'Block Content' option might not work for some content that are plugin-generated. In that case, try using the 'Redirect(302) option.", 'subway'); ?>
-					</p>
-				</dl>
 
+					<?php if ( 'redirect' === $no_access_type ): ?>
+					<div id="access-type-block-wrap" style="display: none;">
+					<?php else: ?>
+					<div id="access-type-block-wrap">
+					<?php endif; ?>
+						<p>
+							<dl>
+								<label>
+									<h4>
+										<?php esc_html_e('Message to show', 'subway'); ?>
+									</h4>
+									
+									<textarea class="widefat" id="subway-visibility-settings-no-access-type-message" name="subway-visibility-settings-no-access-type-message"><?php echo wp_kses_post($access_type_block_message); ?></textarea>
+								</label>
+							</dl>
+						</p>
+						<p class="howto">
+							<?php esc_html_e('This message will show if you choose "Block Content" option "No Access Control"', 'subway'); ?>
+						</p>
+						<p class="howto">
+							<strong><?php esc_html_e('Note: ', 'subway'); ?></strong>
+							<?php esc_html_e("'Block Content' option might not work for some content that are plugin-generated. In that case, try using the 'Redirect(302) option.", 'subway'); ?>
+						</p>
+					</div><!--#access-type-block-wrap-->
+				</dl>
+				
+				
 				<dl>
 					<p>
 						<label>
@@ -196,26 +222,13 @@ final class Metabox {
 						</label>
 					</p>
 				</dl>
+
 			</p>
 
 			<p class="howto">
 				<?php esc_html_e('Choose what type of behaviour would you like to have if the user has no access to the content.', 'subway'); ?>
 			</p>
 
-			<p>
-				<dl>
-					<label>
-						<h4>
-							<?php esc_html_e('Block Content Message', 'subway'); ?>
-						</h4>
-						<?php $access_type_block_message = get_post_meta( $post->ID, 'subway-visibility-settings-no-access-type-message', true); ?>
-						<textarea class="widefat" id="subway-visibility-settings-no-access-type-message" name="subway-visibility-settings-no-access-type-message"><?php echo wp_kses_post($access_type_block_message); ?></textarea>
-					</label>
-				</dl>
-			</p>
-			<p class="howto">
-				<?php esc_html_e('This message will show if you choose "Block Content" option "No Access Control"', 'subway'); ?>
-			</p>
 			<hr/>
 					
 			</div>
@@ -231,9 +244,19 @@ final class Metabox {
 							$('#subway-roles-access-visibility-fields').css('display', 'block');
 						}
 					});
+					$('body').on('change', 'input[name=subway-visibility-settings-no-access-type]', function(){
+						if ( 'block_content' === $(this).val() )
+						{
+							console.log('test');
+							$('#access-type-block-wrap').css('display', 'block');
+						}else {
+							$('#access-type-block-wrap').css('display', 'none');
+						}
+						return;
+					});
 				});
 			</script>
-			<?php if ( $current_page_id !== $login_page_id ): ?>
+			<?php if ( ! in_array( $current_page_id, $internal_pages ) ): ?>
 				<p class="howto">
 					<?php esc_html_e('Choose the accessibility of this page from the options above.', 'subway'); ?>
 				</p>
