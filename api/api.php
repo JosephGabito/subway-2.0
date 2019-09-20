@@ -33,9 +33,19 @@ class Subway_Membership_Route extends WP_REST_Controller
 		$table = $this->get_table_name();
 
 		$data = array(
-			'name' => $title, 
-			'description' => $desc
+				'name' => $title, 
+				'description' => $desc
 			);
+
+		if ( empty( $title ) )
+		{
+			return new WP_REST_Response( 
+				array(
+					'is_error' => true,
+					'message' => 'Title is required.'
+				), 200
+			);
+		}
 
 		$format = array('%s', '%s');
 
@@ -43,8 +53,12 @@ class Subway_Membership_Route extends WP_REST_Controller
 
 		return new WP_REST_Response( 
 			array(
-				'title' => $title,
-				'description' => $desc
+				'is_error' => false,
+				'message' => 'Successfully added new product',
+				'data' => array(
+						'title' => $title,
+						'description' => $desc
+					)
 			), 200 );
 	}
 

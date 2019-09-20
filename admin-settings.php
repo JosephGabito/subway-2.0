@@ -175,7 +175,7 @@ final class AdminSettings
             require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
         }
 
-        require_once SUBWAY_DIR_PATH . 'classes/subway-list-table-membership.php';
+        require_once SUBWAY_DIR_PATH . 'classes/subway-membership-list-table.php';
 
         $SubwayListTableMembership = new \Subway_List_table_Membership();
 

@@ -44,9 +44,7 @@ final class Enqueue
     public static function registerJs() 
     {
 
-
         wp_enqueue_style('subway-style', SUBWAY_DIR_URL . 'assets/css/subway.css');
-
 
         if ( ! is_user_logged_in() ) 
         {
