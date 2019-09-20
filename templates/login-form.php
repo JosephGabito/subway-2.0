@@ -9,7 +9,7 @@
  * 
  * PHP Version 5.4
  * 
- * @category Subway\Templates
+ * @category Subway\Templates\LoginForm
  * @package  Subway
  * @author   Joseph G. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
