@@ -87,9 +87,6 @@ add_filter( 'login_url', array( 'Subway\AuthRedirect', 'loginUrl' ), 10, 3 );
 // Does not trigger when using ajax form. Only on default wp-login.php and wp_login_form().
 add_filter( 'login_redirect', array( 'Subway\AuthRedirect', 'getLoginRedirectUrl' ), 10, 3 );
 
-// Change the default logout url to our sign-in page.
-add_action( 'wp_logout', array( 'Subway\AuthRedirect', 'logoutUrl' ), 10, 3 );
-
 // Adds the Subvway metabox.
 add_action( 'plugins_loaded', array( 'Subway\Metabox', 'initMetabox' ) );
 
