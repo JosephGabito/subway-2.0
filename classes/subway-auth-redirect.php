@@ -19,8 +19,8 @@
 
 namespace Subway;
 
-if (! defined('ABSPATH') ) {
-    return;
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
 }
 
 /**
@@ -33,190 +33,171 @@ if (! defined('ABSPATH') ) {
  * @link     github.com/codehaiku/subway The Plugin Repository
  * @since    1.0
  */
-final class AuthRedirect
-{
+final class AuthRedirect {
 
-    /**
-     * Handles our ajax authentication.
-     *
-     * @return void
-     */
-    public static function handleAuthentication()
-    {
 
-        // Set the header type to json.
-        header('Content-Type: application/json');
+	/**
+	 * Handles our ajax authentication.
+	 *
+	 * @return void
+	 */
+	public static function handleAuthentication() {
 
-        $is_signin = new \WP_Error( 'broke', __( 'Unable to authenticate user', "subway" ) );
+		// Set the header type to json.
+		header( 'Content-Type: application/json' );
 
-        $log = filter_input(INPUT_POST, 'log', FILTER_SANITIZE_STRING);
+		$is_signin = new \WP_Error( 'broke', __( 'Unable to authenticate user', 'subway' ) );
 
-        $pwd = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_STRING);
+		$log = filter_input( INPUT_POST, 'log', FILTER_SANITIZE_STRING );
 
-        if (empty($log) && empty($pwd) ) {
+		$pwd = filter_input( INPUT_POST, 'pwd', FILTER_SANITIZE_STRING );
 
-            $response['type'] = 'error';
+		if ( empty( $log ) && empty( $pwd ) ) {
 
-            $response['message'] = esc_html__(
-                'Username and Password cannot be empty.',
-                'subway'
-            );
+			$response['type'] = 'error';
 
-        } else {
+			$response['message'] = esc_html__(
+				'Username and Password cannot be empty.',
+				'subway'
+			);
 
-            $is_signin = wp_signon();
+		} else {
 
-            $response = array();
+			$is_signin = wp_signon();
 
-            if (is_wp_error($is_signin) ) {
+			$response = array();
 
-                $response['type'] = 'error';
+			if ( is_wp_error( $is_signin ) ) {
 
-                $response['message'] = $is_signin->get_error_message();
+				$response['type'] = 'error';
 
-            } else {
+				$response['message'] = $is_signin->get_error_message();
 
-                $response['type'] = 'success';
+			} else {
 
-                $response['message'] = esc_html__(
-                    'You have successfully logged-in. Redirecting you in few seconds...',
-                    'subway'
-                );
+				$response['type'] = 'success';
 
-            }
-        }
+				$response['message'] = esc_html__(
+					'You have successfully logged-in. Redirecting you in few seconds...',
+					'subway'
+				);
 
-        $subway_redirect_url = AuthRedirect::getLoginRedirectUrl('', $is_signin);
+			}
+		}
 
-        $response['redirect_url'] = apply_filters(
-            'subway_login_redirect',
-            $subway_redirect_url,
-            $is_signin
-        );
+		$subway_redirect_url = AuthRedirect::getLoginRedirectUrl( '', $is_signin );
 
-        echo wp_json_encode($response);
+		$response['redirect_url'] = apply_filters(
+			'subway_login_redirect',
+			$subway_redirect_url,
+			$is_signin
+		);
 
-        wp_die();
+		echo wp_json_encode( $response );
 
-    }
+		wp_die();
 
-    /**
-     * Returns the filtered redirect url for the current user.
-     *
-     * @param string $redirect_to The default redirect callback argument.
-     * @param mixed  $user        This holds the meta info of currently logged-in user.
-     *
-     * @return string             The final redirect url.
-     */
-    public static function getLoginRedirectUrl( $redirect_to, $user )
-    {
+	}
 
-        $subway_redirect_type = get_option('subway_redirect_type');
+	/**
+	 * Returns the filtered redirect url for the current user.
+	 *
+	 * @param string $redirect_to The default redirect callback argument.
+	 * @param mixed  $user        This holds the meta info of currently logged-in user.
+	 *
+	 * @return string             The final redirect url.
+	 */
+	public static function getLoginRedirectUrl( $redirect_to, $user ) {
 
-        // Redirect the user to default behaviour.
-        // If there are no redirect type option saved.
-        if (empty($subway_redirect_type) ) {
+		$subway_redirect_type = get_option( 'subway_redirect_type' );
 
-            return $redirect_to;
+		// Redirect the user to default behaviour.
+		// If there are no redirect type option saved.
+		if ( empty( $subway_redirect_type ) ) {
 
-        }
+			return $redirect_to;
 
-        if ('default' === $subway_redirect_type ) {
-            return $redirect_to;
-        }
+		}
 
-        if ('page' === $subway_redirect_type ) {
+		if ( 'default' === $subway_redirect_type ) {
+			return $redirect_to;
+		}
 
-            // Get the page url of the selected page.
-            // If the admin selected 'Custom Page' in the redirect type settings.
-            $selected_redirect_page = intval(get_option('subway_redirect_page_id'));
+		if ( 'page' === $subway_redirect_type ) {
 
-            // Redirect to default WordPress behaviour.
-            // If the user did not select page.
-            if (empty($selected_redirect_page) ) {
+			// Get the page url of the selected page.
+			// If the admin selected 'Custom Page' in the redirect type settings.
+			$selected_redirect_page = intval( get_option( 'subway_redirect_page_id' ) );
 
-                return $redirect_to;
-            }
+			// Redirect to default WordPress behaviour.
+			// If the user did not select page.
+			if ( empty( $selected_redirect_page ) ) {
 
-            // Otherwise, get the permalink of the saved page
-            // and let the user go into that page.
-            return get_permalink($selected_redirect_page);
+				return $redirect_to;
+			}
 
-        } elseif ('custom_url' === $subway_redirect_type ) {
+			// Otherwise, get the permalink of the saved page
+			// and let the user go into that page.
+			return get_permalink( $selected_redirect_page );
 
-            // Get the custom url saved in the redirect type settings.
-            $entered_custom_url = get_option('subway_redirect_custom_url');
+		} elseif ( 'custom_url' === $subway_redirect_type ) {
 
-            // Redirect to default WordPress behaviour
-            // if the user did enter a custom url.
-            if (empty($entered_custom_url) ) {
+			// Get the custom url saved in the redirect type settings.
+			$entered_custom_url = get_option( 'subway_redirect_custom_url' );
 
-                return $redirect_to;
+			// Redirect to default WordPress behaviour
+			// if the user did enter a custom url.
+			if ( empty( $entered_custom_url ) ) {
 
-            }
+				return $redirect_to;
 
-            // Otherwise, get the custom url saved
-            // and let the user go into that page.
-            if (! empty($user->ID) ) {
-                $entered_custom_url = str_replace(
-                    '%user_id%', $user->ID,
-                    $entered_custom_url
-                );
-            }
+			}
 
-            if (! empty($user->user_login) ) {
-                $entered_custom_url = str_replace(
-                    '%user_name%', $user->user_login,
-                    $entered_custom_url
-                );
-            }
+			// Otherwise, get the custom url saved
+			// and let the user go into that page.
+			if ( ! empty( $user->ID ) ) {
+				$entered_custom_url = str_replace(
+					'%user_id%', $user->ID,
+					$entered_custom_url
+				);
+			}
 
-            return $entered_custom_url;
+			if ( ! empty( $user->user_login ) ) {
+				$entered_custom_url = str_replace(
+					'%user_name%', $user->user_login,
+					$entered_custom_url
+				);
+			}
 
-        }
+			return $entered_custom_url;
 
-        // Otherwise, quit and redirect the user back to default WordPress behaviour.
-        return $redirect_to;
-    }
+		}
 
-    /**
-     * Callback function for the 'login_url' filter defined in Subway.php
-     *
-     * @param string $login_url The login url.
-     *
-     * @return string            The final login url.
-     */
-    public static function loginUrl( $login_url  )
-    {
+		// Otherwise, quit and redirect the user back to default WordPress behaviour.
+		return $redirect_to;
+	}
 
-        $subway_login_page = Options::getRedirectPageUrl();
-       
-        // Return the default login url if there is no log-in page defined.
-        if (empty($subway_login_page) ) {
+	/**
+	 * Callback function for the 'login_url' filter defined in Subway.php
+	 *
+	 * @param string $login_url The login url.
+	 *
+	 * @return string            The final login url.
+	 */
+	public static function loginUrl( $login_url  ) {
 
-            return trailingslashit( site_url( 'wp-login.php', 'login' ) );
+		$subway_login_page = Options::getRedirectPageUrl();
 
-        }
+		// Return the default login url if there is no log-in page defined.
+		if ( empty( $subway_login_page ) ) {
 
-        // Otherwise, return the Subway login page.
-        return $subway_login_page;
+			return trailingslashit( site_url( 'wp-login.php', 'login' ) );
 
-    }
+		}
 
-    /**
-     * The callback function for our logout filter.
-     *
-     * @return void
-     */
-    public static function logoutUrl()
-    {
+		// Otherwise, return the Subway login page.
+		return $subway_login_page;
 
-        $subway_login_page = Options::getRedirectPageUrl();
-
-        wp_safe_redirect(esc_url($subway_login_page . '?loggedout=true'));
-
-        Helpers::close();
-
-    }
+	}
 
 }
