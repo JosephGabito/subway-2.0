@@ -44,6 +44,14 @@ define( 'SUBWAY_DIR_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 // Define Subway URL Path.
 define( 'SUBWAY_DIR_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
+// Include Our API.
+require_once SUBWAY_DIR_PATH . 'api/api.php';
+
+// Include DB Migration.
+require_once SUBWAY_DIR_PATH . 'install.php';
+
+register_activation_hook( __FILE__, 'memberships_migrate' );
+
 // Include Subway i18n.
 require_once SUBWAY_DIR_PATH . 'i18.php';
 

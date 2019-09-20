@@ -43,8 +43,14 @@ final class AdminSettings
     {
 
         add_action('admin_menu', array( $this, 'adminMenu' ));
+        
+        add_action( 'load-toplevel_page_subway-membership', array( $this, 'membership_screen_options' ) );
+
+        add_filter( 'set-screen-option', array( $this, 'test_table_set_option' ), 10, 3);
 
         add_action('admin_init', array( $this, 'registerSettings' ));
+
+
 
     }
 
@@ -62,16 +68,26 @@ final class AdminSettings
             esc_html__('Memberships', 'subway'),
             'manage_options',
             'subway-membership',
-            array( $this, 'test'),
+            array( $this, 'membershipTable'),
             'dashicons-clipboard',
             2
+        );
+
+        // Add 'dashboard' sub menu page.
+        add_submenu_page( 
+            'subway-membership', 
+            esc_html__('Memberships: Products', 'subway'), 
+            esc_html__('Products', 'subway'), 
+            'manage_options', 
+            'subway-membership', 
+            array( $this, 'membershipTable' )
         );
 
         // Add 'general' sub menu page.
         add_submenu_page( 
             'subway-membership', 
-            esc_html__('Memberships: General Settings', 'subway'), 
-            esc_html__('General Settings', 'subway'), 
+            esc_html__('Memberships: Settings', 'subway'), 
+            esc_html__('Settings', 'subway'), 
             'manage_options', 
             'subway-membership-general', 
             array( $this, 'optionsPageGeneral' )
@@ -81,7 +97,7 @@ final class AdminSettings
         add_submenu_page( 
             'subway-membership', 
             esc_html__('Memberships: Payment Gateways', 'subway'), 
-            esc_html__('Payment Gateways', 'subway'), 
+            esc_html__('Payments', 'subway'), 
             'manage_options', 
             'subway-membership-emails', 
             array( $this, 'general_cb' )
@@ -137,15 +153,42 @@ final class AdminSettings
             array( $this, 'general_cb' )
         );
 
-
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueSettingsScripts' ) );
 
         return;
     }
 
-    public function test()
+    public function membership_screen_options()
     {
-        echo 'tae';
+        global $SubwayListTableMembership;
+        
+        $option = 'per_page';
+
+        $args = array(
+            'label' => 'Books',
+            'default' => 10,
+            'option' => 'books_per_page'
+        );
+        add_screen_option( $option, $args );
+
+        if( ! class_exists( 'WP_List_Table' ) ) {
+            require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+        }
+
+        require_once SUBWAY_DIR_PATH . 'classes/subway-list-table-membership.php';
+
+        $SubwayListTableMembership = new \Subway_List_table_Membership();
+
+    }
+
+    public function test_table_set_option( $status, $option, $value )
+    {
+        return $value;
+    }
+    public function membershipTable()
+    {
+        
+        require_once SUBWAY_DIR_PATH . 'templates/admin-membership.php';
     }
 
     public function general_cb()

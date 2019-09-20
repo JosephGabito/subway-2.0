@@ -44,28 +44,18 @@ final class Enqueue
     public static function registerJs() 
     {
 
-        $post_id = absint(get_queried_object_id());
-
-        $signin_page = absint(get_option('subway_login_page'));
 
         wp_enqueue_style('subway-style', SUBWAY_DIR_URL . 'assets/css/subway.css');
 
-        if (! is_user_logged_in() ) {
 
-            wp_enqueue_script('subway-script', 
-                SUBWAY_DIR_URL . 'assets/js/subway.js', 
-                array( 'jquery' )
-            );
+        if ( ! is_user_logged_in() ) 
+        {
 
-            wp_localize_script(
-                'subway-script', 'subway_config', array(
+            wp_enqueue_script('subway-script', SUBWAY_DIR_URL . 'assets/js/subway.js', array( 'jquery' ) );
+
+            wp_localize_script( 'subway-script', 'subway_config', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
-                'login_http_error' => esc_html__(
-                    'An error occured while 
-                	transmitting the data. Refresh the page and try again', 
-                    'subway'
-                ),
-                )
+                'login_http_error' => esc_html__( 'An error occured whiletransmitting the data. Refresh the page and try again', 'subway' ), )
             );
 
         }
