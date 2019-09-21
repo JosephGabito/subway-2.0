@@ -1,4 +1,18 @@
+<?php
+/**
+ * 
+ */
+?>
 <?php $new = filter_input( INPUT_GET, 'new', FILTER_SANITIZE_STRING );?>
+<?php $action = filter_input( INPUT_GET, 'action', FILTER_SANITIZE_STRING );?>
+<?php $product_id = filter_input( INPUT_GET, 'product', FILTER_SANITIZE_NUMBER_INT );?>
+
+<?php if ( "delete" === $action ): ?>
+	<?php $members_products = new Subway_Memberships_Products(); ?>
+	<?php $members_products->delete( $product_id ); ?>
+<?php endif; ?>
+
+<?php global $SubwayListTableMembership; ?>
 
 <?php if ( "yes" === $new ): ?>
 
@@ -14,8 +28,6 @@
 		<h1 class="wp-heading-inline">Products</h1>
 
 		<a href="?page=subway-membership&new=yes" class="page-title-action">Add New</a>
-		
-		<?php global $SubwayListTableMembership; ?>
 
 		<?php $SubwayListTableMembership->prepare_items(); ?>
 

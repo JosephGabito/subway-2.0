@@ -20,8 +20,8 @@ class Subway_List_Table_Membership extends WP_List_Table
 
 	function prepare_items() 
 	{
-		$memberships = new Subway_Memberships();
-	  	$data = $memberships->get_memberships();
+		$memberships = new Subway_Memberships_Products();
+	  	$data = $memberships->get_products();
 
 	  	$columns = $this->get_columns();
 	 	$hidden = array();
@@ -77,13 +77,15 @@ class Subway_List_Table_Membership extends WP_List_Table
 	  	}
 	}
 
-	function column_name($item) {
+	function column_name( $item ) {
+	  	
 	  	$actions = array(
-	        'edit'      => sprintf('<a href="?page=%s&action=%s&book=%s">Edit</a>',$_REQUEST['page'],'edit',$item['ID']),
-	        'delete'    => sprintf('<a href="?page=%s&action=%s&book=%s">Delete</a>',$_REQUEST['page'],'delete',$item['ID']),
+	        'edit'      => sprintf('<a href="?page=%s&action=%s&product=%s">Edit</a>',$_REQUEST['page'],'edit',$item['id']),
+	        'delete'    => sprintf('<a href="?page=%s&action=%s&product=%s">Trash</a>',$_REQUEST['page'],'delete',$item['id']),
 	    );
 
 	  return sprintf('%1$s %2$s', '<a href="#"><strong>'.$item['name'].'</strong></a>', $this->row_actions($actions) );
+
 	}
 
 	function get_bulk_actions() 
