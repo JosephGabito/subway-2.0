@@ -47,7 +47,7 @@
 		<a href="?page=subway-membership&new=yes" class="page-title-action"><?php esc_html_e('Add New', 'subway'); ?></a>
 
 		<hr class="wp-header-end">
-
+		
 		<?php $SubwayListTableMembership->prepare_items(); ?>
 
 		<form method="post">
@@ -60,8 +60,10 @@
 				<p><?php esc_html_e('Successfully moved to trash', 'subway'); ?></p>
 			</div>
 		<?php endif; ?>
-
-		<?php $SubwayListTableMembership->display(); ?>
+		
+		<form id="subway-products-list-table-form" method="post">
+			<?php $SubwayListTableMembership->display(); ?>
+		</form>
 
 	</div>
 
