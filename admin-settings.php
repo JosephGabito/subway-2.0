@@ -165,9 +165,9 @@ final class AdminSettings
         $option = 'per_page';
 
         $args = array(
-            'label' => 'Books',
+            'label' => esc_html__('Products', 'subway'),
             'default' => 10,
-            'option' => 'books_per_page'
+            'option' => 'products_per_page'
         );
         add_screen_option( $option, $args );
 

@@ -9,22 +9,29 @@ class Subway_Membership_Route extends WP_REST_Controller
 		$namespace = 'subway/v'.$version;
 		$base = 'membership';
 
+		// New Product.
 		register_rest_route( $namespace, '/' . $base . '/new-product', array(
 			array(
 		        'methods'             => WP_REST_Server::CREATABLE,
-		        'callback'            => array( $this, 'create_item' ),
-		        'permission_callback' => array( $this, 'create_item_permissions_check' ),
+		        'callback'            => array( $this, 'add_product' ),
+		        'permission_callback' => array( $this, 'permission_check' ),
 		        'args'                => $this->get_endpoint_args_for_item_schema( false ),
 		    ),
 		));
 
-		register_rest_route( $namespace, '/' . $base . '/schema', array(
-	      'methods'  => WP_REST_Server::READABLE,
-	      'callback' => array( $this, 'get_public_item_schema' ),
-	    ) );
+		// Edit Product.
+		register_rest_route( $namespace, '/' . $base . '/update-product', array(
+			array(
+		        'methods'             => WP_REST_Server::CREATABLE,
+		        'callback'            => array( $this, 'update_product' ),
+		        'permission_callback' => array( $this, 'permission_check' ),
+		        'args'                => $this->get_endpoint_args_for_item_schema( false ),
+		    ),
+		));
+		
 	}
 
-	public function create_item( $request )
+	public function add_product( $request )
 	{
 		global $wpdb;
 
@@ -51,6 +58,13 @@ class Subway_Membership_Route extends WP_REST_Controller
 
 		$inserted = $wpdb->insert( $table, $data, $format );
 
+		if ( $inserted ) 
+		{
+			// Update the total membership count.
+			$current_total = get_option('subway_products_count', 0);
+			update_option( 'subway_products_count', absint( $current_total ) + 1 );
+		}
+
 		return new WP_REST_Response( 
 			array(
 				'is_error' => false,
@@ -62,7 +76,32 @@ class Subway_Membership_Route extends WP_REST_Controller
 			), 200 );
 	}
 
-	public function create_item_permissions_check( $request ) {
+	public function update_product( $request )
+	{
+
+		require_once SUBWAY_DIR_PATH . '/classes/subway-membership.php';
+
+		$id = $request->get_param('id');
+		$title = $request->get_param('title');
+		$desc = $request->get_param('description');
+
+		$membership = new Subway_Memberships_Products();
+
+		$membership->update( ['id' => $id, 'title' => $title,'description' => $desc] );
+
+		return new WP_REST_Response( 
+			array(
+				'is_error' => false,
+				'message' => 'Successfully updated product',
+				'data' => array(
+						'title' => $title,
+						'description' => $desc
+					)
+			), 200 );
+
+	}
+
+	public function permission_check( $request ) {
 		// Testing purposes no need permission check for now.
     	return true;
   	}
@@ -72,12 +111,19 @@ class Subway_Membership_Route extends WP_REST_Controller
   		return $wpdb->prefix . 'memberships_products';
   	}
 
-  	public function register_scripts(){
-  		wp_register_script( 'subway-wp-api', SUBWAY_DIR_URL . 'assets/js/membership-new.js', array('jquery') );
-  		wp_localize_script( 'subway-wp-api', 'subway_api_settings', array(
+  	public function register_scripts()
+  	{
+  		
+  		wp_register_script( 'subway-admin-js', SUBWAY_DIR_URL . 'assets/js/admin.js', array('jquery') );
+
+  		wp_register_script( 'subway-membership-add-js', SUBWAY_DIR_URL . 'assets/js/membership-new.js', array('jquery', 'subway-admin-js') );
+  		wp_register_script( 'subway-membership-update-js', SUBWAY_DIR_URL . 'assets/js/membership-update.js', array('jquery', 'subway-admin-js') );
+
+  		wp_localize_script( 'subway-admin-js', 'subway_api_settings', array(
             'root' => esc_url_raw( rest_url() ),
             'nonce' => wp_create_nonce( 'wp_rest' )
         ) );
+
         return;
   	}
 

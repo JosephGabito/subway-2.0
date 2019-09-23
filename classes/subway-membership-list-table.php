@@ -20,30 +20,42 @@ class Subway_List_Table_Membership extends WP_List_Table
 
 	function prepare_items() 
 	{
+
 		$memberships = new Subway_Memberships_Products();
-	  	$data = $memberships->get_products();
 
 	  	$columns = $this->get_columns();
 	 	$hidden = array();
 	  	$sortable = $this->get_sortable_columns();
 	  	$this->_column_headers = $this->get_column_info();
 
-	  	usort( $data, array( &$this, 'usort_reorder' ) );
-  		
-  		$per_page = $this->get_items_per_page('membership_per_page', 5);
+  		$per_page = $this->get_items_per_page('products_per_page', 5);
 	  	$current_page = $this->get_pagenum();
 
-	  	$total_items = count( $data );
+	  	$order = filter_input( INPUT_GET, 'order', FILTER_SANITIZE_SPECIAL_CHARS );
 
-	  	// only ncessary because we have sample data
-	  	$this->found_data = array_slice( $data, ( ( $current_page - 1 ) * $per_page), $per_page );
+	  	$offset = 0;
+	  	//Manually determine page query offset (offset + current page (minus one) x posts per page).
+	  	$page_offset = $offset + ( $current_page - 1 ) * $per_page;
+	  	
+	  	$data = $memberships->get_products( array(
+	  		'orderby' => 'name', 
+	  		'direction' => $order,
+	  		'offset' => $page_offset,
+	  		'limit' => $per_page
+	  	) );
+
+
+	  	$total_items = absint( get_option( 'subway_products_count' ) );
 
 	  	$this->set_pagination_args( array(
 	    	'total_items' => $total_items,                  //WE have to calculate the total number of items
 	    	'per_page'    => $per_page                     //WE have to determine how many items to show on a page
 	  	) );
 
-	  	$this->items = $this->found_data;
+	  	$this->items = $data;
+
+	  	return $this;
+
 	}
 
 	function get_sortable_columns()
@@ -73,15 +85,27 @@ class Subway_List_Table_Membership extends WP_List_Table
 	    	case 'description':
 	      		return $item[ $column_name ];
 	    	default:
-	      	return print_r( $item, true ) ; //Show the whole array for troubleshooting purposes
+	    	return;
+	      	// return print_r( $item, true ) ; //Show the whole array for troubleshooting purposes
 	  	}
 	}
 
 	function column_name( $item ) {
 	  	
+	  	$delete_url = wp_nonce_url(
+	  		sprintf('?page=%s&action=%s&product=%s', $_REQUEST['page'], 'delete', $item['id']), 
+	  		sprintf('trash_product_%s', $item['id']), 
+	  		'_wpnonce');
+
+	  	$edit_url = wp_nonce_url(
+	  		sprintf('?page=%s&edit=%s&product=%s', $_REQUEST['page'],'yes',$item['id'] ),
+	  		sprintf('edit_product_%s', $item['id']),
+	  		'_wpnonce'
+	  		);
+
 	  	$actions = array(
-	        'edit'      => sprintf('<a href="?page=%s&action=%s&product=%s">Edit</a>',$_REQUEST['page'],'edit',$item['id']),
-	        'delete'    => sprintf('<a href="?page=%s&action=%s&product=%s">Trash</a>',$_REQUEST['page'],'delete',$item['id']),
+	        'edit'      => sprintf('<a href="%s">Edit</a>', esc_url( $edit_url ) ),
+	        'delete'    => sprintf('<a href="%s">Trash</a>', esc_url( $delete_url ) ),
 	    );
 
 	  return sprintf('%1$s %2$s', '<a href="#"><strong>'.$item['name'].'</strong></a>', $this->row_actions($actions) );

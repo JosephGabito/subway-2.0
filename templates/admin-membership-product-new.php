@@ -1,6 +1,6 @@
 <div id="subway-new-product-form">
 	
-	<?php wp_enqueue_script( 'subway-wp-api' ); ?>
+	<?php wp_enqueue_script( 'subway-membership-add-js' ); ?>
 
 	<form autocomplete="off" method="POST" action="http://multisite.local/nibble/wp-json/subway/v1/membership/new-product">
 		
