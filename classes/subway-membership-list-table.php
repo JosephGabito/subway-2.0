@@ -20,8 +20,10 @@ class Subway_List_Table_Membership extends WP_List_Table
 
 	function prepare_items() 
 	{
-
+		
 		$memberships = new Subway_Memberships_Products();
+		// Process bulk actions.
+		$this->process_bulk_action( $memberships );
 
 	  	$columns = $this->get_columns();
 	 	$hidden = array();
@@ -36,7 +38,7 @@ class Subway_List_Table_Membership extends WP_List_Table
 	  	$offset = 0;
 	  	//Manually determine page query offset (offset + current page (minus one) x posts per page).
 	  	$page_offset = $offset + ( $current_page - 1 ) * $per_page;
-	  	
+
 	  	$data = $memberships->get_products( array(
 	  		'orderby' => 'name', 
 	  		'direction' => $order,
@@ -115,14 +117,31 @@ class Subway_List_Table_Membership extends WP_List_Table
 	function get_bulk_actions() 
 	{
 		$actions = array(
-	    	'delete' => 'Delete'
+	    	'delete' => __('Delete', 'subway')
 	  	);
 	  	return $actions;
 	}
 
+	function process_bulk_action( $membership )
+	{
+
+
+		if ( 'delete' ===  $this->current_action() ) 
+		{
+			check_admin_referer( 'bulk-' . $this->_args['plural'] );
+			$product_ids = filter_input( INPUT_POST, 'product_ids', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+			if ( ! empty( $product_ids ) )
+			{
+				foreach ( $product_ids as $id ) {
+					$membership->delete($id);
+				}
+			}
+		}
+	}
+
 	function column_cb($item) {
         return sprintf(
-            '<input type="checkbox" name="book[]" value="%s" />', $item['ID']
+            '<input type="checkbox" name="product_ids[]" value="%s" />', $item['id']
         );    
     }
 
