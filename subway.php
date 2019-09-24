@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:  Subway Membership Payment and Subscription
+ * Plugin Name:  Subway Memberships & Subscriptions
  * Description: It helps you build a membership website with out spending thousands of bucks. Lock content base on user roles or subscription types. Take control of your exclusive content.
  * Version: 3.0
  * Author: Dunhakdis
@@ -54,6 +54,9 @@ register_activation_hook( __FILE__, 'memberships_migrate' );
 
 // Include Subway i18n.
 require_once SUBWAY_DIR_PATH . 'i18.php';
+
+// Include Vendors.
+require_once SUBWAY_DIR_PATH . 'vendor/autoload.php';
 
 // Include Subway Settings Class.
 require_once SUBWAY_DIR_PATH . 'admin-settings.php';

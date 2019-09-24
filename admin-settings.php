@@ -93,65 +93,6 @@ final class AdminSettings
             array( $this, 'optionsPageGeneral' )
         );
 
-         // Add 'Payment Gateways' sub menu page.
-        add_submenu_page( 
-            'subway-membership', 
-            esc_html__('Memberships: Payment Gateways', 'subway'), 
-            esc_html__('Payments', 'subway'), 
-            'manage_options', 
-            'subway-membership-emails', 
-            array( $this, 'general_cb' )
-        );
-
-        // Add 'Reports' sub menu page.
-        add_submenu_page( 
-            'subway-membership', 
-            esc_html__('Memberships: Reports', 'subway'), 
-            esc_html__('Reports', 'subway'), 
-            'manage_options', 
-            'subway-membership-emails', 
-            array( $this, 'general_cb' )
-        );
-
-        // Add 'Emails' sub menu page.
-        add_submenu_page( 
-            'subway-membership', 
-            esc_html__('Memberships: Email Settings', 'subway'), 
-            esc_html__('Emails', 'subway'), 
-            'manage_options', 
-            'subway-membership-emails', 
-            array( $this, 'general_cb' )
-        );
-
-        // Add 'BuddyPress' sub menu page.
-        add_submenu_page( 
-            'subway-membership', 
-            esc_html__('Memberships: BuddyPress', 'subway'), 
-            esc_html__('BuddyPress', 'subway'), 
-            'manage_options', 
-            'subway-membership-emails', 
-            array( $this, 'general_cb' )
-        );
-
-        // Add 'bbPress' sub menu page.
-        add_submenu_page( 
-            'subway-membership', 
-            esc_html__('Memberships: bbPress', 'subway'), 
-            esc_html__('bbPress', 'subway'), 
-            'manage_options', 
-            'subway-membership-emails', 
-            array( $this, 'general_cb' )
-        );
-
-        // Add 'Manual' sub menu page.
-        add_submenu_page( 
-            'subway-membership', 
-            esc_html__('Memberships: Manual', 'subway'), 
-            esc_html__('Documentation', 'subway'), 
-            'manage_options', 
-            'subway-membership-emails', 
-            array( $this, 'general_cb' )
-        );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueSettingsScripts' ) );
 
