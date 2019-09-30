@@ -80,6 +80,8 @@ final class Shortcodes
 
         add_shortcode('subway_login', array( $this, 'loginForm' ));
 
+        add_shortcode('subway_require_membership', array( $this, 'subway_require_membership' ));
+
         add_action('login_form_middle', array( $this, 'loginFormAction' ), 10, 2);
 
         add_action('login_form_middle', array( $this, 'lostPasswordLink' ), 10, 2);
@@ -88,6 +90,44 @@ final class Shortcodes
 
     }
 
+    public function subway_require_membership( $atts, $content = null ) 
+    {
+        
+        // Always show on admin.
+        if ( current_user_can( 'manage_options' ) ) 
+        {
+            return $content;
+        }
+
+        $a = shortcode_atts( array(
+            'roles' => '',
+            'subscription_type' => '',
+        ), $atts );
+
+        $post_id = get_the_id();
+
+        $roles = explode(',', $a['roles'] );
+
+        $subscription_type = array();
+        
+        $is_user_subscribed = Metabox::isCurrentUserSubscribedToPartial( $post_id, $roles, $subscription_type );
+
+        if ( ! $is_user_subscribed )
+        {
+            
+            $message = get_option('subway_partial_message', 
+                esc_html__('Please login to see this content','subway'));  
+
+            return apply_filters(
+                'subway_partial_hide_message', 
+                '<div class="subway-restricted-area">' . wp_kses_post( $message ) . '</div>'
+                );
+        }
+        
+
+        return $content;
+
+    }
     /**
      * Displays the login form
      * 

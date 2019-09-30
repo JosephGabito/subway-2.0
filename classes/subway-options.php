@@ -44,23 +44,29 @@ final class Options
     public static function getRedirectPageUrl() 
     {
 
-        $selected_login_post_id = intval(get_option('subway_login_page'));
+        $selected_login_post_id = intval( get_option('subway_login_page') );
 
-        if (0 === $selected_login_post_id ) {
-
-            return;
-
+        // Redirect logged in user to different page.
+        if ( is_user_logged_in() )
+        {
+            if ( ! empty( intval( get_option('subway_logged_in_user_no_access_page') ) ) )
+            {
+                $selected_login_post_id = intval( get_option('subway_logged_in_user_no_access_page') );
+            }
         }
 
-        $login_post = get_post($selected_login_post_id);
+        $login_url = site_url( 'wp-login.php', 'login' );
 
-        if (! empty($login_post) ) {
+        $destination_post = get_post( $selected_login_post_id );
 
-            return trailingslashit(get_permalink($login_post->ID));
+        if (! empty( $destination_post ) ) {
+
+            $login_url = trailingslashit(get_permalink($destination_post->ID));
 
         }
-
-        return false;
+        
+        return add_query_arg( apply_filters( 'subway_redirected_url', 
+            array('_redirected'=> 'redirected') ), $login_url );
 
     }
 
@@ -104,5 +110,29 @@ final class Options
 
         }
         return false;
+    }
+
+    public static function getPostNoAccessType( $post_id )
+    {
+        $allowed_no_access_type = array('block_content', 'redirect');
+
+        $post_no_access_type = get_post_meta($post_id, 'subway-visibility-settings-no-access-type', true );
+        
+        if ( empty( $post_no_access_type ) || ! in_array( $post_no_access_type, $allowed_no_access_type ) ) 
+        {
+            $post_no_access_type = 'block_content';
+        }
+
+        return $post_no_access_type;
+    }
+
+    public static function getInternalPages()
+    {
+        // Login Page.
+        $login_page = (int)get_option('subway_login_page');
+        // No Access Page.
+        $no_access_page = (int)get_option('subway_logged_in_user_no_access_page');
+        // Return the pages.
+        return array_diff( [$login_page, $no_access_page], [0]);
     }
 }

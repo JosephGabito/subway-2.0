@@ -21,14 +21,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
 
-function subway_lock_wp_admin() { ?>
+function subway_redirected_message_login_form() { ?>
+	
+	<?php $content = get_option('subway_redirected_message_login_form',
+		esc_html__('Members only page. Please use the login form below to access the page.','subway'));  ; ?>
 
-	<p class="description">
-		<?php
-			echo sprintf( __( "In case you were locked out. Use the link below to bypass the log-in page and go directly
-			to your website's wp-login URL (http://yoursiteurl.com/wp-login.php): <strong class='subway-settings-text-notice'>%s</strong>", 'subway' ), site_url( 'wp-login.php?no_redirect=true' ) ); 
-		?>
-	</p>
-<?php
-return;
+	<?php $settings = apply_filters('subway_redirected_message_login_form_editor',
+		array( 'teeny' => true, 'media_buttons' => true, 'editor_height' => 100 )); ?>
+
+	<?php echo wp_editor( $content, 'subway_redirected_message_login_form', $settings ); ?>
+	
+	<?php
+	return;
 }

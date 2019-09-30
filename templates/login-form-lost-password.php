@@ -9,7 +9,7 @@
  * 
  * PHP Version 5.4
  * 
- * @category Subway\Templates
+ * @category Subway\Templates\LostPasswordForm
  * @package  Subway
  * @author   Joseph G. <emailnotdisplayed@domain.tld>
  * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -20,6 +20,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
+
 ?>
 <p class="subway-login-lost-password">
 	<a href="<?php echo esc_url( wp_lostpassword_url( $redirect = '' ) ); ?>">

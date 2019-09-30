@@ -6,8 +6,15 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @package Subway
+ * 
+ * PHP Version 5.4
+ * 
+ * @category Subway\SettingsFields
+ * @package  Subway
+ * @author   Joseph G. <emailnotdisplayed@domain.tld>
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @version  GIT:github.com/codehaiku/subway
+ * @link     github.com/codehaiku/subway The Plugin Repository
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -45,13 +52,13 @@ function subway_login_page_form() {
 
 	wp_dropdown_pages(
 		array(
-		'name' => 'subway_login_page',
-		'selected' => intval( $subway_login_page_id ),
-		'show_option_none' => esc_html__( '---', 'subway' ),
+			'name' => 'subway_login_page',
+			'selected' => intval( $subway_login_page_id ),
+			'show_option_none' => esc_html__( '*/wp-login.php', 'subway' ),
 		)
 	);
 
-	echo '<p class="description">' . sprintf( esc_html__( 'Select a login page and save the changes to make your site private. Selecting "---" (blank) will make your site public. %1$s.', 'subway' ), '<span class="subway-settings-notice">' . esc_html__( 'You need to add "[subway_login]" shortcode in the selected page to show the login form (this will be done automatically after saving)', 'subway' ) ) . '</span></p>';
+	echo '<p class="description">' . sprintf( esc_html__( "Select a page to be used for logging in. A shortcode [subway_login] which will display the login form will be automatically added to the content of the selected page", 'subway' ) ) . '</span></p>';
 
 	return;
 }

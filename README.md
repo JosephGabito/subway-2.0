@@ -1,4 +1,4 @@
-<h1>:closed_lock_with_key: Subway - Private WordPress Site Option</h1>
+<h1>:closed_lock_with_key: Subway - Paid Membership and Subscription for WordPress</h1>
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/e85826fc-c1cb-47f1-9448-2a04b7b00eb1/big.png?x_cache=false)](https://insight.sensiolabs.com/projects/e85826fc-c1cb-47f1-9448-2a04b7b00eb1)
 

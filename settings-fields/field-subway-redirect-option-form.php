@@ -6,8 +6,15 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @package Subway
+ * 
+ * PHP Version 5.4
+ * 
+ * @category Subway\SettingsFields
+ * @package  Subway
+ * @author   Joseph G. <emailnotdisplayed@domain.tld>
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @version  GIT:github.com/codehaiku/subway
+ * @link     github.com/codehaiku/subway The Plugin Repository
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -52,13 +59,6 @@ function subway_redirect_option_form() {
 
 		</label>
 
-	</p>
-
-	<p class="description">
-		<?php
-			esc_html_e('Where do you want your members to go after logging-in? You can pick a page, a Custom URL, or just a WordPress Default behavior. Page and Custom URL has its settings.', 'subway'
-			);
-		?>
 	</p>
 
 	<div id="subway_redirect_page_option_section" class="hidden subway-redirect-option-section">
